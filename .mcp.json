@@ -1,0 +1,4 @@
+{
+	"comment": "Project-specific MCP configuration - global MCP config is at ~/.claude/mcp.json",
+	"mcpServers": {}
+}
