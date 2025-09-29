@@ -214,3 +214,6 @@ input/*
 !input/.gitkeep
 output/*
 !output/.gitkeep
+
+# Project files
+utf8_emojis
