@@ -11,6 +11,7 @@ A practical, no-nonsense guide to using Git for everyday development work.
 6. [Fixing Mistakes](#fixing-mistakes)
 7. [Advanced Operations](#advanced-operations)
 8. [Quick Reference](#quick-reference)
+9. [Simple Tutorial](#simple-tutorial)
 
 ---
 
@@ -747,6 +748,46 @@ git remote -v                      # View remotes
 git fetch origin                   # Download changes
 git pull origin main              # Pull and merge
 git push origin main              # Push to remote
+```
+
+---
+
+## Simple Tutorial
+
+```bash
+# You are currently on an up-to-date main branch
+git checkout -b xyz
+# Create a new branch called xyz. Checkout to that branch
+
+# Check the status of your current branch
+git status  # You have uncommitted changes
+
+# Stage changes
+git add ["file name"]
+
+# Alternatively, we can add all changes
+git add .
+
+# Commit these changes
+git commit -m ["input message"]
+
+# Push branch
+git push origin xyz
+
+# Switch to main
+git checkout main
+git pull origin main
+
+# Merge branch to main
+git merge xyz
+
+# Push the updated main to remote
+git push origin main
+
+# (Optional) Delete the xyz branch locally and remotely if you're done 
+with it
+git branch -d xyz              # Delete local branch
+git push origin --delete xyz   # Delete remote branch
 ```
 
 ---
