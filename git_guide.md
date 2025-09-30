@@ -784,10 +784,9 @@ git merge xyz
 # Push the updated main to remote
 git push origin main
 
-# (Optional) Delete the xyz branch locally and remotely if you're done 
-with it
+# (Optional) Delete the xyz branch locally and remotely if you're done with it
 git branch -d xyz              # Delete local branch
-git push origin --delete xyz   # Delete remote branch
+git push origin -d xyz   # Delete remote branch
 ```
 
 ---
