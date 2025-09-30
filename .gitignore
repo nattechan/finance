@@ -243,10 +243,11 @@ node_modules/
 # tasks/ 
 
 # Reference books (Git submodules for learning)
+# Submodule directories - don't ignore the submodules themselves
 reference/QuantFinanceBook/MatlabCodes/
 reference/QuantFinanceBook/Book - flyer.pdf
 reference/book_irds3/previous_edition_material/
 reference/book_irds3/tests/
 
 # Notes are tracked (your own code/notes for learning)
-# notes/ folder is committed to track your learning progress
+# reference/notes/ is YOUR folder (tracked), parallel to submodules
