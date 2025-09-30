@@ -11,7 +11,7 @@ A practical, no-nonsense guide to using Git for everyday development work.
 6. [Fixing Mistakes](#fixing-mistakes)
 7. [Advanced Operations](#advanced-operations)
 8. [Quick Reference](#quick-reference)
-9. [Simple Tutorial](#simple-tutorial)
+9. [Hands-On Tutorial](#hands-on-tutorial)
 
 ---
 
@@ -752,42 +752,920 @@ git push origin main              # Push to remote
 
 ---
 
-## Simple Tutorial
+## Hands-On Tutorial
+
+This section provides step-by-step tutorials you can execute to learn Git through practice. Each scenario includes expected outputs and common pitfalls.
+
+### Tutorial 1: First Repository and Commit
+
+**Scenario**: Create your first Git repository from scratch.
 
 ```bash
-# You are currently on an up-to-date main branch
-git checkout -b xyz
-# Create a new branch called xyz. Checkout to that branch
+# 1. Create a practice directory
+mkdir git-practice
+cd git-practice
 
-# Check the status of your current branch
-git status  # You have uncommitted changes
+# 2. Initialize Git repository
+git init
 
-# Stage changes
-git add ["file name"]
+# Expected output:
+# Initialized empty Git repository in /path/to/git-practice/.git/
 
-# Alternatively, we can add all changes
-git add .
+# 3. Check repository status
+git status
 
-# Commit these changes
-git commit -m ["input message"]
+# Expected output:
+# On branch main
+# No commits yet
+# nothing to commit (create/copy files and use "git add" to track)
 
-# Push branch
-git push origin xyz
+# 4. Create your first file
+echo "# My First Git Project" > README.md
+echo "Learning Git step by step" >> README.md
 
-# Switch to main
+# 5. Check status again
+git status
+
+# Expected output:
+# On branch main
+# No commits yet
+# Untracked files:
+#   README.md
+
+# 6. Stage the file
+git add README.md
+
+# 7. Check status
+git status
+
+# Expected output:
+# On branch main
+# No commits yet
+# Changes to be committed:
+#   new file:   README.md
+
+# 8. Create your first commit
+git commit -m "add initial README with project description"
+
+# Expected output:
+# [main (root-commit) abc123] add initial README with project description
+#  1 file changed, 2 insertions(+)
+#  create mode 100644 README.md
+
+# 9. View commit history
+git log
+
+# Expected output:
+# commit abc123def456... (HEAD -> main)
+# Author: Your Name <your.email@example.com>
+# Date:   Mon Sep 30 10:00:00 2024
+#
+#     add initial README with project description
+
+# 10. View compact history
+git log --oneline
+
+# Expected output:
+# abc123 add initial README with project description
+```
+
+**What you learned:**
+- `git init` creates a new repository
+- Files start as "untracked"
+- `git add` stages files for commit
+- `git commit` saves staged changes
+- `git log` shows commit history
+
+---
+
+### Tutorial 2: Making Changes and Committing
+
+**Scenario**: Practice the edit-stage-commit cycle with multiple files.
+
+```bash
+# Starting from git-practice directory with one commit
+
+# 1. Create a new Python file
+cat > calculator.py << 'EOF'
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+EOF
+
+# 2. Create a test file
+cat > test_calculator.py << 'EOF'
+from calculator import add, subtract
+
+def test_add():
+    assert add(2, 3) == 5
+
+def test_subtract():
+    assert subtract(5, 3) == 2
+EOF
+
+# 3. Check what changed
+git status
+
+# Expected output:
+# On branch main
+# Untracked files:
+#   calculator.py
+#   test_calculator.py
+
+# 4. View differences (nothing yet - files are untracked)
+git diff
+# (no output - untracked files don't show in diff)
+
+# 5. Stage only calculator.py
+git add calculator.py
+
+# 6. Check status
+git status
+
+# Expected output:
+# On branch main
+# Changes to be committed:
+#   new file:   calculator.py
+#
+# Untracked files:
+#   test_calculator.py
+
+# 7. Commit calculator.py
+git commit -m "add calculator with add and subtract functions"
+
+# 8. Now stage and commit tests
+git add test_calculator.py
+git commit -m "add unit tests for calculator"
+
+# 9. View commit history
+git log --oneline
+
+# Expected output:
+# def789 add unit tests for calculator
+# abc123 add calculator with add and subtract functions
+# abc000 add initial README with project description
+
+# 10. Make a change to calculator.py
+cat >> calculator.py << 'EOF'
+
+def multiply(a, b):
+    return a * b
+EOF
+
+# 11. Check status and diff
+git status
+# Shows: modified: calculator.py
+
+git diff calculator.py
+# Shows: + def multiply(a, b):
+#        +     return a * b
+
+# 12. Stage and commit the change
+git add calculator.py
+git commit -m "add multiply function to calculator"
+
+# 13. View detailed history with changes
+git log -p -2
+
+# Shows last 2 commits with full diffs
+```
+
+**What you learned:**
+- Stage and commit files separately for logical commits
+- `git diff` shows unstaged changes
+- Modified files must be staged again
+- Each commit should be a logical unit of work
+
+---
+
+### Tutorial 3: Working with Branches
+
+**Scenario**: Create a feature branch, make changes, and merge back to main.
+
+```bash
+# Starting from git-practice with 4 commits on main
+
+# 1. View current branches
+git branch
+
+# Expected output:
+# * main
+
+# 2. Create and switch to feature branch
+git checkout -b feature-division
+
+# Expected output:
+# Switched to a new branch 'feature-division'
+
+# 3. Verify you're on new branch
+git branch
+
+# Expected output:
+#   main
+# * feature-division
+
+# 4. Add division function
+cat >> calculator.py << 'EOF'
+
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
+EOF
+
+# 5. Check status
+git status
+
+# Expected output:
+# On branch feature-division
+# Changes not staged for commit:
+#   modified:   calculator.py
+
+# 6. Stage and commit
+git add calculator.py
+git commit -m "add divide function with zero check"
+
+# 7. Add corresponding test
+cat >> test_calculator.py << 'EOF'
+
+def test_divide():
+    assert divide(10, 2) == 5
+
+def test_divide_by_zero():
+    try:
+        divide(5, 0)
+        assert False, "Should have raised ValueError"
+    except ValueError as e:
+        assert str(e) == "Cannot divide by zero"
+EOF
+
+# 8. Stage and commit test
+git add test_calculator.py
+git commit -m "add tests for divide function"
+
+# 9. View branch history
+git log --oneline
+
+# Expected output (on feature-division):
+# xyz789 add tests for divide function
+# xyz456 add divide function with zero check
+# def789 add unit tests for calculator
+# abc123 add calculator with add and subtract functions
+# abc000 add initial README with project description
+
+# 10. Switch back to main
+git checkout main
+
+# 11. Check calculator.py (no divide function here!)
+cat calculator.py
+# Only shows add, subtract, multiply
+
+# 12. View main branch history
+git log --oneline
+
+# Expected output (on main):
+# ghi123 add multiply function to calculator
+# def789 add unit tests for calculator
+# abc123 add calculator with add and subtract functions
+# abc000 add initial README with project description
+
+# 13. See commits in feature branch not in main
+git log main..feature-division --oneline
+
+# Expected output:
+# xyz789 add tests for divide function
+# xyz456 add divide function with zero check
+
+# 14. Merge feature branch into main
+git merge feature-division
+
+# Expected output:
+# Updating ghi123..xyz789
+# Fast-forward
+#  calculator.py      | 5 +++++
+#  test_calculator.py | 8 ++++++++
+#  2 files changed, 13 insertions(+)
+
+# 15. Verify divide function is now in main
+cat calculator.py
+# Now shows add, subtract, multiply, divide
+
+# 16. View updated history
+git log --oneline --graph --all
+
+# Expected output:
+# * xyz789 (HEAD -> main, feature-division) add tests for divide function
+# * xyz456 add divide function with zero check
+# * ghi123 add multiply function to calculator
+# * def789 add unit tests for calculator
+# * abc123 add calculator with add and subtract functions
+# * abc000 add initial README with project description
+
+# 17. Delete feature branch (no longer needed)
+git branch -d feature-division
+
+# Expected output:
+# Deleted branch feature-division (was xyz789).
+
+# 18. Verify branch deleted
+git branch
+
+# Expected output:
+# * main
+```
+
+**What you learned:**
+- `git checkout -b` creates and switches to new branch
+- Changes on feature branch don't affect main
+- `git merge` brings changes from one branch to another
+- Delete feature branches after merging to keep repository clean
+
+---
+
+### Tutorial 4: Handling Merge Conflicts
+
+**Scenario**: Create a conflict and learn to resolve it.
+
+```bash
+# Starting from git-practice on main branch
+
+# 1. Create two branches from main
+git checkout -b branch-a
+git checkout main
+git checkout -b branch-b
+
+# 2. On branch-b, modify calculator.py
+git checkout branch-b
+cat > calculator.py << 'EOF'
+def add(a, b):
+    """Add two numbers and return the result."""
+    return a + b
+
+def subtract(a, b):
+    """Subtract b from a and return the result."""
+    return a - b
+
+def multiply(a, b):
+    """Multiply two numbers and return the result."""
+    return a * b
+
+def divide(a, b):
+    """Divide a by b with zero check."""
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
+EOF
+
+git add calculator.py
+git commit -m "add docstrings to all functions"
+
+# 3. Switch to branch-a and make DIFFERENT changes
+git checkout branch-a
+cat > calculator.py << 'EOF'
+def add(a, b):
+    # Addition operation
+    return a + b
+
+def subtract(a, b):
+    # Subtraction operation
+    return a - b
+
+def multiply(a, b):
+    # Multiplication operation
+    return a * b
+
+def divide(a, b):
+    # Division with error handling
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
+EOF
+
+git add calculator.py
+git commit -m "add inline comments to all functions"
+
+# 4. Merge branch-b into branch-a (will conflict!)
+git merge branch-b
+
+# Expected output:
+# Auto-merging calculator.py
+# CONFLICT (content): Merge conflict in calculator.py
+# Automatic merge failed; fix conflicts and then commit the result.
+
+# 5. Check status
+git status
+
+# Expected output:
+# On branch branch-a
+# You have unmerged paths.
+#   (fix conflicts and run "git commit")
+#
+# Unmerged paths:
+#   (use "git add <file>..." to mark resolution)
+#     both modified:   calculator.py
+
+# 6. View the conflict in calculator.py
+cat calculator.py
+
+# Expected output:
+# def add(a, b):
+# <<<<<<< HEAD
+#     # Addition operation
+# =======
+#     """Add two numbers and return the result."""
+# >>>>>>> branch-b
+#     return a + b
+# ... (more conflicts)
+
+# 7. Resolve conflict manually (choose docstrings)
+cat > calculator.py << 'EOF'
+def add(a, b):
+    """Add two numbers and return the result."""
+    return a + b
+
+def subtract(a, b):
+    """Subtract b from a and return the result."""
+    return a - b
+
+def multiply(a, b):
+    """Multiply two numbers and return the result."""
+    return a * b
+
+def divide(a, b):
+    """Divide a by b with zero check."""
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
+EOF
+
+# 8. Mark conflict as resolved
+git add calculator.py
+
+# 9. Check status
+git status
+
+# Expected output:
+# On branch branch-a
+# All conflicts fixed but you are still merging.
+#   (use "git commit" to conclude merge)
+
+# 10. Complete the merge
+git commit -m "merge branch-b, resolve conflicts using docstrings"
+
+# Expected output:
+# [branch-a abc123] merge branch-b, resolve conflicts using docstrings
+
+# 11. View merge commit in history
+git log --oneline --graph
+
+# Expected output showing merge:
+# *   abc123 (HEAD -> branch-a) merge branch-b, resolve conflicts using docstrings
+# |\
+# | * def456 (branch-b) add docstrings to all functions
+# * | ghi789 add inline comments to all functions
+# |/
+# * xyz789 add tests for divide function
+# ...
+
+# 12. Merge into main and clean up
+git checkout main
+git merge branch-a
+git branch -d branch-a
+git branch -d branch-b
+```
+
+**What you learned:**
+- Conflicts occur when same lines are changed in different branches
+- Git marks conflicts with `<<<<<<<`, `=======`, `>>>>>>>`
+- You must manually choose which version to keep (or combine them)
+- `git add` marks conflict as resolved
+- Complete merge with `git commit`
+
+---
+
+### Tutorial 5: Connecting to GitHub and Pushing
+
+**Scenario**: Push your local repository to GitHub.
+
+```bash
+# Starting from git-practice with commits on main
+
+# 1. Create repository on GitHub
+# Go to github.com → New Repository
+# Name it "git-practice"
+# Do NOT initialize with README (we already have commits)
+# Copy the SSH URL: git@github.com:username/git-practice.git
+
+# 2. Add GitHub as remote
+git remote add origin git@github.com:username/git-practice.git
+
+# 3. Verify remote was added
+git remote -v
+
+# Expected output:
+# origin  git@github.com:username/git-practice.git (fetch)
+# origin  git@github.com:username/git-practice.git (push)
+
+# 4. Push main branch to GitHub
+git push -u origin main
+
+# Expected output:
+# Enumerating objects: 15, done.
+# Counting objects: 100% (15/15), done.
+# ...
+# To github.com:username/git-practice.git
+#  * [new branch]      main -> main
+# Branch 'main' set up to track remote branch 'main' from 'origin'.
+
+# 5. Make a new commit
+echo "## Installation" >> README.md
+echo "pip install -r requirements.txt" >> README.md
+git add README.md
+git commit -m "add installation instructions to README"
+
+# 6. Push update (no need for -u origin main anymore)
+git push
+
+# Expected output:
+# Enumerating objects: 5, done.
+# ...
+# To github.com:username/git-practice.git
+#    abc123..def456  main -> main
+
+# 7. Create feature branch and push it
+git checkout -b feature-power
+cat >> calculator.py << 'EOF'
+
+def power(a, b):
+    """Raise a to the power of b."""
+    return a ** b
+EOF
+
+git add calculator.py
+git commit -m "add power function"
+
+# 8. Push feature branch to GitHub
+git push -u origin feature-power
+
+# Expected output:
+# To github.com:username/git-practice.git
+#  * [new branch]      feature-power -> feature-power
+# Branch 'feature-power' set up to track remote branch 'feature-power'
+
+# 9. View all branches (local and remote)
+git branch -a
+
+# Expected output:
+# * feature-power
+#   main
+#   remotes/origin/feature-power
+#   remotes/origin/main
+
+# 10. Delete remote feature branch (after merging on GitHub)
+git push origin --delete feature-power
+
+# Expected output:
+# To github.com:username/git-practice.git
+#  - [deleted]         feature-power
+```
+
+**What you learned:**
+- `git remote add origin` connects local repo to GitHub
+- `git push -u origin main` pushes and sets up tracking
+- After `-u` once, can just use `git push`
+- Can push any branch to GitHub
+- Delete remote branches with `git push origin --delete`
+
+---
+
+### Tutorial 6: Real-World Workflow (nc Branch Pattern)
+
+**Scenario**: Practice the workflow used in this project with numbered branches.
+
+```bash
+# Starting from clean main branch
+
+# WORKFLOW: Quick commit and merge pattern
+
+# 1. Start on up-to-date main
 git checkout main
 git pull origin main
 
-# Merge branch to main
-git merge xyz
+# 2. Find next branch number (check existing nc branches)
+git branch -a | grep nc
+# Suppose you see nc1, nc2, nc3, nc4, nc5
+# Next branch will be nc6
 
-# Push the updated main to remote
+# 3. Create and switch to nc6
+git checkout -b nc6
+
+# 4. Make your changes (simulate some work)
+cat > new_feature.py << 'EOF'
+def new_feature():
+    """A new feature for the project."""
+    return "Feature implemented!"
+EOF
+
+# 5. Check status
+git status
+
+# Expected output:
+# On branch nc6
+# Untracked files:
+#   new_feature.py
+
+# 6. Stage all changes
+git add .
+
+# 7. Commit with descriptive message
+git commit -m "add new feature module with implementation
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+
+# 8. Push branch to remote
+git push -u origin nc6
+
+# Expected output:
+# To github.com:username/project.git
+#  * [new branch]      nc6 -> nc6
+
+# 9. [PAUSE HERE] Review changes on GitHub, run tests, etc.
+
+# 10. After verification, merge to main
+git checkout main
+git pull origin main
+
+# 11. Check for conflicts BEFORE merging (dry run)
+git merge --no-commit --no-ff nc6
+
+# If no conflicts:
+git merge --abort  # Cancel dry run
+git merge nc6      # Do real merge
+
+# Expected output:
+# Updating abc123..def456
+# Fast-forward
+#  new_feature.py | 3 +++
+#  1 file changed, 3 insertions(+)
+
+# 12. Push updated main
 git push origin main
 
-# (Optional) Delete the xyz branch locally and remotely if you're done with it
-git branch -d xyz              # Delete local branch
-git push origin -d xyz   # Delete remote branch
+# 13. Delete nc6 branch (local and remote)
+git branch -d nc6
+git push origin --delete nc6
+
+# Expected output:
+# Deleted branch nc6 (was def456).
+# To github.com:username/project.git
+#  - [deleted]         nc6
+
+# 14. Verify clean state
+git branch
+# Expected output:
+# * main
+
+git status
+# Expected output:
+# On branch main
+# Your branch is up to date with 'origin/main'.
+# nothing to commit, working tree clean
+
+# SUCCESS! Feature merged and branch cleaned up.
+
+# Next feature? Start with nc7!
 ```
+
+**What you learned:**
+- Numbered branch convention (nc1, nc2, nc3...)
+- Always pull main before creating branch
+- Commit message includes attribution footer
+- Review before merging (don't auto-merge!)
+- Clean up branches after merge
+- This pattern keeps history clean and organized
+
+---
+
+### Tutorial 7: Fixing Mistakes
+
+**Scenario**: Common mistakes and how to fix them.
+
+```bash
+# MISTAKE 1: Committed to wrong branch
+
+# You're on main and make a commit (oops!)
+git checkout main
+echo "New file" > mistake.txt
+git add mistake.txt
+git commit -m "add mistake file"
+
+# Realize you should have done this on a feature branch
+# Fix: Move commit to new branch
+
+git branch nc7              # Create branch with this commit
+git reset --hard HEAD~1     # Remove commit from main
+git checkout nc7            # Switch to nc7
+
+# Now the commit is on nc7, not main!
+
+# ---
+
+# MISTAKE 2: Commit message has typo
+
+git commit -m "add calculatro module"  # Typo: calculatro
+
+# Fix: Amend the commit
+git commit --amend -m "add calculator module"
+
+# ---
+
+# MISTAKE 3: Forgot to add a file to last commit
+
+git add file1.py
+git commit -m "add feature X"
+
+# Oops, forgot file2.py that belongs in this commit
+git add file2.py
+git commit --amend --no-edit  # Add to last commit
+
+# ---
+
+# MISTAKE 4: Made changes but need to switch branches urgently
+
+git checkout nc7
+# Edit files...
+# Urgent: need to switch to main for bug fix, but changes aren't ready to commit
+
+# Fix: Stash the changes
+git stash save "nc7 work in progress"
+git checkout main
+# Fix urgent bug...
+git checkout nc7
+git stash pop  # Restore work
+
+# ---
+
+# MISTAKE 5: Want to undo last commit completely
+
+git commit -m "bad feature"
+# Actually, this whole commit was a bad idea
+
+# Fix: Reset (if not pushed yet)
+git reset --hard HEAD~1  # Deletes commit and changes
+
+# ---
+
+# MISTAKE 6: Already pushed bad commit
+
+git push origin main
+# Oops, that commit broke production!
+
+# Fix: Revert (creates new commit that undoes it)
+git revert HEAD
+git push origin main
+
+# History now shows:
+# abc123 revert "bad commit"
+# def456 bad commit  (safely undone)
+
+# ---
+
+# MISTAKE 7: Lost commits after reset
+
+git reset --hard HEAD~3  # Oh no, lost 3 commits!
+
+# Fix: Use reflog to recover
+git reflog
+
+# Output:
+# abc123 HEAD@{0}: reset: moving to HEAD~3
+# def456 HEAD@{1}: commit: important feature
+# ghi789 HEAD@{2}: commit: another feature
+
+# Recover the commits
+git checkout def456
+git checkout -b recovery-branch
+# Your commits are back!
+```
+
+**What you learned:**
+- `git commit --amend` fixes last commit
+- `git stash` temporarily saves changes
+- `git reset` undoes commits (use with caution)
+- `git revert` safely undoes pushed commits
+- `git reflog` can recover "lost" commits
+- Most mistakes are recoverable!
+
+---
+
+### Tutorial 8: Practice Challenge
+
+**Put it all together**: Complete this realistic workflow without looking at hints.
+
+```bash
+# CHALLENGE: Implement a new feature end-to-end
+
+# Requirements:
+# 1. Create feature branch nc8
+# 2. Add a new file: statistics.py with mean() function
+# 3. Add tests in test_statistics.py
+# 4. Commit with good message
+# 5. Make second commit adding median() function
+# 6. Push branch to GitHub
+# 7. Merge to main (after imaginary review)
+# 8. Clean up branch locally and remotely
+# 9. Verify main is clean
+
+# Try to complete this without looking at previous examples!
+# Solutions below...
+```
+
+<details>
+<summary><strong>Solution (click to expand)</strong></summary>
+
+```bash
+# 1. Create and switch to nc8
+git checkout main
+git pull origin main
+git checkout -b nc8
+
+# 2. Create statistics.py
+cat > statistics.py << 'EOF'
+def mean(numbers):
+    """Calculate arithmetic mean of a list of numbers."""
+    if not numbers:
+        raise ValueError("Cannot calculate mean of empty list")
+    return sum(numbers) / len(numbers)
+EOF
+
+# 3. Create tests
+cat > test_statistics.py << 'EOF'
+from statistics import mean
+import pytest
+
+def test_mean_basic():
+    assert mean([1, 2, 3, 4, 5]) == 3.0
+
+def test_mean_empty():
+    with pytest.raises(ValueError):
+        mean([])
+EOF
+
+# 4. Commit
+git add statistics.py test_statistics.py
+git commit -m "add statistics module with mean function and tests"
+
+# 5. Add median function
+cat >> statistics.py << 'EOF'
+
+def median(numbers):
+    """Calculate median of a list of numbers."""
+    if not numbers:
+        raise ValueError("Cannot calculate median of empty list")
+    sorted_nums = sorted(numbers)
+    n = len(sorted_nums)
+    mid = n // 2
+    if n % 2 == 0:
+        return (sorted_nums[mid-1] + sorted_nums[mid]) / 2
+    return sorted_nums[mid]
+EOF
+
+cat >> test_statistics.py << 'EOF'
+
+def test_median_odd():
+    assert median([1, 3, 5]) == 3
+
+def test_median_even():
+    assert median([1, 2, 3, 4]) == 2.5
+EOF
+
+git add statistics.py test_statistics.py
+git commit -m "add median function with tests"
+
+# 6. Push to GitHub
+git push -u origin nc8
+
+# 7. Merge to main
+git checkout main
+git pull origin main
+git merge nc8
+git push origin main
+
+# 8. Delete branches
+git branch -d nc8
+git push origin --delete nc8
+
+# 9. Verify
+git status
+git branch
+
+# Perfect! You've completed the workflow!
+```
+</details>
 
 ---
 
@@ -914,8 +1792,9 @@ git reset --hard HEAD~1         # Remove commit from wrong branch
 - **Interactive Git Tutorial**: https://learngitbranching.js.org/
 - **GitHub Git Cheat Sheet**: https://education.github.com/git-cheat-sheet-education.pdf
 - **Atlassian Git Tutorials**: https://www.atlassian.com/git/tutorials
+- **Pro Git Book (Free)**: https://git-scm.com/book/en/v2
 
 ---
 
-**Last Updated**: 2025-09-29
-**Version**: 1.0
+**Last Updated**: 2025-09-30
+**Version**: 2.0
