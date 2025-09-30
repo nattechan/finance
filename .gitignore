@@ -241,3 +241,12 @@ node_modules/
 # Task files
 # tasks.json
 # tasks/ 
+
+# Reference books (Git submodules for learning)
+reference/QuantFinanceBook/MatlabCodes/
+reference/QuantFinanceBook/Book - flyer.pdf
+reference/book_irds3/previous_edition_material/
+reference/book_irds3/tests/
+
+# Notes are tracked (your own code/notes for learning)
+# notes/ folder is committed to track your learning progress

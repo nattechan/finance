@@ -1,0 +1,6 @@
+[submodule "reference/QuantFinanceBook"]
+	path = reference/QuantFinanceBook
+	url = https://github.com/LechGrzelak/QuantFinanceBook.git
+[submodule "reference/book_irds3"]
+	path = reference/book_irds3
+	url = https://github.com/attack68/book_irds3.git
