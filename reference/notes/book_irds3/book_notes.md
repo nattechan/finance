@@ -23,7 +23,7 @@ See `python_notes` for my learning implementation.
 
 The book relies on  mathematical topics from calculus, linear algebra and matrices, random variables and statistical distributions (normal, log-normal), confidence intervals, correlation and covariance, and optimization. Below are some examples of python libraries used.
 
-```bash
+```python
 import numpy as np
 from scipy.stats import norm
 ```
