@@ -1,6 +1,6 @@
 # Learning Notes
 
-This directory contains my personal notes, code experiments, and exercises while learning from the reference materials.
+This directory contains my personal notes and learning materials.
 
 ## Reference Materials
 
@@ -8,12 +8,13 @@ The reference books are Git submodules located in `/reference/`:
 - `QuantFinanceBook` - BSD 3-Clause License
 - `book_irds3` - GPL v3 License
 
-## Structure
+Book-specific notes are in `/reference/notes/`.
 
-- `*.md` - Markdown notes on concepts
-- `*.py` - Python code examples and experiments
-- `experiments/` - Modified/extended versions for learning
+## Contents
+
+- `optimization.md` - Comprehensive guide to optimization theory and methods
+- `git_guide.md` - Git workflow and best practices for the project
 
 ## Notes
 
-All code in this `notes/` directory is my own work for learning purposes. The reference materials remain unmodified in their respective submodules.
+This `notes/` directory contains general learning materials. Book-specific notes are organized in `/reference/notes/` alongside their respective submodules.

@@ -13,4 +13,4 @@
 ```
 
 ### My modifications
-See `experiments/my_chapter1.py` for my version adapted to Canadian markets.
+Python implementations adapted to Canadian markets are in the main project source code.
