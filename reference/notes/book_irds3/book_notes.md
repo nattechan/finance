@@ -21,13 +21,12 @@ See `python_notes` for my learning implementation.
 
 ### Chapter 1 - Mathematical Review
 
-#### 1.1 Calculus
+The book relies on  mathematical topics from calculus, linear algebra and matrices, random variables and statistical distributions (normal, log-normal), confidence intervals, correlation and covariance, and optimization. Below are some examples of python libraries used.
 
-#### 1.2 Linear algebra and matrices
-
-#### 1.3 Random variables and statistical distributions
-
-#### 1.4 Optimization
+```bash
+import numpy as np
+from scipy.stats import norm
+```
 
 ### Chapter 2 - Interest Rates
 
