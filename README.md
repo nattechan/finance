@@ -10,8 +10,8 @@ Python code for finance applications. Mainly focusing on interest rate derivativ
 6. Canadian fixed income and credit analytics (Cash, MBS, IRS) 🟢
 
 #### Investment Ideas
-1. Long JBG bills in USD, short UST bills
-2. Credit dispersion/tranche/steepener
+1. Long JBG bills in USD, short UST bills 🟢
+2. Credit dispersion/tranche/steepener 🟢
 
 #### Key
 ✅ = Completed
