@@ -2,12 +2,12 @@
 
 ## Reading from: `Pricing and Trading Interest Rate Derivatives - A Practical Guide to Swaps 3E by J H M Darbyshire`
 
-### Original Code Location
+### Original Code Repository Location
 - Notebook: `../book_irds3/notebooks/`
 - Library: `../book_irds3/bookirds/`
 
-### My Experiments
-See `python_notes` for my learning implementation.
+### My Code
+See `reference/notes/book_irds3/python_notes.ipynb` for my learning implementation.
 
 ### Preface
 #### Guiding questions
@@ -20,15 +20,23 @@ See `python_notes` for my learning implementation.
 7. What does the future hold for IRD risk management and trading?
 
 ### Chapter 1 - Mathematical Review
-
 The book relies on  mathematical topics from calculus, linear algebra and matrices, random variables and statistical distributions (normal, log-normal), confidence intervals, correlation and covariance, and optimization. Below are some examples of python libraries used.
 
 ```python
 import numpy as np
+import pandas as pd
 from scipy.stats import norm
 ```
 
 ### Chapter 2 - Interest Rates
+
+#### Day count conventions
+See `reference/Interest-Rate-Instruments-and-Market-Conventions.pdf` for notes.
+
+#### Business day calendars and modified following
+- Business day calendars (and to an extent holiday calendars) determine which dates are able to be used for payments, accruals, resets, etc.
+- Following (F) and previous (P) determine what to do if an action date lands on a holiday.
+- Modified ('M' preceeding the date rules) denotes what to do if an adjustment goes on to the next month.
 
 ### Chapter 3 - Basics of IRDs
 
