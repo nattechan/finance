@@ -33,8 +33,7 @@ from scipy.stats import norm
 ### Chapter 2 - Interest Rates
 
 #### Day count conventions
-
-See `reference/Interest-Rate-Instruments-and-Market-Conventions.pdf` for notes.
+- For example, ACT/ACT, ACT/365, 30/360 etc.
 
 #### Business day calendars and modified following
 - Business day calendars (and to an extent holiday calendars) determine which dates are able to be used for payments, accruals, resets, etc.
