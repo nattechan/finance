@@ -4,6 +4,7 @@ A practical, no-nonsense guide to using Git for everyday development work.
 
 ## Table of Contents
 1. [Initial Setup](#initial-setup)
+   - [Git Aliases (Shortcuts)](#git-aliases-shortcuts)
 2. [Starting a Project](#starting-a-project)
 3. [Daily Workflow](#daily-workflow)
 4. [Branching Strategy](#branching-strategy)
@@ -49,6 +50,124 @@ ssh-add ~/.ssh/id_ed25519
 pbcopy < ~/.ssh/id_ed25519.pub
 
 # Then paste this key into GitHub Settings > SSH Keys
+```
+
+### Git Aliases (Shortcuts)
+
+Aliases let you create shortcuts for frequently used Git commands. These save typing and make your workflow faster.
+
+#### Setting Up Aliases
+
+```bash
+# Basic shortcuts
+git config --global alias.st status
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+
+# Unstage files
+git config --global alias.unstage 'reset HEAD --'
+
+# View last commit
+git config --global alias.last 'log -1 HEAD'
+
+# Visual log graph
+git config --global alias.visual 'log --graph --oneline --all'
+```
+
+#### Recommended Additional Aliases
+
+```bash
+# Short status with branch info
+git config --global alias.s 'status -sb'
+
+# Compact log (last 20 commits)
+git config --global alias.l 'log --oneline -20'
+
+# Amend last commit without editing message
+git config --global alias.amend 'commit --amend --no-edit'
+
+# Undo last commit (keep changes)
+git config --global alias.undo 'reset HEAD~1'
+
+# View all branches (local and remote)
+git config --global alias.branches 'branch -a'
+
+# View all remotes
+git config --global alias.remotes 'remote -v'
+
+# List all your aliases
+git config --global alias.aliases 'config --get-regexp alias'
+
+# Show changes in last commit
+git config --global alias.show-last 'show --stat'
+
+# Pretty log with dates and authors
+git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+# Find branches containing commit
+git config --global alias.find-branch 'branch -a --contains'
+
+# Delete merged branches
+git config --global alias.cleanup "!git branch --merged | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -d"
+```
+
+#### Using Aliases
+
+```bash
+# Instead of: git status
+git st
+
+# Instead of: git checkout main
+git co main
+
+# Instead of: git log --graph --oneline --all
+git visual
+
+# Instead of: git reset HEAD -- file.py
+git unstage file.py
+
+# View all your configured aliases
+git aliases
+```
+
+#### Avoid Anti-Pattern Aliases
+
+**Don't create aliases that skip review steps:**
+
+```bash
+# ❌ BAD - Auto-commits without review
+git config --global alias.fpush '!git pull && git add . && git commit -m && git push'
+# Problems:
+# - git commit -m requires a message (this will fail)
+# - Stages ALL files without review
+# - No chance to check git diff before committing
+# - Violates "review before committing" best practice
+```
+
+**If you need quick commits, use this safer version:**
+
+```bash
+# ✓ BETTER - But still use sparingly!
+git config --global alias.quicksave '!f() { git add . && git commit -m "${1:-WIP: quick save}" && git push; }; f'
+
+# Usage:
+git quicksave "my commit message"
+# Or just: git quicksave  (uses "WIP: quick save")
+```
+
+**However, even this is discouraged because:**
+- Skips `git diff` review
+- Encourages lazy commit messages
+- Can accidentally commit unwanted files
+
+**Best practice**: Always review changes before committing:
+```bash
+git status           # See what changed
+git diff            # Review changes
+git add file.py     # Stage specific files
+git commit -m "..."  # Thoughtful message
+git push
 ```
 
 ---
