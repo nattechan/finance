@@ -271,11 +271,31 @@ GITHUB_API_KEY=<set>
 
 ## Reference Links
 
+### Online Resources
 - **QuantLib Python**: https://quantlib-python-docs.readthedocs.io/
+- **QuantLib Guide**: https://www.quantlibguide.com/
+- **rateslib Documentation**: https://rateslib.com/py/en/latest/index.html
 - **xbbg Documentation**: https://github.com/alpha-xone/xbbg
 - **CORRA Information**: https://www.bankofcanada.ca/rates/interest-rates/corra/
 - **IIROC Bond Rules**: https://www.iiroc.ca/
 - **OSFI Guidelines**: https://www.osfi-bsif.gc.ca/
+
+### Local Reference Documents
+- **Interest Rate Instruments & Market Conventions**: `reference/Interest-Rate-Instruments-and-Market-Conventions.pdf`
+  - Day count conventions (ACT/ACT, ACT/360, 30/360, ACT/365)
+  - Settlement conventions by market and instrument type
+  - Business day adjustment rules and calendar handling
+  - Coupon frequency and payment date conventions
+  - Benchmark instrument specifications
+  - Use this reference when implementing or validating market conventions
+
+- **QuantLib Python Cookbook**: `reference/quantlibpythoncookbook.pdf`
+  - Comprehensive examples for yield curve construction
+  - Bond pricing, swap pricing, and derivative valuation
+  - Date handling, calendars, and day count conventions
+  - Greeks calculation and risk analytics
+  - Numerical methods and optimization techniques
+  - Use this reference when implementing QuantLib-based pricing engines
 
 ## Questions or Issues?
 
