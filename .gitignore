@@ -214,8 +214,6 @@ input/*
 !input/.gitkeep
 output/*
 !output/.gitkeep
-results/*
-!results/.gitkeep
 
 # Project files
 utf8_emojis
@@ -256,3 +254,6 @@ reference/book_irds3/tests/
 
 # CMHC
 cmhc/
+
+# PDF files
+*.pdf

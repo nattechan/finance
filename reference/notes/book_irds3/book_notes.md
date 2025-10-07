@@ -7,6 +7,7 @@
 - Library: `../book_irds3/bookirds/`
 
 ### My Code
+
 See `reference/notes/book_irds3/python_notes.ipynb` for my learning implementation.
 
 ### Preface
@@ -20,6 +21,7 @@ See `reference/notes/book_irds3/python_notes.ipynb` for my learning implementati
 7. What does the future hold for IRD risk management and trading?
 
 ### Chapter 1 - Mathematical Review
+
 The book relies on  mathematical topics from calculus, linear algebra and matrices, random variables and statistical distributions (normal, log-normal), confidence intervals, correlation and covariance, and optimization. Below are some examples of python libraries used.
 
 ```python
@@ -31,6 +33,7 @@ from scipy.stats import norm
 ### Chapter 2 - Interest Rates
 
 #### Day count conventions
+
 See `reference/Interest-Rate-Instruments-and-Market-Conventions.pdf` for notes.
 
 #### Business day calendars and modified following
