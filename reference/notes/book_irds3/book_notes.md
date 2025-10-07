@@ -40,6 +40,29 @@ from scipy.stats import norm
 - Following (F) and previous (P) determine what to do if an action date lands on a holiday.
 - Modified ('M' preceeding the date rules) denotes what to do if an adjustment goes on to the next month.
 
+#### Per annum interest rates and annualized interest rates
+
+Annualized rate = (1 + PAr / f)^f - 1
+
+PAr = Per Annum rate
+f = frequency
+
+#### Continuous compounding
+
+e^(DCF * CCr) = 1 + DCF * PAR
+
+DCF = Discount Factor
+CCr = Continuously Compounded rate
+
+CCr are useful in derivations for financial mathematics but have limited practical use
+
+#### Time value of money and discount factors (DFs)
+
+No arbitrage pricing (equivalent financial scenarios should have identical values and prices)
+
+#### Interest rate indexes
+
+
 ### Chapter 3 - Basics of IRDs
 
 ### Chapter 4 - Users of IRDs
