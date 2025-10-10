@@ -4,3 +4,6 @@
 [submodule "reference/book_irds3"]
 	path = reference/book_irds3
 	url = https://github.com/attack68/book_irds3.git
+[submodule "reference/Deep-Learning-in-Quantitative-Trading"]
+	path = reference/Deep-Learning-in-Quantitative-Trading
+	url = https://github.com/zcakhaa/Deep-Learning-in-Quantitative-Trading.git
