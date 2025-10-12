@@ -3,6 +3,7 @@
 A practical, no-nonsense guide to using Git for everyday development work.
 
 ## Table of Contents
+
 1. [Initial Setup](#initial-setup)
    - [Git Aliases (Shortcuts)](#git-aliases-shortcuts)
 2. [Starting a Project](#starting-a-project)
@@ -157,11 +158,13 @@ git quicksave "my commit message"
 ```
 
 **However, even this is discouraged because:**
+
 - Skips `git diff` review
 - Encourages lazy commit messages
 - Can accidentally commit unwanted files
 
 **Best practice**: Always review changes before committing:
+
 ```bash
 git status           # See what changed
 git diff            # Review changes
@@ -454,6 +457,7 @@ git push
 ### Example: Resolving a Conflict
 
 **Before (calculator.py with conflict):**
+
 ```python
 def add(a, b):
 <<<<<<< HEAD
@@ -464,12 +468,14 @@ def add(a, b):
 ```
 
 **After (resolved):**
+
 ```python
 def add(a, b):
     return float(a) + float(b)  # Chose their version with type casting
 ```
 
 **Then:**
+
 ```bash
 git add calculator.py
 git commit -m "Resolve conflict in add function, use type casting"
@@ -837,7 +843,7 @@ git branch -d feature               # Delete local branch
 git push origin --delete feature    # Delete remote branch
 ```
 
-### Fixing Mistakes
+### Fixing Mistakes Reference
 
 ```bash
 git restore file.py                # Discard file changes
@@ -859,7 +865,7 @@ git blame file.py                  # Who changed what
 git show abc123                    # Show specific commit
 ```
 
-### Collaboration
+### Collaboration Reference
 
 ```bash
 git clone url                      # Clone repository
@@ -949,6 +955,7 @@ git log --oneline
 ```
 
 **What you learned:**
+
 - `git init` creates a new repository
 - Files start as "untracked"
 - `git add` stages files for commit
@@ -1052,6 +1059,7 @@ git log -p -2
 ```
 
 **What you learned:**
+
 - Stage and commit files separately for logical commits
 - `git diff` shows unstaged changes
 - Modified files must be staged again
@@ -1196,6 +1204,7 @@ git branch
 ```
 
 **What you learned:**
+
 - `git checkout -b` creates and switches to new branch
 - Changes on feature branch don't affect main
 - `git merge` brings changes from one branch to another
@@ -1356,6 +1365,7 @@ git branch -d branch-b
 ```
 
 **What you learned:**
+
 - Conflicts occur when same lines are changed in different branches
 - Git marks conflicts with `<<<<<<<`, `=======`, `>>>>>>>`
 - You must manually choose which version to keep (or combine them)
@@ -1451,6 +1461,7 @@ git push origin --delete feature-power
 ```
 
 **What you learned:**
+
 - `git remote add origin` connects local repo to GitHub
 - `git push -u origin main` pushes and sets up tracking
 - After `-u` once, can just use `git push`
@@ -1560,6 +1571,7 @@ git status
 ```
 
 **What you learned:**
+
 - Numbered branch convention (nc1, nc2, nc3...)
 - Always pull main before creating branch
 - Commit message includes attribution footer
@@ -1672,6 +1684,7 @@ git checkout -b recovery-branch
 ```
 
 **What you learned:**
+
 - `git commit --amend` fixes last commit
 - `git stash` temporarily saves changes
 - `git reset` undoes commits (use with caution)
@@ -1703,8 +1716,8 @@ git checkout -b recovery-branch
 # Solutions below...
 ```
 
-<details>
-<summary><strong>Solution (click to expand)</strong></summary>
+</details>
+</summary></strong>Solution (click to expand)</strong></summary>
 
 ```bash
 # 1. Create and switch to nc8
@@ -1784,6 +1797,7 @@ git branch
 
 # Perfect! You've completed the workflow!
 ```
+
 </details>
 
 ---
@@ -1907,11 +1921,11 @@ git reset --hard HEAD~1         # Remove commit from wrong branch
 
 ## Additional Resources
 
-- **Official Git Documentation**: https://git-scm.com/doc
-- **Interactive Git Tutorial**: https://learngitbranching.js.org/
-- **GitHub Git Cheat Sheet**: https://education.github.com/git-cheat-sheet-education.pdf
-- **Atlassian Git Tutorials**: https://www.atlassian.com/git/tutorials
-- **Pro Git Book (Free)**: https://git-scm.com/book/en/v2
+- **Official Git Documentation**: <https://git-scm.com/doc>
+- **Interactive Git Tutorial**: <https://learngitbranching.js.org/>
+- **GitHub Git Cheat Sheet**: <https://education.github.com/git-cheat-sheet-education.pdf>
+- **Atlassian Git Tutorials**: <https://www.atlassian.com/git/tutorials>
+- **Pro Git Book (Free)**: <https://git-scm.com/book/en/v2>
 
 ---
 

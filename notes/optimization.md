@@ -3,6 +3,7 @@
 A comprehensive guide to optimization theory and practice for quantitative finance applications.
 
 ## Table of Contents
+
 1. [Fundamental Concepts](#fundamental-concepts)
 2. [Constrained vs Unconstrained Optimization](#constrained-vs-unconstrained-optimization)
 3. [Linear vs Nonlinear Programming](#linear-vs-nonlinear-programming)
@@ -20,10 +21,12 @@ A comprehensive guide to optimization theory and practice for quantitative finan
 Optimization is the process of finding the "best" solution from a set of feasible alternatives. Mathematically, we seek to:
 
 **Minimize (or Maximize):** An objective function f(x)
+
 **Subject to:** Constraints on x
 
 General form:
-```
+
+```text
 minimize    f(x)
 subject to  g_i(x) ≤ 0,  i = 1,...,m    (inequality constraints)
             h_j(x) = 0,  j = 1,...,p    (equality constraints)
@@ -31,6 +34,7 @@ subject to  g_i(x) ≤ 0,  i = 1,...,m    (inequality constraints)
 ```
 
 Where:
+
 - **x** is the decision variable (can be scalar or vector)
 - **f(x)** is the objective function
 - **g_i(x)** are inequality constraint functions
@@ -45,18 +49,21 @@ Where:
 **Definition:** Optimization problems with no restrictions on the decision variables (except possibly domain X = ℝⁿ).
 
 **Form:**
-```
+
+```text
 minimize f(x)
 where x ∈ ℝⁿ
 ```
 
 **Characteristics:**
+
 - Simplest form of optimization
 - Solution found where gradient vanishes: ∇f(x*) = 0
 - Only consider interior points (no boundary effects)
 - Easier to solve numerically
 
 **Solution Methods:**
+
 - **Gradient Descent:** Iteratively move in direction of steepest descent
 - **Newton's Method:** Use second-order information (Hessian)
 - **Quasi-Newton Methods:** Approximate Hessian (BFGS, L-BFGS)
@@ -83,19 +90,22 @@ print(f"Optimal value: {result.fun}")  # -5
 **Definition:** Optimization with restrictions on feasible values of decision variables.
 
 **Form:**
-```
+
+```text
 minimize    f(x)
 subject to  g_i(x) ≤ 0,  i = 1,...,m
             h_j(x) = 0,  j = 1,...,p
 ```
 
 **Characteristics:**
+
 - More complex than unconstrained problems
 - Optimal solution may lie on constraint boundaries
 - Requires constraint handling in solution methods
 - Introduces Lagrange multipliers (dual variables)
 
 **Solution Methods:**
+
 - **Lagrange Multipliers:** For equality constraints
 - **KKT Conditions:** Generalization for inequality constraints
 - **Penalty Methods:** Convert to unconstrained problem
@@ -139,18 +149,21 @@ print(f"Optimal x: {result.x}")  # On boundary: x₁ + x₂ = 2
 **Definition:** Optimization where both objective and constraints are linear functions.
 
 **Standard Form:**
-```
+
+```text
 minimize    c'x
 subject to  Ax ≤ b
             x ≥ 0
 ```
 
 Where:
+
 - **c** ∈ ℝⁿ is the cost vector
 - **A** ∈ ℝᵐˣⁿ is the constraint matrix
 - **b** ∈ ℝᵐ is the right-hand side vector
 
 **Characteristics:**
+
 - **Convex:** Any local minimum is global minimum
 - **Polyhedral feasible region:** Defined by linear inequalities
 - **Vertex solution:** Optimal solution at vertex of feasible region
@@ -158,6 +171,7 @@ Where:
 - **No gradient needed:** Simplex method uses vertices
 
 **Solution Methods:**
+
 - **Simplex Method:** Walk along edges of polytope
 - **Interior Point Methods:** Move through interior
 - **Dual Simplex:** Solve dual problem
@@ -197,7 +211,8 @@ print(f"Expected return: {problem.value:.2%}")
 **Definition:** Optimization where objective or constraints are nonlinear functions.
 
 **General Form:**
-```
+
+```text
 minimize    f(x)
 subject to  g_i(x) ≤ 0,  i = 1,...,m
             h_j(x) = 0,  j = 1,...,p
@@ -206,6 +221,7 @@ subject to  g_i(x) ≤ 0,  i = 1,...,m
 Where f, g_i, or h_j are nonlinear functions.
 
 **Characteristics:**
+
 - **More expressive:** Can model complex relationships
 - **Non-convex:** May have multiple local minima
 - **Harder to solve:** May require good initial guess
@@ -213,11 +229,13 @@ Where f, g_i, or h_j are nonlinear functions.
 - **No global optimality guarantee:** Unless special structure (convex)
 
 **Types:**
+
 - **Quadratic Programming (QP):** Quadratic objective, linear constraints
 - **Quadratically Constrained (QCQP):** Quadratic objective and constraints
 - **General NLP:** Arbitrary smooth nonlinear functions
 
 **Solution Methods:**
+
 - **Sequential Quadratic Programming (SQP)**
 - **Interior Point Methods**
 - **Augmented Lagrangian Methods**
@@ -278,13 +296,15 @@ print(f"Expected return: {(mu @ w.value):.2%}")
 **Convex optimization** is optimization of a convex objective over a convex feasible set.
 
 **Form:**
-```
+
+```text
 minimize    f(x)
 subject to  g_i(x) ≤ 0,  i = 1,...,m
             Ax = b
 ```
 
 Where:
+
 - **f(x)** is a convex function
 - **g_i(x)** are convex functions
 - Equality constraints **Ax = b** are affine (linear)
@@ -292,11 +312,13 @@ Where:
 ### Convex Sets
 
 A set C is **convex** if for any x, y ∈ C and 0 ≤ θ ≤ 1:
-```
+
+```text
 θx + (1-θ)y ∈ C
 ```
 
 **Examples:**
+
 - **Halfspaces:** {x | a'x ≤ b}
 - **Polyhedra:** Intersection of halfspaces
 - **Norm balls:** {x | ||x|| ≤ r}
@@ -305,7 +327,8 @@ A set C is **convex** if for any x, y ∈ C and 0 ≤ θ ≤ 1:
 ### Convex Functions
 
 A function f is **convex** if its domain is convex and for all x, y and 0 ≤ θ ≤ 1:
-```
+
+```text
 f(θx + (1-θ)y) ≤ θf(x) + (1-θ)f(y)
 ```
 
@@ -314,6 +337,7 @@ f(θx + (1-θ)y) ≤ θf(x) + (1-θ)f(y)
 **Second-order condition:** For twice differentiable f, convex ⟺ Hessian ∇²f(x) ⪰ 0 (positive semidefinite)
 
 **Examples:**
+
 - **Affine:** a'x + b
 - **Quadratic (convex):** x'Px + q'x + r, where P ⪰ 0
 - **Norms:** ||x||, ||x||₁, ||x||₂, ||x||∞
@@ -324,9 +348,10 @@ f(θx + (1-θ)y) ≤ θf(x) + (1-θ)f(y)
 
 **Fundamental Property:** Any local minimum is a global minimum.
 
-**Proof sketch:** Suppose x* is local minimum but not global. Then ∃ y with f(y) < f(x*). By convexity, f is decreasing along line from x* to y, contradicting x* being local minimum.
+**Proof sketch:** Suppose x is local minimum but not global. Then ∃ y with f(y) < f(x*). By convexity, f is decreasing along line from x to y, contradicting x* being local minimum.
 
 **Implications:**
+
 1. **No local minima trap:** Don't get stuck in suboptimal solutions
 2. **Efficiently solvable:** Polynomial time algorithms
 3. **Duality theory:** Strong duality (zero duality gap)
@@ -336,6 +361,7 @@ f(θx + (1-θ)y) ≤ θf(x) + (1-θ)f(y)
 ### Solution Methods
 
 **General Approaches:**
+
 - **Interior Point Methods:** Barrier methods, primal-dual methods
 - **First-Order Methods:** Gradient descent, accelerated gradient
 - **Proximal Methods:** For non-smooth objectives
@@ -384,7 +410,7 @@ print(f"Number of positions: {np.sum(w.value > 1e-6)}")
 
 ### The Optimization Taxonomy
 
-```
+```text
 ┌─────────────────────────────────────────────────┐
 │         ALL OPTIMIZATION PROBLEMS               │
 │                                                 │
@@ -426,7 +452,7 @@ print(f"Number of positions: {np.sum(w.value > 1e-6)}")
 
 ### Subset Relationships
 
-**LP ⊂ QP ⊂ SOCP ⊂ SDP ⊂ Convex ⊂ NLP**
+***LP ⊂ QP ⊂ SOCP ⊂ SDP ⊂ Convex ⊂ NLP***
 
 1. **Linear Programming ⊂ Quadratic Programming**
    - Any LP can be written as QP with zero quadratic term
@@ -446,7 +472,7 @@ print(f"Number of positions: {np.sum(w.value > 1e-6)}")
 
 ### Decision Tree: Which Problem Type?
 
-```
+```text
 Start
   │
   ├─ No constraints?
@@ -785,12 +811,14 @@ print(f"  Surplus in period {periods}: ${(asset_cashflows.value[-1] - liabilitie
 ## Further Reading
 
 ### Books
+
 - **Boyd & Vandenberghe** - *Convex Optimization* (free PDF available)
 - **Nocedal & Wright** - *Numerical Optimization*
 - **Bertsimas & Tsitsiklis** - *Introduction to Linear Optimization*
 - **Cornuejols & Tütüncü** - *Optimization Methods in Finance*
 
 ### Python Libraries
+
 - **CVXPY** - Convex optimization modeling
 - **SciPy.optimize** - General optimization
 - **Pyomo** - Algebraic modeling language
@@ -798,9 +826,10 @@ print(f"  Surplus in period {periods}: ${(asset_cashflows.value[-1] - liabilitie
 - **Google OR-Tools** - Combinatorial optimization
 
 ### Online Resources
-- CVXPY documentation: https://www.cvxpy.org/
-- Boyd's course: https://web.stanford.edu/~boyd/cvxbook/
-- NEOS Guide: https://neos-guide.org/content/optimization-tree
+
+- CVXPY documentation: <https://www.cvxpy.org/>
+- Boyd's course: <https://web.stanford.edu/~boyd/cvxbook/>
+- NEOS Guide: <https://neos-guide.org/content/optimization-tree>
 
 ---
 

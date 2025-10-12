@@ -5,6 +5,7 @@
 A triple-leveraged ETF structure for a client involves creating a **synthetic 3x exposure** to an underlying index through total return swaps (TRS) or funded equity swaps. As the dealer, you're providing 3x daily leverage on the reference index with daily rebalancing to maintain constant leverage.
 
 **Typical All-In Cost to Client:**
+
 - Funding spread: **OIS + 50-150 bps** on the borrowed portion (2x notional)
 - Management fee: **75-150 bps annually** on notional
 - Rebalancing costs: **10-30 bps annually** (volatility-dependent)
@@ -17,7 +18,8 @@ A triple-leveraged ETF structure for a client involves creating a **synthetic 3x
 ### Case Example 1: $10M Notional 3x S&P 500 Exposure
 
 **Initial Setup:**
-```
+
+```text
 Client Investment: $10,000,000 (100% cash collateral)
 Gross Exposure: $30,000,000 (3x leverage)
 Dealer Funding Required: $20,000,000
@@ -29,6 +31,7 @@ Client pays: Funding costs + management fees
 **Cash Flow Breakdown:**
 
 **Day 0 - Trade Inception:**
+
 - Client posts: $10M cash to you
 - You borrow: $20M in repo/funding markets at OIS + 30 bps
 - You purchase: $30M S&P 500 futures or delta-one basket
@@ -36,7 +39,7 @@ Client pays: Funding costs + management fees
 
 **Daily Economics (assuming OIS = 4.5%, Your Funding Spread = 100 bps):**
 
-```
+```text
 Daily Funding Charge to Client:
 - Borrowed amount: $20M
 - Rate: 4.5% + 1.0% = 5.5% annually
@@ -51,7 +54,7 @@ Total Daily Cost to Client: $3,333.34
 
 **Your Revenue & Margin:**
 
-```
+```text
 Revenue (What you charge client):
 - Funding: 5.5% on $20M = $1,100,000/year
 - Management fee: 1.0% on $10M = $100,000/year
@@ -74,9 +77,9 @@ ROE: ~22% on $10M capital (if fully collateralized)
 
 The leverage ratio drifts as markets move. You must rebalance daily to maintain exactly 3x exposure.
 
-**Example Day 1: S&P 500 +2%**
+#### Example Day 1: S&P 500 +2%
 
-```
+```text
 Before Market Close:
 - Client NAV: $10M → $10.6M (+6% from 3x exposure)
 - Exposure: $30M → $30.6M (now only 2.89x the new NAV)
@@ -93,9 +96,9 @@ After Rebalance:
 - Your funding: $21.2M
 ```
 
-**Example Day 2: S&P 500 -3%**
+#### Example Day 2: S&P 500 -3%
 
-```
+```text
 Before Market Close:
 - Client NAV: $10.6M → $9.646M (-9% from 3x exposure)
 - Exposure: $31.8M → $30.846M (now 3.20x the new NAV)
@@ -116,9 +119,9 @@ After Rebalance:
 
 **Critical Issue:** Due to daily rebalancing, the 3x product does NOT deliver 3x the cumulative return over multi-day periods.
 
-**Example: Volatile Markets**
+#### Example: Volatile Markets
 
-```
+```text
 Scenario 1: Low Volatility
 Day 1: Index +1%, 3x ETF +3%
 Day 2: Index +1%, 3x ETF +3%
@@ -141,15 +144,16 @@ This creates **convexity exposure** for you as the dealer - you're effectively s
 ### Initial Margin (IM) Requirements
 
 **For the Client:**
-- Typically **100% of notional** posted as cash collateral
+
+- Typically 100% of notional posted as cash collateral
 - Sometimes 105-110% to cover small adverse moves
 - In your example: $10M cash posted
 
 **For You (Dealer) - Regulatory Capital:**
 
-Under **SA-CCR (Standardized Approach for Counterparty Credit Risk):**
+Under SA-CCR (Standardized Approach for Counterparty Credit Risk):
 
-```
+```text
 Replacement Cost (RC): $0 (fully collateralized by client)
 
 Potential Future Exposure (PFE):
@@ -170,7 +174,7 @@ Capital charge as % of notional: 7.68%
 
 **You mark-to-market daily with the client:**
 
-```
+```text
 Day 1: S&P 500 +2%
 - Client profit: $10M × 3 × 2% = $600,000
 - You owe client: $600,000 in cash
@@ -185,7 +189,8 @@ Day 2: S&P 500 -3%
 ```
 
 **Margin Call Triggers:**
-- If client NAV falls below maintenance threshold (e.g., 20% of original)
+
+- If client NAV falls below maintenance threshold (for example, 20% of original)
 - Client must post additional cash or position is liquidated
 - For $10M notional with 3x leverage, ~33% index decline wipes out NAV
 
@@ -198,7 +203,8 @@ Day 2: S&P 500 -3%
 **Exposure:** You're borrowing $20M at OIS + 30 bps but charging client OIS + 100 bps. If your funding costs spike, your margin compresses.
 
 **Quantification:**
-```
+
+```text
 Funding Basis Risk:
 - Borrowed: $20M at floating OIS + 30 bps
 - Revenue: $20M at OIS + 100 bps
@@ -222,7 +228,8 @@ BUT if your credit spread widens 50 bps:
 **Exposure:** Daily rebalancing in volatile markets creates negative convexity. You're forced to "buy high, sell low."
 
 **Quantification:**
-```
+
+```text
 High Volatility Period:
 Day 1: Index +5%
 - Client up 15% → NAV = $11.5M
@@ -241,7 +248,8 @@ Annual cost in 30% vol environment: $30,000-$50,000
 This exceeds your budgeted rebalancing allowance!
 ```
 
-**Mitigation:** 
+**Mitigation:**
+
 - Charge higher fees for high-volatility underlyings
 - Use options overlays to hedge gamma exposure
 - Implement rebalancing bands (±5% tolerance) rather than daily
@@ -251,7 +259,8 @@ This exceeds your budgeted rebalancing allowance!
 **Exposure:** Client could default when deeply out-of-the-money to you.
 
 **Scenario:**
-```
+
+```text
 Market crashes 35% over 5 days:
 - Client NAV: $10M → effectively $0
 - Your position: Long $30M exposure → Down $10.5M
@@ -262,6 +271,7 @@ Gap Risk: Time between margin call and liquidation
 ```
 
 **Mitigation:**
+
 - Conservative margin thresholds (liquidate at 25-30% loss)
 - Daily or intra-day margin calls
 - Price credit risk into fees (higher spread for weaker credits)
@@ -271,7 +281,8 @@ Gap Risk: Time between margin call and liquidation
 **Exposure:** Errors in daily NAV calculation, rebalancing execution, or index tracking.
 
 **Example Operational Loss:**
-```
+
+```text
 Failure to rebalance on Day 1:
 - Should have bought $1.2M additional exposure
 - Delay by 1 day
@@ -283,12 +294,13 @@ Failure to rebalance on Day 1:
 
 ## Part 5: Hedging Strategies
 
-### Hedge 1: **Delta Hedging with Futures**
+### Hedge 1: Delta Hedging with Futures
 
-**Most Common Approach**
+***Most Common Approach***
 
-**Implementation:**
-```
+#### Implementation
+
+```text
 Daily Rebalancing via S&P 500 Futures:
 - Contract size: $50 × S&P 500 Index
 - Index at 4,000: Notional per contract = $200,000
@@ -304,17 +316,20 @@ Day 2 (-3%): Sell 4.5 contracts (round to 5)
 ```
 
 **Advantages:**
+
 - Highly liquid, tight spreads (0.5-1 bps)
 - Low margin requirements (~10%)
 - Easy to scale and rebalance
 
 **Disadvantages:**
+
 - Basis risk (futures vs. spot index)
 - Roll costs every quarter ($10,000-$30,000 annually)
 - No protection against volatility drag
 
 **Cash Flows:**
-```
+
+```text
 Initial:
 - Post $3M margin to exchange (from client collateral)
 - Earn OIS on remaining $7M cash: $7M × 4.5% = $315,000/year
@@ -326,12 +341,13 @@ Daily:
 
 ---
 
-### Hedge 2: **Delta-One Basket Replication**
+### Hedge 2: Delta-One Basket Replication
 
-**For Tighter Tracking**
+***For Tighter Tracking***
 
-**Implementation:**
-```
+#### Hedge 2 Implementation
+
+```text
 Buy physical basket of S&P 500 stocks:
 - Top 50 holdings: ~70% index weight
 - Track with 0.98+ correlation
@@ -344,18 +360,21 @@ Rebalancing:
 ```
 
 **Advantages:**
+
 - Capture dividend income (~1.5% yield on $30M = $450k/year)
 - No roll costs
 - Better tracking than futures (no basis risk)
 
 **Disadvantages:**
+
 - Higher transaction costs (5-10 bps per rebalance)
 - Requires stock loan/borrow for liquidity
 - More operational complexity
 - Tied up capital in physical holdings
 
 **Economics:**
-```
+
+```text
 Annual Dividend Income: $450,000
 Less: Rebalancing costs: -$60,000
 Less: Stock borrow fees: -$30,000
@@ -366,16 +385,17 @@ Improves margin by 360 bps on notional
 
 ---
 
-### Hedge 3: **Variance Swaps / Volatility Overlay**
+### Hedge 3: Variance Swaps / Volatility Overlay
 
-**To Hedge Path-Dependency Risk**
+***To Hedge Path-Dependency Risk***
 
 **Problem:** You're short gamma - daily rebalancing costs increase with volatility.
 
 **Solution:** Buy volatility protection via variance swaps or VIX call options.
 
-**Implementation:**
-```
+#### Hedge 3 Implementation
+
+```text
 1-Year Variance Swap:
 - Notional: $30M
 - Strike: 20% annualized volatility
@@ -392,8 +412,9 @@ If realized vol = 15%:
 - But rebalancing costs are minimal anyway
 ```
 
-**Alternative: VIX Call Spread**
-```
+#### Alternative: VIX Call Spread
+
+```text
 Buy VIX 25/35 call spread (6-month):
 - Protects if volatility spikes above 25
 - Cost: ~$50,000 per quarter
@@ -401,23 +422,26 @@ Buy VIX 25/35 call spread (6-month):
 ```
 
 **Advantages:**
+
 - Direct hedge of path-dependency risk
 - Protects in tail events (market crashes)
 - Relatively cheap insurance (~50-100 bps/year)
 
 **Disadvantages:**
+
 - Negative carry in low-vol environments
 - Basis risk (VIX vs. realized vol of your rebalancing)
 - Requires sophisticated vol trading desk
 
 ---
 
-### Hedge 4: **Dynamic Hedging with Options**
+### Hedge 4: Dynamic Hedging with Options
 
-**For Large Notional or Long-Dated Structures**
+***For Large Notional or Long-Dated Structures***
 
-**Implementation:**
-```
+#### Hedge 4 Implementation
+
+```text
 Sell OTM Put Options (30 delta, 1-month tenor):
 - Generates premium income
 - Offsets funding costs
@@ -434,11 +458,13 @@ Net Cost: -$200,000/year
 ```
 
 **Advantages:**
+
 - Convex payoff in tail scenarios
 - Reduces gap risk from client default
 - Can be structured to minimize capital charges
 
 **Disadvantages:**
+
 - Expensive (~200 bps drag on margin)
 - Requires monthly rolling and rebalancing
 - Introduces vega and theta exposures
@@ -450,20 +476,23 @@ Net Cost: -$200,000/year
 ### Balance Sheet Impact
 
 **Assets:**
-```
+
+```text
 $30M Equity Exposure (S&P 500 futures or physical)
 $10M Client Cash Collateral
 ```
 
 **Liabilities:**
-```
+
+```text
 $20M Repo Borrowing (funding)
 $10M Synthetic Short Position to Client (TRS liability)
 $9.6M RWA for regulatory capital
 ```
 
 **Leverage Ratio:**
-```
+
+```text
 Gross Notional: $30M
 Tier 1 Capital Required (3%): $900,000
 With $10M client cash: Leverage = 3:1
@@ -478,8 +507,9 @@ ROE: $220,000 margin / $1.7M capital = 12.9%
 
 ### Funding Sources & Costs
 
-**Option 1: Repo Market (Cheapest)**
-```
+#### Option 1: Repo Market (Cheapest)
+
+```text
 Overnight GC Repo:
 - Rate: SOFR + 10-30 bps
 - Term: Daily rollover
@@ -489,8 +519,9 @@ Overnight GC Repo:
 Risk: Rollover risk if repo market dislocates
 ```
 
-**Option 2: Prime Brokerage Credit Line**
-```
+#### Option 2: Prime Brokerage Credit Line
+
+```text
 Committed facility from bank:
 - Rate: SOFR + 100 bps
 - Term: 364-day committed
@@ -500,8 +531,9 @@ Committed facility from bank:
 Benefit: Guaranteed funding, no rollover risk
 ```
 
-**Option 3: Balance Sheet (Most Expensive)**
-```
+#### Option 3: Balance Sheet (Most Expensive)
+
+```text
 Use bank's own capital:
 - Cost of equity: 10-12%
 - Regulatory capital: $1.7M
@@ -517,13 +549,15 @@ Only viable for strategic clients or bundled with other business
 ### Case Study 1: Stable Market (Low Volatility, Trending Up)
 
 **Parameters:**
+
 - Notional: $10M
 - Period: 252 trading days (1 year)
 - Index: S&P 500 starts at 4,000
 - Scenario: +12% annual return, 15% realized vol
 
 **Performance:**
-```
+
+```text
 Index Return: +12% → 4,480
 Client 3x Return: ~+38% (with vol drag) → NAV $13.8M
 Your Hedging: S&P futures tracking index
@@ -551,13 +585,15 @@ ROE: 11.8% on $1.7M capital
 ### Case Study 2: High Volatility, Sideways Market (Worst Case)
 
 **Parameters:**
+
 - Notional: $10M
 - Period: 252 trading days
 - Index: Oscillates between 3,800-4,200 (ends flat at 4,000)
 - Realized vol: 35% (market whipsaw)
 
 **Performance:**
-```
+
+```text
 Index Return: 0%
 Client 3x Return: -15% (volatility drag!) → NAV $8.5M
 Your Hedging: Delta-hedged but losses from rebalancing
@@ -581,6 +617,7 @@ ROE: 1.4% on $1.7M capital
 **Outcome:** Marginal profit for you, but client suffers volatility decay. Risk of complaints/litigation.
 
 **Mitigation for Next Time:**
+
 - Increase rebalancing cost estimate to 50 bps
 - Add 50 bps volatility surcharge to management fee
 - Buy variance swap protection
@@ -590,12 +627,14 @@ ROE: 1.4% on $1.7M capital
 ### Case Study 3: Market Crash (-30% Index Drop in 10 Days)
 
 **Parameters:**
+
 - Notional: $10M
 - Scenario: Flash crash, index 4,000 → 2,800
 - Client NAV: $10M → $1M (90% loss)
 
 **Performance:**
-```
+
+```text
 Client Position:
 - Day 10 NAV: ~$1M (before approaching zero)
 - You liquidate at $2M NAV (30% maintenance margin)
@@ -621,11 +660,13 @@ Gap Risk:
 ```
 
 **Outcome:** Significant loss due to:
+
 1. Illiquidity in crash (can't rebalance fast enough)
 2. Client default with insufficient collateral
 3. Slippage on emergency hedge liquidation
 
 **Prevention:**
+
 - More conservative margin thresholds (liquidate at 40% loss)
 - Intraday monitoring and margin calls
 - Tail risk insurance via put options
@@ -638,6 +679,7 @@ Gap Risk:
 ### Suitability Requirements
 
 **KYC/AML:** Client must be:
+
 - Institutional or qualified investor
 - Demonstrated understanding of leverage and daily rebalancing
 - Signed risk disclosure (path dependency, margin calls, total loss possible)
@@ -645,6 +687,7 @@ Gap Risk:
 ### Trade Reporting
 
 **Dodd-Frank / EMIR Requirements:**
+
 - Report TRS to swap data repository
 - If notional >$50M: Post initial margin to third party
 - Daily valuation and reconciliation
@@ -652,13 +695,14 @@ Gap Risk:
 ### Capital Treatment
 
 **Basel III / Dodd-Frank:**
+
 - RWA: $9.6M (as calculated above)
 - Supplementary Leverage Ratio: 3% × $30M = $900k capital
 - Total: ~$1.7M capital required per $10M trade
 
 **Profitability Threshold:**
-Must generate >$170k profit for 10% ROE hurdle
-Your $220k margin exceeds this (12.9% ROE)
+
+Must generate greater than $170k profit for 10% ROE hurdle. Your $220k margin exceeds this (12.9% ROE)
 
 ---
 
@@ -690,7 +734,7 @@ Your $220k margin exceeds this (12.9% ROE)
 
 ### Deal Economics Summary
 
-```
+```text
 Per $10M Client Notional:
 
 Annual Revenue: $1,200,000 (1,200 bps)

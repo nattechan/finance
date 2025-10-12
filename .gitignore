@@ -257,3 +257,9 @@ cmhc/
 
 # PDF files
 *.pdf
+
+# Books folder
+reference/books
+
+# Calculus 3
+notes/calculus_3.md

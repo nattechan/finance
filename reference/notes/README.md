@@ -4,7 +4,7 @@ My personal notes organized by reference book.
 
 ## Structure
 
-```
+```text
 reference/
 ├── QuantFinanceBook/                           # Submodule (read-only)
 ├── Deep-Learning-in-Quantitative-Trading/      # Submodule (read-only)
