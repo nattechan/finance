@@ -12,6 +12,7 @@
 See `reference/notes/book_irds3/python_notes.ipynb` for my learning implementation.
 
 ### Preface
+
 #### Guiding questions
 
 1. What makes up the set of linear IRD products?
@@ -46,17 +47,21 @@ For example, ACT/ACT, ACT/365, 30/360 etc.
 
 #### Per annum interest rates and annualized interest rates
 
+```text
 Annualized rate = (1 + PAr / f)^f - 1
 
 PAr = Per Annum rate
 f = frequency
+```
 
 #### Continuous compounding
 
+```text
 e^(DCF * CCr) = 1 + DCF * PAR
 
 DCF = Discount Factor
 CCr = Continuously Compounded rate
+```
 
 CCr are useful in derivations for financial mathematics but have limited practical use
 
@@ -66,14 +71,12 @@ No arbitrage pricing (equivalent financial scenarios should have identical value
 
 #### Interest rate indexes
 
-- For various currencies, there are central bank rates and overnight indexes and risk free rates (i.e., in USD, the Federal Reserve dictates the discount rate and federal funds target rate, while the ). The former is central bank dependent and the latter is market dependent and transaction based. 
-- Overnight index swap (OIS) rates are calculated based off of data on executed unsecured lending tranasactions. The index is a notional weighed average, and published as a daily overnight level. 
+- For various currencies, there are central bank rates and overnight indexes and risk free rates (i.e., in USD, the Federal Reserve dictates the discount rate and federal funds target rate, while the ). The former is central bank dependent and the latter is market dependent and transaction based.
+- Overnight index swap (OIS) rates are calculated based off of data on executed unsecured lending tranasactions. The index is a notional weighed average, and published as a daily overnight level.
 - IBOR vs OIS Index differs where IBOR is an estimate of the future level while OIS is an observation of the past (both are unsecured). There is sometimes a lag between when a rate is fixed and the valuation period (i.e., 2 b.d. lag with EUR)
-- Fallback method was requred to continue to settle derivative contracts which settled against IBOR after the cessation, turning the rate from a look-forward rate (IBOR) into a look-back rate (RFR). 
+- Fallback method was requred to continue to settle derivative contracts which settled against IBOR after the cessation, turning the rate from a look-forward rate (IBOR) into a look-back rate (RFR).
 
 ### Chapter 3 - Basics of IRDs
-
-
 
 ### Chapter 4 - Users of IRDs
 

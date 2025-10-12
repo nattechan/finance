@@ -7,6 +7,7 @@ This project-specific CLAUDE.md file supplements the global configuration at `~/
 **Purpose**: Quantitative finance analytics and trading system for Canadian fixed income markets
 
 **Tech Stack**:
+
 - Python 3.11 (`/Users/nattechan/src/venv`)
 - DuckDB for data storage and querying
 - Polars for data transformations
@@ -16,6 +17,7 @@ This project-specific CLAUDE.md file supplements the global configuration at `~/
 ## Current Focus Areas
 
 ### Active Development
+
 1. **Yield Curve Modeling**
    - Nelson-Siegel-Svensson fitting for GoC curves
    - Cubic spline interpolation for corporate bonds
@@ -32,6 +34,7 @@ This project-specific CLAUDE.md file supplements the global configuration at `~/
    - Scenario analysis and stress testing
 
 ### Planned Features
+
 - [ ] Inflation swap pricing module
 - [ ] MBS prepayment modeling
 - [ ] Real-time risk dashboard with Streamlit
@@ -40,6 +43,7 @@ This project-specific CLAUDE.md file supplements the global configuration at `~/
 ## Data Sources & Locations
 
 ### Market Data
+
 - **Bloomberg**: Via xbbg package
   - Bond prices: `PX_LAST`, `YLD_YTM_MID`
   - Swap rates: `SWAP_RATE_MID`
@@ -51,13 +55,14 @@ This project-specific CLAUDE.md file supplements the global configuration at `~/
   - Risk reports: `/Users/nattechan/src/finance/data/risk.duckdb`
 
 ### Static Data
+
 - Bond master: `/Users/nattechan/src/finance/data/bond_master.csv`
 - Calendar definitions: `/Users/nattechan/src/finance/data/calendars/`
 - Curve configurations: `/Users/nattechan/src/finance/config/curves.yaml`
 
 ## Project Structure
 
-```
+```text
 /Users/nattechan/src/finance/
 ├── src/
 │   ├── curves/           # Yield curve construction
@@ -90,6 +95,7 @@ This project-specific CLAUDE.md file supplements the global configuration at `~/
 ### Canadian Fixed Income Markets
 
 **Government Bonds (GoC)**:
+
 - Day count: ACT/ACT
 - Settlement: T+1
 - Coupon: Semi-annual
@@ -97,12 +103,14 @@ This project-specific CLAUDE.md file supplements the global configuration at `~/
 - Benchmark tenors: 2Y, 5Y, 10Y, 30Y
 
 **Corporate Bonds**:
+
 - Day count: 30/360 (most common) or ACT/ACT
 - Settlement: T+2
 - Coupon: Semi-annual or annual
 - Quotes: Price or spread over GoC
 
 **Interest Rate Swaps**:
+
 - Day count: ACT/365 (fixed), ACT/365 (float)
 - Settlement: T+2
 - Frequency: Semi-annual (fixed), varies (float)
@@ -111,6 +119,7 @@ This project-specific CLAUDE.md file supplements the global configuration at `~/
 ### Code Conventions
 
 **Pricing Functions**:
+
 ```python
 def price_bond(
     coupon: Decimal,
@@ -137,6 +146,7 @@ def price_bond(
 ```
 
 **Risk Functions**:
+
 ```python
 def calculate_duration(
     bond: Bond,
@@ -153,6 +163,7 @@ def calculate_duration(
 ## Testing Standards
 
 ### Required Tests
+
 1. **Financial Calculations**
    - Compare against QuantLib benchmarks
    - Validate with known market prices
@@ -169,6 +180,7 @@ def calculate_duration(
    - Memory profiling for large portfolios
 
 ### Test Data Locations
+
 - Mock market data: `/tests/fixtures/market_data.json`
 - QuantLib benchmarks: `/tests/fixtures/quantlib_benchmarks.csv`
 - Test bonds: `/tests/fixtures/test_bonds.yaml`
@@ -176,17 +188,20 @@ def calculate_duration(
 ## Environment Setup
 
 ### Activate Environment
+
 ```bash
 source /Users/nattechan/src/venv/bin/activate
 ```
 
 ### Install Dependencies
+
 ```bash
 # Always use uv pip, never standard pip
 uv pip install -r requirements.txt
 ```
 
 ### Environment Variables
+
 ```bash
 # Set in ~/.claude/.env (already configured)
 ANTHROPIC_API_KEY=<set>
@@ -201,6 +216,7 @@ GITHUB_API_KEY=<set>
 ### Adding a New Financial Product
 
 1. **Research phase**:
+
    ```bash
    /agent-research "Research [product] pricing conventions for Canadian markets"
    ```
@@ -221,16 +237,19 @@ GITHUB_API_KEY=<set>
    - Document in product class docstring
 
 ### Running Backtests
+
 ```bash
 /backtest "Bond momentum strategy on Canadian corporates 2020-2024"
 ```
 
 ### Fitting Yield Curves
+
 ```bash
 /curve-fit "GoC curve as of 2024-09-29 using NSS"
 ```
 
 ### Pre-commit Validation
+
 ```bash
 /pre-commit-check "Validate src/curves/ before committing"
 ```
@@ -238,16 +257,19 @@ GITHUB_API_KEY=<set>
 ## Performance Optimization Notes
 
 ### DuckDB Usage
+
 - Use for all aggregations and joins
 - Query market data instead of loading into Pandas
 - Export to Polars for downstream calculations
 
 ### Vectorization
+
 - NumPy operations for price/yield calculations
 - Polars for data transformations
 - Avoid Python loops on bond portfolios
 
 ### Caching Strategy
+
 - Cache yield curves (15-minute TTL)
 - Cache Bloomberg data (until market close)
 - Invalidate on new data arrival
@@ -272,15 +294,17 @@ GITHUB_API_KEY=<set>
 ## Reference Links
 
 ### Online Resources
-- **QuantLib Python**: https://quantlib-python-docs.readthedocs.io/
-- **QuantLib Guide**: https://www.quantlibguide.com/
-- **rateslib Documentation**: https://rateslib.com/py/en/latest/index.html
-- **xbbg Documentation**: https://github.com/alpha-xone/xbbg
-- **CORRA Information**: https://www.bankofcanada.ca/rates/interest-rates/corra/
-- **IIROC Bond Rules**: https://www.iiroc.ca/
-- **OSFI Guidelines**: https://www.osfi-bsif.gc.ca/
+
+- **QuantLib Python**: <https://quantlib-python-docs.readthedocs.io/>
+- **QuantLib Guide**: <https://www.quantlibguide.com/>
+- **rateslib Documentation**: <https://rateslib.com/py/en/latest/index.html>
+- **xbbg Documentation**: <https://github.com/alpha-xone/xbbg>
+- **CORRA Information**: <https://www.bankofcanada.ca/rates/interest-rates/corra/>
+- **IIROC Bond Rules**: <https://www.iiroc.ca/>
+- **OSFI Guidelines**: <https://www.osfi-bsif.gc.ca/>
 
 ### Local Reference Documents
+
 - **Interest Rate Instruments & Market Conventions**: `reference/Interest-Rate-Instruments-and-Market-Conventions.pdf`
   - Day count conventions (ACT/ACT, ACT/360, 30/360, ACT/365)
   - Settlement conventions by market and instrument type
