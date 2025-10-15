@@ -14,6 +14,12 @@ This project-specific CLAUDE.md file supplements the global configuration at `~/
 - QuantLib for derivatives pricing
 - xbbg for Bloomberg integration
 
+**Frontend/Backend Options**:
+
+- **Backend**: Flask REST API (see `notes/flask.md`)
+- **Frontend**: React with TypeScript (see `notes/react.md`)
+- **Rapid Prototyping**: Streamlit (see `notes/streamlit.md`)
+
 ## Current Focus Areas
 
 ### Active Development
@@ -64,30 +70,70 @@ This project-specific CLAUDE.md file supplements the global configuration at `~/
 
 ```text
 /Users/nattechan/src/finance/
-├── src/
-│   ├── curves/           # Yield curve construction
-│   │   ├── nss.py        # Nelson-Siegel-Svensson
-│   │   ├── spline.py     # Cubic spline
-│   │   └── bootstrap.py  # QuantLib bootstrap
-│   ├── portfolio/        # Portfolio optimization
-│   │   ├── optimizer.py  # CVXPY optimization
+├── backend/            # Flask REST API (see notes/flask.md)
+│   ├── app.py          # Flask application factory
+│   ├── config.py       # Configuration settings
+│   ├── api/            # API endpoints
+│   │   ├── bonds.py    # Bond pricing endpoints
+│   │   ├── curves.py   # Yield curve endpoints
+│   │   ├── portfolio.py # Portfolio optimization
+│   │   └── risk.py     # Risk calculation endpoints
+│   ├── services/       # Business logic layer
+│   │   ├── pricing_service.py
+│   │   ├── curve_service.py
+│   │   └── risk_service.py
+│   └── tests/          # Backend API tests
+├── frontend/           # React UI (see notes/react.md)
+│   ├── src/
+│   │   ├── api/        # API client integration
+│   │   ├── components/ # React components
+│   │   │   ├── bonds/
+│   │   │   ├── curves/
+│   │   │   └── portfolio/
+│   │   ├── pages/      # Page components
+│   │   ├── hooks/      # Custom React hooks
+│   │   ├── store/      # State management (Zustand)
+│   │   └── types/      # TypeScript types
+│   ├── package.json
+│   └── vite.config.ts
+├── streamlit_app.py    # Streamlit dashboard (see notes/streamlit.md)
+├── src/                # Core pricing libraries
+│   ├── curves/         # Yield curve construction
+│   │   ├── nss.py      # Nelson-Siegel-Svensson
+│   │   ├── spline.py   # Cubic spline
+│   │   └── bootstrap.py # QuantLib bootstrap
+│   ├── portfolio/      # Portfolio optimization
+│   │   ├── optimizer.py # CVXPY optimization
 │   │   └── constraints.py
-│   ├── risk/            # Risk calculations
-│   │   ├── duration.py   # Duration analytics
+│   ├── risk/           # Risk calculations
+│   │   ├── duration.py # Duration analytics
 │   │   ├── convexity.py
-│   │   └── scenarios.py  # Stress testing
-│   ├── data/            # Data loaders and ETL
-│   │   ├── bloomberg.py  # xbbg integration
+│   │   └── scenarios.py # Stress testing
+│   ├── data/           # Data loaders and ETL
+│   │   ├── bloomberg.py # xbbg integration
 │   │   ├── duckdb_ops.py # DuckDB utilities
 │   │   └── validators.py # Data quality
-│   └── utils/           # Shared utilities
-│       ├── calendar.py   # Business day logic
-│       ├── daycount.py   # Day count conventions
-│       └── cashflows.py  # Cash flow generation
-├── tests/               # Unit tests
-├── notebooks/           # Jupyter analysis
+│   └── utils/          # Shared utilities
+│       ├── calendar.py # Business day logic
+│       ├── daycount.py # Day count conventions
+│       └── cashflows.py # Cash flow generation
+├── tests/              # Unit tests
+├── notebooks/          # Jupyter analysis
 ├── data/               # Local data storage
-└── config/             # Configuration files
+├── config/             # Configuration files
+├── notes/              # Documentation and guides
+│   ├── flask.md        # Flask backend guide
+│   ├── react.md        # React frontend guide
+│   └── streamlit.md    # Streamlit rapid prototyping guide
+└── reference/          # Reference materials
+    ├── QuantFinance/   # Git submodule: Quant finance library
+    ├── Orderbook/      # Git submodule: Order book implementation
+    ├── Quant-Developers-Resources/  # Git submodule: Learning resources
+    ├── books/          # PDF books and documentation
+    └── notes/          # Notes organized by topic/submodule
+        ├── QuantFinance/
+        ├── Orderbook/
+        └── Quant-Developers-Resources/
 ```
 
 ## Key Conventions
@@ -291,6 +337,195 @@ GITHUB_API_KEY=<set>
    - Need to implement parallel processing
    - Memory usage high for Monte Carlo (>10k paths)
 
+## Frontend/Backend Architecture
+
+### Overview
+
+The project supports three frontend/backend approaches, each suited for different use cases:
+
+1. **Flask + React** (Production-grade web application)
+2. **Streamlit** (Rapid prototyping and internal tools)
+3. **Jupyter Notebooks** (Ad-hoc analysis)
+
+### Flask Backend
+
+Flask provides a RESTful API for bond pricing, curve fitting, and portfolio optimization.
+
+**Key Features**:
+
+- RESTful API design with blueprints
+- Integration with existing `src/` pricing libraries
+- CORS support for React frontend
+- DuckDB integration for data queries
+- Comprehensive error handling and validation
+
+**See**: `notes/flask.md` for complete setup guide
+
+**Quick Start**:
+
+```bash
+# Install dependencies
+uv pip install flask flask-cors flask-sqlalchemy
+
+# Run development server
+python backend/app.py
+# API available at http://localhost:5000
+```
+
+**API Endpoints**:
+
+- `POST /api/bonds/price` - Calculate bond price from yield
+- `POST /api/bonds/yield` - Calculate yield from price
+- `POST /api/bonds/duration` - Calculate duration and convexity
+- `GET /api/curves/goc` - Get GoC yield curve
+- `POST /api/curves/fit/nss` - Fit Nelson-Siegel-Svensson model
+- `POST /api/portfolio/optimize` - Optimize portfolio
+
+### React Frontend
+
+React provides a modern, interactive user interface with TypeScript support.
+
+**Key Features**:
+
+- Component-based architecture
+- TypeScript for type safety
+- Recharts/Plotly for financial charts
+- Zustand for state management
+- Axios for API integration
+
+**See**: `notes/react.md` for complete setup guide
+
+**Quick Start**:
+
+```bash
+# Create React app with Vite
+npm create vite@latest frontend -- --template react-ts
+cd frontend
+npm install
+
+# Install dependencies
+npm install recharts axios zustand
+
+# Run development server
+npm run dev
+# UI available at http://localhost:5173
+```
+
+**Key Components**:
+
+- `BondPricer.tsx` - Interactive bond pricing calculator
+- `YieldCurveChart.tsx` - Yield curve visualization
+- `PortfolioOptimizer.tsx` - Portfolio optimization interface
+- `RiskMetrics.tsx` - Risk analytics dashboard
+
+### Streamlit Dashboard
+
+Streamlit provides the fastest path from analysis to dashboard, ideal for internal tools and prototyping.
+
+**Key Features**:
+
+- Pure Python (no HTML/CSS/JS)
+- Built-in widgets and charts
+- Auto-reload on code changes
+- Direct integration with existing pricing libraries
+- Built-in caching for performance
+
+**See**: `notes/streamlit.md` for complete setup guide
+
+**Quick Start**:
+
+```bash
+# Already installed in requirements.txt
+# Create Streamlit app
+touch streamlit_app.py
+
+# Run Streamlit
+streamlit run streamlit_app.py
+# Dashboard available at http://localhost:8501
+```
+
+**Use Cases**:
+
+- Rapid prototyping of analytics
+- Internal quant team dashboards
+- Proof-of-concept applications
+- One-off analysis tools
+
+### Choosing the Right Approach
+
+| Requirement | Flask + React | Streamlit | Jupyter |
+|-------------|---------------|-----------|---------|
+| Development Speed | Slow (days/weeks) | Fast (hours) | Fastest (minutes) |
+| Customization | Full control | Limited | N/A |
+| Production Ready | Yes | Yes (internal) | No |
+| Mobile Support | Excellent | Basic | None |
+| Learning Curve | High (JS/TS) | Low (Python) | Lowest |
+| Use Case | Client-facing | Internal tools | Analysis |
+
+**Recommendation**:
+
+- Start with **Streamlit** for rapid prototyping
+- Migrate to **React + Flask** for production client-facing apps
+- Use **Jupyter** for ad-hoc analysis and research
+
+### Integration Architecture
+
+```text
+┌─────────────────────────────────────────────────┐
+│                 Frontend Layer                   │
+├─────────────┬───────────────┬───────────────────┤
+│   React UI  │  Streamlit    │  Jupyter Notebook │
+│ (Port 5173) │  (Port 8501)  │  (Port 8888)      │
+└──────┬──────┴───────┬───────┴────────┬──────────┘
+       │              │                │
+       │ HTTP/REST    │ HTTP           │ Direct Import
+       │              │                │
+┌──────▼──────────────▼────────────────▼──────────┐
+│            Flask Backend (Port 5000)             │
+│                                                  │
+│  ┌─────────────────────────────────────────┐    │
+│  │          API Endpoints Layer            │    │
+│  │  /api/bonds  /api/curves  /api/portfolio│    │
+│  └────────────────┬────────────────────────┘    │
+│                   │                              │
+│  ┌────────────────▼────────────────────────┐    │
+│  │         Services Layer                  │    │
+│  │  pricing_service.py  curve_service.py   │    │
+│  └────────────────┬────────────────────────┘    │
+│                   │                              │
+└───────────────────┼──────────────────────────────┘
+                    │
+┌───────────────────▼──────────────────────────────┐
+│              Core Pricing Libraries (src/)       │
+│                                                  │
+│  curves/  portfolio/  risk/  data/  utils/      │
+│                                                  │
+│  ┌──────────────────────────────────────────┐   │
+│  │  QuantLib, rateslib, CVXPY integration   │   │
+│  └──────────────────┬───────────────────────┘   │
+└─────────────────────┼───────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────┐
+│              Data Layer                          │
+│                                                  │
+│  DuckDB  │  Parquet  │  Bloomberg (xbbg)        │
+└──────────────────────────────────────────────────┘
+```
+
+### Development Workflow
+
+1. **Prototype** in Streamlit to validate functionality
+2. **Implement** core logic in `src/` libraries
+3. **Expose** via Flask API for production use
+4. **Build** React UI for client-facing application
+5. **Test** with automated tests at each layer
+
+### Documentation References
+
+- **Flask Backend Setup**: `notes/flask.md`
+- **React Frontend Setup**: `notes/react.md`
+- **Streamlit Dashboard**: `notes/streamlit.md`
+
 ## Reference Links
 
 ### Online Resources
@@ -321,6 +556,39 @@ GITHUB_API_KEY=<set>
   - Numerical methods and optimization techniques
   - Use this reference when implementing QuantLib-based pricing engines
 
+### Reference Code Repositories (Git Submodules)
+
+- **QuantFinance**: `reference/QuantFinance/`
+  - Python-based quantitative finance library
+  - Implementations of financial models and algorithms
+  - Notes: `reference/notes/QuantFinance/`
+  - Repository: <https://github.com/PythonCharmers/QuantFinance>
+
+- **Orderbook**: `reference/Orderbook/`
+  - Order book implementation and market microstructure tools
+  - Limit order book simulation and analysis
+  - Notes: `reference/notes/Orderbook/`
+  - Repository: <https://github.com/Tzadiko/Orderbook>
+
+- **Quant-Developers-Resources**: `reference/Quant-Developers-Resources/`
+  - Curated collection of quantitative finance resources
+  - Learning materials, libraries, and best practices
+  - Notes: `reference/notes/Quant-Developers-Resources/`
+  - Repository: <https://github.com/cybergeekgyan/Quant-Developers-Resources>
+
+**Submodule Management**:
+
+```bash
+# Clone with submodules
+git clone --recursive <repo-url>
+
+# Update all submodules to latest
+git submodule update --remote --merge
+
+# Initialize submodules in existing clone
+git submodule update --init --recursive
+```
+
 ## Questions or Issues?
 
 - Check global configuration: `~/.claude/CLAUDE.md`
@@ -330,6 +598,6 @@ GITHUB_API_KEY=<set>
 
 ---
 
-**Last Updated**: 2025-09-29
+**Last Updated**: 2025-10-14
 **Maintainer**: Financial Engineering Team
 **Python Environment**: `/Users/nattechan/src/venv`

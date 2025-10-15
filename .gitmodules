@@ -7,3 +7,12 @@
 [submodule "reference/Deep-Learning-in-Quantitative-Trading"]
 	path = reference/Deep-Learning-in-Quantitative-Trading
 	url = https://github.com/zcakhaa/Deep-Learning-in-Quantitative-Trading.git
+[submodule "reference/QuantFinance"]
+	path = reference/QuantFinance
+	url = https://github.com/PythonCharmers/QuantFinance
+[submodule "reference/Orderbook"]
+	path = reference/Orderbook
+	url = https://github.com/Tzadiko/Orderbook
+[submodule "reference/Quant-Developers-Resources"]
+	path = reference/Quant-Developers-Resources
+	url = https://github.com/cybergeekgyan/Quant-Developers-Resources

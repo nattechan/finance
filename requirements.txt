@@ -57,6 +57,9 @@ exchange-calendars==4.11.1
 executing==2.2.1
 fastjsonschema==2.21.2
 filelock==3.19.1
+flask==3.1.2
+flask-cors==6.0.1
+flask-sqlalchemy==3.1.1
 flatbuffers==25.9.23
 fonttools==4.60.0
 fqdn==1.5.1
@@ -87,6 +90,7 @@ ipywidgets==8.1.7
 iso3166==2.1.1
 iso4217==1.14.20250512
 isoduration==20.11.0
+itsdangerous==2.2.0
 jedi==0.19.2
 jinja2==3.1.6
 joblib==1.5.2
