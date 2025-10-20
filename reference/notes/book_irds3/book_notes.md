@@ -13,7 +13,7 @@ See `reference/notes/book_irds3/python_notes.ipynb` for my learning implementati
 
 ### Preface
 
-#### Guiding questions
+#### Guiding questions of the book
 
 1. What makes up the set of linear IRD products?
 2. How does one trade IRDs physically, practically, and sensibly?
@@ -77,6 +77,32 @@ No arbitrage pricing (equivalent financial scenarios should have identical value
 - Fallback method was requred to continue to settle derivative contracts which settled against IBOR after the cessation, turning the rate from a look-forward rate (IBOR) into a look-back rate (RFR).
 
 ### Chapter 3 - Basics of IRDs
+
+#### Guiding Questions
+
+1. How any IRD can be physically traded and the associated mechanisms.
+2. Each of the basic interest rate products including their mathematical pricing formulae.
+
+#### Trading mechanisms
+
+##### Trading on exchange
+
+- Futures and options exchange, swap execution facility (SEF), designated contract market (DCM), Made available to trade (MAT).
+- SEF and DCM are legal entities that act as a record keeper and general ledger for IRD transactions, but do not act as a full fledged exchange as they do not service accounts or maintain margin.
+- MATs are typically common, liquid swaps that have to be traded on SEF or DCM and through a clearing house
+
+##### Trading off exchange
+
+- Transaction directly between two parties or brokered by an intermediary (does not need to go through an exchange or clearing house).
+- Requires a pre-signed documentation of terms (ISDA).
+- Can be settled bilaterally or through an clearing house.
+
+##### Clearing house
+
+- A legal counterparty between which the two IRD counterparties are facing (market and collateral neutral), acting as a centralized trade depository, mitigating credit risk.
+
+##### Margin
+
 
 ### Chapter 4 - Users of IRDs
 
