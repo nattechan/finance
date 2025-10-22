@@ -47,23 +47,28 @@ For example, ACT/ACT, ACT/365, 30/360 etc.
 
 #### Per annum interest rates and annualized interest rates
 
-```text
-Annualized rate = (1 + PAr / f)^f - 1
+The relationship between per annum rates and annualized rates:
 
-PAr = Per Annum rate
-f = frequency
-```
+$$\text{Annualized rate} = \left(1 + \frac{PAR}{f}\right)^f - 1$$
+
+Where:
+
+- $PAR$ = Per Annum rate
+- $f$ = frequency (number of compounding periods per year)
 
 #### Continuous compounding
 
-```text
-e^(DCF * CCr) = 1 + DCF * PAR
+The relationship between continuously compounded rates and simple rates:
 
-DCF = Discount Factor
-CCr = Continuously Compounded rate
-```
+$$e^{DCF \times CCr} = 1 + DCF \times PAR$$
 
-CCr are useful in derivations for financial mathematics but have limited practical use
+Where:
+
+- $DCF$ = Day Count Fraction (time period in years)
+- $CCr$ = Continuously Compounded rate
+- $PAR$ = Per Annum rate (simple rate)
+
+Continuously compounded rates are useful in derivations for financial mathematics but have limited practical use
 
 #### Time value of money and discount factors (DFs)
 
@@ -103,6 +108,93 @@ No arbitrage pricing (equivalent financial scenarios should have identical value
 
 ##### Margin
 
+- Cash as insurance required by a clearing house when there is an open, at risk, traded position with a counterparty.
+- Initial margin is the margin required to make new positions/trades, variation/maintenance margin is the margin required to keep open positions active (re-calculated daily).
+
+##### Forward rate agreements (FRAs)
+
+- Obsolete or becoming obsolete post IBOR cessation
+- A cash for difference derivative, settled against a particular IBOR index of some future benchmark fixing.
+
+**FRA pricing formula:**
+
+The present value of an FRA from the perspective of the buyer/payer of the contract:
+
+$$P = v_{i-1} \frac{N d_i (r_i - R)}{1 + d_i r_i}$$
+
+Where:
+
+- $P$ = Present value of the FRA
+- $v_{i-1}$ = Discount factor to the settlement date
+- $N$ = Notional amount
+- $d_i$ = Day count fraction for the accrual period
+- $r_i$ = Floating rate (actual IBOR fixing)
+- $R$ = Fixed rate (agreed FRA rate)
+
+The numerator represents the undiscounted cash settlement: the buyer receives $(r_i - R)$ on notional $N$ over period $d_i$.
+The denominator discounts this payment from the end of the accrual period back to the settlement date using the actual floating rate $r_i$.
+
+**FRA quoting convention:**
+
+- 'Currency, Index, Start-month x End-month, Roll-date' i.e., 'GBP, LIBOR, 5 x 8, 23rd, FRA'.
+- Start-month and end-month are the numbers of month from the current month.
+
+##### STIR futures (IBOR)
+
+- Obsolete or becoming obsolete post IBOR cessation.
+- Similar to FRAs as tey are cash settled against a future benchmark but they differ in a few ways.
+- SITR futures are traded on exchanges, FRAs are off exchange.
+- Size of single contract on STIR future is set to notioanl sizes according to exchange rules (0.5mm or 1mm), vs. FRAs which can have bespoke notionals.
+- STIR futures are quoted in price terms, FRAs are quoted in yield terms.
+- STIR futures start and settle on specific dates set by exchange, FRAs can be written for any business day.
+
+- STIR futures settle only against 3M-IBOR tenors and only for value start dates that fall on International Monetary Market (IMM) dates.
+
+**STIR future pricing:**
+
+The 3M-IBOR fixing rate implied by a STIR future is:
+
+$$r_{i} = 100 - q_{i}$$
+
+where $q_{i}$ is the price of the future. The PV of a single STIR future contract (from POV of the buyer) is:
+
+$$P = N (q_{i} - Q_{i})$$
+
+where $N$ is the value of one lot per unit increment, and $Q_{i}$ the orignally traded price.
+
+**Settlement:**
+
+Exchange delivery settlement price (EDSP):
+
+$$EDSP = 100 - \text{3M-IBOR fixing}$$
+
+##### STIR futures (RFR)
+
+- Similar to STIR futures (IBOR), with the same properties to IMM dates, fixed notional, and pricing conventions.
+- Fixings of RFR STIR within the period must occur before the EDSP can be produced (i.e., a March contract cannot be settled in March).
+
+**EDSP:**
+
+EDSP one month rate:
+
+$$EDSP\ one\ month\ rate = 100 \times \left(\frac{1}{d}\sum_{k=1}^{T_1}\left(r_k d_k\right)\right)$$
+
+EDSP three month rate:
+
+$$EDSP\ three\ month\ rate = 100 \times \left(\frac{1}{d}\prod_{k=1}^{T_1}\left(1 + r_k d_k\right) - 1\right)$$
+
+Where:
+
+- $T_1$ = the number of fixings that make up the period
+- $d$ = the three month rate settles for a compounded rate, albeit both of these definitions describe the EDSP in terms of the exchange specifying the contracts and they may differ
+- $r_k$ = RFR fixings
+- $d_k$ = day count fraction for each published fixing
+
+- Since the front month contract does not settle until all the RFR fixings are published, it continues to trade mid period.
+- Reduces its volatility substantially midway through its periods since proportions of the EDSP is already known, and with each published fixing becomes less variable.
+- RFR SITR futures experience convexity adjustments.
+
+##### IRSs and OIS
 
 ### Chapter 4 - Users of IRDs
 
