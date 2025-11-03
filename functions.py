@@ -1,6 +1,9 @@
+import logging
 import QuantLib as ql
 import pandas as pd
-import logging
+from fredapi import Fred
+import ssl
+import certifi
 
 # Configure logging
 logging.basicConfig(
@@ -60,3 +63,13 @@ price = ql.BondPrice(98.0, ql.BondPrice.Clean)
 b = bond1.bondYield(price, day_count, ql.Compounded, ql.Semiannual)
 
 log.info(f"Yield: {b:.6%}")
+
+# Create SSL context with certifi certificates
+ssl._create_default_https_context = ssl._create_unverified_context
+
+fred = Fred(api_key='8e39873ef3fce2ffeb49391bfa650db2')
+data = fred.get_series('SP500')
+log.info(data)
+
+data = fred.get_series_first_release('GDP')
+log.info(data.tail())
