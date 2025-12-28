@@ -2,3 +2,6 @@ project-includes = [
     "**/*.py*",
     "**/*.ipynb",
 ]
+
+# Point Pyrefly to the virtual environment
+venv-path = "/Users/nattechan/src/venv"

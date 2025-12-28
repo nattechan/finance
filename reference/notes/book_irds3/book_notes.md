@@ -206,7 +206,7 @@ Example IRS
 *Example cashflows of a standard 6M semi-quarterly IRS starting on 8th February 2016 and ending 8th August 2016. It details one fixed cashflow and two floating cash flows:*
 
 | Notional | Accrual date | Accrual end date | Fixing date | Value date | Value end date | Payment date | Rate | Cashflow |
-|----------|--------------|------------------|-------------|------------|----------------|--------------|------|----------|
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 100,000,000 | 2016-02-08 | 2016-08-08 | - | - | - | 2016-08-08 | 2.025% | 1,009,726 |
 | 100,000,000 | 2016-02-08 | 2016-05-09 | 2016-02-04 | 2016-02-08 | 2016-05-09 | 2016-05-09 | 1.961% | -488,907 |
 | 100,000,000 | 2016-05-09 | 2016-08-08 | 2016-05-05 | 2016-05-09 | 2016-08-09 | 2016-08-08 | 2.061% | -513,838 |
@@ -361,7 +361,7 @@ Quoting convention:
 #### Zero coupon swaps (ZCSs)
 
 - Similar to IRS except payments are not made after each accrual period. Instead, payments due for each periiod, on each leg of the swap, are compounded up to be paid as a single cashflow at the maturity of the swap
-- The fixed and floating leg both have a single cashflow, payable on the same day in the future ofr standard ZCSs
+- The fixed and floating leg both have a single cashflow, payable on the same day in the future for standard ZCSs
 
 #### IRS futures
 
