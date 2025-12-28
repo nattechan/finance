@@ -111,12 +111,12 @@ No arbitrage pricing (equivalent financial scenarios should have identical value
 - Cash as insurance required by a clearing house when there is an open, at risk, traded position with a counterparty.
 - Initial margin is the margin required to make new positions/trades, variation/maintenance margin is the margin required to keep open positions active (re-calculated daily).
 
-##### Forward rate agreements (FRAs)
+#### Forward rate agreements (FRAs)
 
 - Obsolete or becoming obsolete post IBOR cessation
 - A cash for difference derivative, settled against a particular IBOR index of some future benchmark fixing.
 
-###### FRA pricing formula
+##### FRA pricing formula
 
 The present value of an FRA from the perspective of the buyer/payer of the contract:
 
@@ -134,12 +134,12 @@ Where:
 The numerator represents the undiscounted cash settlement: the buyer receives $(r_i - R)$ on notional $N$ over period $d_i$.
 The denominator discounts this payment from the end of the accrual period back to the settlement date using the actual floating rate $r_i$.
 
-###### FRA quoting convention
+##### FRA quoting convention
 
 - 'Currency, Index, Start-month x End-month, Roll-date' i.e., 'GBP, LIBOR, 5 x 8, 23rd, FRA'.
 - Start-month and end-month are the numbers of month from the current month.
 
-##### STIR futures (IBOR)
+#### STIR futures (IBOR)
 
 - Obsolete or becoming obsolete post IBOR cessation.
 - Similar to FRAs as tey are cash settled against a future benchmark but they differ in a few ways.
@@ -150,7 +150,7 @@ The denominator discounts this payment from the end of the accrual period back t
 
 - STIR futures settle only against 3M-IBOR tenors and only for value start dates that fall on International Monetary Market (IMM) dates.
 
-###### STIR future pricing
+##### STIR future pricing
 
 The 3M-IBOR fixing rate implied by a STIR future is:
 
@@ -162,18 +162,18 @@ $$P = N (q_{i} - Q_{i})$$
 
 where $N$ is the value of one lot per unit increment, and $Q_{i}$ the orignally traded price.
 
-###### Settlement
+##### Settlement
 
 Exchange delivery settlement price (EDSP):
 
 $$EDSP = 100 - \text{3M-IBOR fixing}$$
 
-##### STIR futures (RFR)
+#### STIR futures (RFR)
 
 - Similar to STIR futures (IBOR), with the same properties to IMM dates, fixed notional, and pricing conventions.
 - Fixings of RFR STIR within the period must occur before the EDSP can be produced (i.e., a March contract cannot be settled in March).
 
-###### EDSP
+##### EDSP
 
 EDSP one month rate:
 
@@ -194,9 +194,9 @@ Where:
 - Reduces its volatility substantially midway through its periods since proportions of the EDSP is already known, and with each published fixing becomes less variable.
 - RFR SITR futures experience convexity adjustments.
 
-##### IRSs and OIS
+#### IRSs and OIS
 
-###### IRS
+##### IRS
 
 - An agreement to exchange a series of fixed rate payments for a series of floating rate payments by an RFR index (previously an IBOR index). We treat OIS and IRS as semantically the same now as RFRs are overnight indices.
 - The main component of an IRS is the date schedule, incouding payment dates, accrual periods, fixing dates for determination of floating rates, and notional amounts.
@@ -323,7 +323,7 @@ START                                                               END
 
 The hatched/shaded areas (////) represent stub periods at the start (long-front) and end (short-back) of the swap.
 
-##### Single currency basis swaps (SBSs)
+#### Single currency basis swaps (SBSs)
 
 - Obsolete or becoming obsolete post IBOR cessation (for some currencies)
 - Exchange a series of flaoting cashflows, almost exclusively of one index against another (i.e., 3M-IBOR cashflows for 6M-IBOR cashflows)
@@ -358,18 +358,18 @@ Quoting convention:
 
 'Currency, Index(es), Start-date, End-date, Float-frequency¹, Float-frequency², Roll-date, Stub-type'
 
-##### Zero coupon swaps (ZCSs)
+#### Zero coupon swaps (ZCSs)
 
 - Similar to IRS except payments are not made after each accrual period. Instead, payments due for each periiod, on each leg of the swap, are compounded up to be paid as a single cashflow at the maturity of the swap
 - The fixed and floating leg both have a single cashflow, payable on the same day in the future ofr standard ZCSs
 
-##### IRS futures
+#### IRS futures
 
-##### Non-MTM cross-currency swaps (XCSs)
+#### Non-MTM cross-currency swaps (XCSs)
 
-##### MTM cross-currency swaps (XCSs)
+#### MTM cross-currency swaps (XCSs)
 
-##### FX Swaps
+#### FX Swaps
 
 ### Chapter 4 - Users of IRDs
 
