@@ -40,6 +40,7 @@ cvxportfolio==1.5.1
 cvxpy==1.7.3
 cvxpy-base==1.7.3
 cycler==0.12.1
+cython==3.2.3
 dataclasses-json==0.6.7
 dateparser==1.2.2
 debugpy==1.8.17
