@@ -460,7 +460,7 @@ Mathematical formulae:
 
 The PV of, for example, a EUR/USD non-MTM XCS from the POV of the payer of the spread (B in figure 3.4) is:
 
-$$PV = N F_0 w_0^* - NF_0 \sum_{i=1}^{T_1} (r_i^{*} + Z^{*}) d_i^{*} w_i^{*} - N F_0 w_{T_1}^* - N f_0 v_0 + N f_0 \sum_{j=1}^{T_2} r_j d_j v_j + N f_0 v_{T_2}$$
+$$PV = N F_0 w_0^\ast - NF_0 \sum_{i=1}^{T_1} (r_i^\ast + Z^\ast) d_i^\ast w_i^\ast - N F_0 w_{T_1}^\ast - N f_0 v_0 + N f_0 \sum_{j=1}^{T_2} r_j d_j v_j + N f_0 v_{T_2}$$
 
 where $v_i$ represents the discount factor of a USD cashflow and $w_i^*$ the discount factor of the EUR cashflow. $f_0$ represents the FX rate which was fixed at the time of execution and $F_0$ represents the current spot FX rate. $N$ is the notional of the domestic currency where the bp spread is attached, so in this case is in EUR. It is also usual (although not necessary) to assume that $f_0 = F_0$ when pricing a new trade. The rates $r_i^*, r_j$ are determined according to equation 3.1 when RFRs are the leg indexes.
 
@@ -483,7 +483,7 @@ Mathematical formulae:
 
 The PV of, for example, a EUR/USD MTM XCS from the POV of the payer of the spread is:
 
-$$PV = N F_0 w_0^* - NF_0 \sum_{i=1}^{T_1} (r_i^{*} + Z^{*}) d_i^{*} w_i^{*} - N F_0 w_{T_1}^* - N f_0 v_0 + N \sum_{j=1}^{T_2} f_{j-1} r_j d_j v_j + N \sum_{j=1}^{T_2} (f_{j-1} - f_j) v_j + N f_{T_2} v_{T_2}$$
+$$PV = N F_0 w_0^\ast - NF_0 \sum_{i=1}^{T_1} (r_i^\ast + Z^\ast) d_i^\ast w_i^\ast - N F_0 w_{T_1}^\ast - N f_0 v_0 + N \sum_{j=1}^{T_2} f_{j-1} r_j d_j v_j + N \sum_{j=1}^{T_2} (f_{j-1} - f_j) v_j + N f_{T_2} v_{T_2}$$
 
 It is common that one might seek to determine a mid-market spread, $Z^{*mid}$, for a XCS. To do this, the forecast rates and DFs in each currency need to be obtained from a multi-currency curveset. The PV can then be set to zero and the formula rearranged in terms of $Z^{*mid}$. The same type of customizations are available as for non-MTM XCSs as are the quoting conventions.
 
