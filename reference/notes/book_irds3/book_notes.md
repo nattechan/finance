@@ -20,7 +20,7 @@ See `reference/notes/book_irds3/python_notes.ipynb` for my learning implementati
 3. How are each of the IRDs priced and what factors influence their prices?
 4. What are the risks of trading IRDs and how are they risk managed?
 5. Who trades IRDs and why?
-6. What are the drivers of IRarkets at large?
+6. What are the drivers of IR markets at large?
 7. What does the future hold for IRD risk management and trading?
 
 ### Chapter 1 - Mathematical Review
@@ -53,7 +53,7 @@ $$DCF_{ACT/365F} := \frac{\text{accrual end date} - \text{accrual start date}}{3
 
 - Business day calendars (and to an extent holiday calendars) determine which dates are able to be used for payments, accruals, resets, etc.
 - Following (F) and previous (P) determine what to do if an action date lands on a holiday.
-- Modified ('M' preceeding the date rules) denotes what to do if an adjustment goes on to the next month.
+- Modified ('M' preceding the date rules) denotes what to do if an adjustment goes on to the next month.
 
 #### Per annum interest rates and annualized interest rates
 
@@ -527,11 +527,100 @@ Swaptions are not classified as linear IRD products. Chapter 20 exclusively outl
 
 #### Central banks
 
-- Central banks preside over their own domestic currency, and as a defensive measure, they build up foreign reserves. This is done by buying foreign currency with domestic currency, which when done with enough nominal size, will depreciate the domestic currency. This is usually supportive of inflation for two reasons: import prices rise, and the economy can be stimulated by foreign investment increasing growth and wages.
+- Central banks preside over their own domestic currency, and as a defensive measure, they build up foreign reserves. This is done by buying foreign currency with domestic currency, which when done with enough nominal size, will depreciate the domestic currency. This is usually supportive of inflation for two reasons: import prices rise, and the economy can be stimulated by foreign investment increasing growth and wages
 - In order to facilitate a functional financial system, any domestic central bank is expected to provide liquidity to its domestic banks through some standing facilities (and given the globalized nature of modern finance, domestic banks often need to access to liquidity in foreign currencies). Central banks must have this foreign reserve available, but as they are not keen to offer this from their variable foreign exchange reserves, central banks have created swap lines between themselves to exchange each other's domestic currency. Swap lines represent XCSs, so by utilizing these derivatives, a central bank gains access to a foreign currency but does not change the FX exposure of their foreign exchanges reserves account (neither central bank is exposed to the movement of FX rates via the transaction)
 - A central bank with the right amount of FX exposure invested in government bonds of a foreign currency may believe interest rates in that foreign currency to rise, and rather to sell the FX reserves, it may be better to hedge this change in rates using IRSs
 
 #### Non-financial corporations (NFCs)
+
+- Although NFCs can have a multitude of reasons to access financial markets (surplus cash management, revenue smoothing, hedging, tax optimization strategies), their primary action in the IR market is to issue debt. Sovereign debt is usually easier and cheaper to issue compared to NFC debt (greater credit quality, size of market and liquidity)
+- NFCs are concerned with and sensitive to a number of factors when it comes to debt issuance: credit spreads, liquidity, and international IRD rates and international credit spreads
+- The credit spread is the difference between YTM of the credit bond and some conventional benchmark reference rate. For most countries (US, UK, Canada), common convention is to measure the credit spread relative to government bonds. In the EU area, the convention is to benchmark relative to IRSs because of the complication of multiple countries' sovereign bonds having quite different overall yield levels. The goal is to issue with as tight or low a credit spread as possible, both relative to peers (relative credit spread) as well as the general level of spreads taken across all domestic NFCs (domestic credit spread)
+- To expand on liquidity, an NFC would generally like to issue in reasonable size to promote secondary market activity. Past performance of successful and oversubscribed issuances carry psychological benefits, creating positive momentum and allowing for higher pricing (tighter spreads)
+- NFCs must pay attention to international IRD rates and international credit spreads. It may be cheaper to issue in foreign currencies based off of supply and demand factors of XCSs markets
+
+*Example 4.1:*
+Suppose Alpha Corp., a EUR domesticated NFC, is considering issuing a bond. It considers either domestic issuance or foreign issuance, in USD, swapped back to EUR. If Alpha swaps the issuance it will execute IRDs. The IRDs have three purposes: switch the USDhat investors pay for the bonds to EURor Alpha, allow Alpha to pay fixed EUR interest, while the investors receive USD interest cashflows, and as maturity permit Alpha to pay back the original USD sum whilst the investors receive the original USD sum, all without exposing any party to the FX risk.
+
+Figure 4.1 demonstrates netted legs from the POV of Alpha Corp. if it pursues foreign issuance. The rightmost legs of the figure do not net and reflect outstanding commitments; a fixed EUR interest outflow and EUR notional exchanges, as required. The final notional exchange and repayment of principal to investors is not shown - it is the opposite of all initial changes.
+
+*Figure 4.1: Netted Cash Flows for Alpha Corp. Foreign Issuance:*
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│              Three IRD Products Netted Together:                            │
+│                                                                             │
+│   EUR IRS          USD IRS            Non-MTM EUR/USD XCS                   │
+│  ┌───────┐       ┌─────────┐            ┌──────────┐                        │
+│  │  Pay  │       │ Receive │            │          │                        │
+│  │ Fixed │       │  Fixed  │            │          │                        │
+│  │  EUR  │       │   USD   │            │          │                        │
+│  └───┬───┘       └────┬────┘            └─────┬────┘                        │
+│      │                │                       │                             │
+│      │ ┌──────────────▼───────────────┐       │                             │
+│      │ │    USD Bond Issue            │       │                             │
+│      │ │  (Receive Fixed USD from     │       │                             │
+│      │ │   investors + USD credit spl)│       │                             │
+│      │ └──────────────┬───────────────┘       │                             │
+│      │                │                       │                             │
+│      │                │ ┌─────────────────────▼──────┐                      │
+│      │                └─│  Pay Floating USD          │                      │
+│      │                  │  to USD IRS                │                      │
+│      │                  └──────────┬─────────────────┘                      │
+│      │                             │                                        │
+│      │                    ┌────────▼──────────┐                             │
+│      │                    │ Receive Floating  │                             │
+│      │                    │ USD from XCS      │                             │
+│      │                    └────────┬──────────┘                             │
+│      │                             │ (Nets to zero)                         │
+│      │                             │                                        │
+│      │                    ┌────────▼──────────┐                             │
+│      └────────────────────│ Receive Floating  │                             │
+│                           │ EUR from EUR IRS  │                             │
+│                           └────────┬──────────┘                             │
+│                                    │                                        │
+│                           ┌────────▼──────────┐                             │
+│                           │ Pay Fixed EUR to  │  ← Outstanding              │
+│                           │ XCS (EUR IRS rate)│     commitment              │
+│                           └───────────────────┘                             │
+│                                                                             │
+│  Net Result = EUR IRS rate + USD credit spread + EUR/USD XCS spread         │
+│                                                                             │
+│  Outstanding Commitments (Right-most legs that don't net):                  │
+│  • Pay fixed EUR interest                                                   │
+│  • EUR notional exchanges                                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+If Alpha chooses to issue domestically then it pays a fixed rate equal to EUR IRS rate (RFR benchmark) + EUR credit spread (say 1% and +40bps for a total of 1.40%). For foreign issuance the figure demonstrates the net payment is equal to EUR IRS rate (RFR) + USD credit spread + EUR/USD XCS spread (non-MTM). Supposing the two spreads were +50bps and -30bps resp., then the overall fixed rate for comparison is 1.2%, so it is advantageous for Alpha to consider swapped foreign issuance.
+
+- It is common for a bank to facilitate this service to NFCs by providing a single non-MTM fixed/fixed XCS that replaces the three individual IRSs. Upon hedging, the bank will usually expose itself to cross-gamma risks due to different terms of the CSAs of the interbank trade hedges, and due to the build up on non-MTM XCSs hedged with interbank MTM XCSs (further explored in chapter 21)
+- NFCs do not always desire to have fixed rate exposure on their bonds, however investors generally prefer fixed rate bonds. If the issuer were to issue fixed rate but choose to receive fixed on an IRS, then this would convert the issue to floating rate (only from the issuers POV). In figure 4.1, for the foreign issuance, this could be achieved by omitting to pay fixed on the EUR IRS
+
+##### Issuance swaps
+
+A domestic issuer chooses to 'swap to floating' its issuance by receiving fixed on an IRS. The issuer does not execute a benchmark interbank IRS to hedge its market risk exposure, instead, it executes an IRS that precisely matches the dates and specific cashflows of its bond (done to classify its issuance and derivative under the IFRS 9 cashflow hedge accounting designation). Since the transactions are large, with the IRS notional being the same as the issue size, there is often the requirement for a third party validation of the pricing given by a market-maker (screen references). The screen reference uses interbank brokers' electronically published prices to validate the mid-market of benchmark swaps. Since these benchmark swaps do not precisely match the issuer's customized IRS, there are also adjustments that need to be agreed.
+
+*Example 4.2:*
+
+Alpha Corp decides to issue domestically. It chooses to issue a new 7Y fixed rate bond, with settlement T+5 b.d.s, and swap it to floating RFR. With everything complete, Alpha Corp. will have issued bonds priced at some yield to maturity and received fixed on an IRS with the same fixed rate and conventions as the bond cashflows to pay RFR plus a bp spread. We outline the process of calculation of that spread.
+
+The bond is typically priced by specifying its YTM as the forward adjusted, mid-market 7Y RFR IRS rate + a credit spread. Say the standard 7Y RFR IRS from some official screen source is 0.995%. The fact that the bond settles T+5 means that the dates on the swap are customized. The standard 7Y RFR IRS has a fixed rate 0.5bps lower than the equivalent IRS starting T+5 (called the forward adjustment). Thus the referenced mid-market rate for the purpose of pricing the bond is equal to the screen price plus the forward adjustment (0.5bps), making 1.00%. Adding the credit spread (40bps agreed between investors, issuer, syndicate banks), this makes the issuance priced at a YTM of 1.40%.
+
+| Description | Value |
+| --- | --- |
+| Screen reference T+1 and swap | 0.995% |
+| T+5 forward adjustment | 0.005% |
+| Bond credit spread | 0.400% |
+| Priced yield to maturity | 1.400% |
+
+If the coupon on the bond were matched at 1.400%, the bond would price at par. If Alpha Corp. received 1.400% on the IRS with standard conventions, the RFR floating rate spread would match the credit spread at 40bps. However, there are three adjustments which might exists which can result in that spread that the issuer pays differing from 40bps;
+
+- Convention adjustments: if the fixed leg and floating leg have different conventions (i.e., day count conventions or different frequencies), the same bp spread on one leg is not equivalent to the same spread on the other
+- Coupon adjustment: if the coupon on the bond is not set to be the same as the priced YTM, the bond price is not exactly par. Usually the coupon is set to be lower than the YTM (bond prices at discount). The issuer typically wants to receive par however, so an economic upfront payment value known as the make to par is embedded into the swap. The lower coupon rate applied to the fixed rate of the swap offsets this in part but the economics are not exact
+- Market-maker's margin: this is a fee for facilitating the transaction embedded into the issuer swap
+
+The coupon is set at 1.375% and the issuer receives a T+5 7Y RFR fixed at 1.375% with conventions, Annual ACT/ACT ICMA, and pays floating rate plus 38.1bps, which equates to 37.5bps standard spread plus 0.3bps convention adjustment minus 0.2bps make to par coupon adjustment plus a market maker fee of 0.5bps. The swap includes an upfront make to par payment.
 
 #### Asset managers
 
@@ -567,7 +656,7 @@ Swaptions are not classified as linear IRD products. Chapter 20 exclusively outl
 
 ### Chapter 18 - Market-Making and Price-Taking
 
-### Chapter 19 - Electoric Trading
+### Chapter 19 - Electronic Trading
 
 ### Chapter 20 - Swaptions and Volatility
 
