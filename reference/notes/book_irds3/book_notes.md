@@ -87,9 +87,9 @@ No arbitrage pricing (equivalent financial scenarios should have identical value
 #### Interest rate indexes
 
 - For various currencies, there are central bank rates and overnight indexes and risk free rates (i.e., in USD, the Federal Reserve dictates the discount rate and federal funds target rate, while the ). The former is central bank dependent and the latter is market dependent and transaction based.
-- Overnight index swap (OIS) rates are calculated based off of data on executed unsecured lending tranasactions. The index is a notional weighed average, and published as a daily overnight level.
+- Overnight index swap (OIS) rates are calculated based off of data on executed unsecured lending transactions. The index is a notional weighed average, and published as a daily overnight level.
 - IBOR vs OIS Index differs where IBOR is an estimate of the future level while OIS is an observation of the past (both are unsecured). There is sometimes a lag between when a rate is fixed and the valuation period (i.e., 2 b.d. lag with EUR)
-- Fallback method was requred to continue to settle derivative contracts which settled against IBOR after the cessation, turning the rate from a look-forward rate (IBOR) into a look-back rate (RFR).
+- Fallback method was required to continue to settle derivative contracts which settled against IBOR after the cessation, turning the rate from a look-forward rate (IBOR) into a look-back rate (RFR).
 
 #### Derivation of CC rates formula
 
@@ -173,8 +173,8 @@ The denominator discounts this payment from the end of the accrual period back t
 
 - Obsolete or becoming obsolete post IBOR cessation.
 - Similar to FRAs as tey are cash settled against a future benchmark but they differ in a few ways.
-- SITR futures are traded on exchanges, FRAs are off exchange.
-- Size of single contract on STIR future is set to notioanl sizes according to exchange rules (0.5mm or 1mm), vs. FRAs which can have bespoke notionals.
+- STIR futures are traded on exchanges, FRAs are off exchange.
+- Size of single contract on STIR future is set to notional sizes according to exchange rules (0.5mm or 1mm), vs. FRAs which can have bespoke notionals.
 - STIR futures are quoted in price terms, FRAs are quoted in yield terms.
 - STIR futures start and settle on specific dates set by exchange, FRAs can be written for any business day.
 
@@ -190,7 +190,7 @@ where $q_{i}$ is the price of the future. The PV of a single STIR future contrac
 
 $$P = N (q_{i} - Q_{i})$$
 
-where $N$ is the value of one lot per unit increment, and $Q_{i}$ the orignally traded price.
+where $N$ is the value of one lot per unit increment, and $Q_{i}$ the originally traded price.
 
 ##### Settlement
 
@@ -222,14 +222,14 @@ Where:
 
 - Since the front month contract does not settle until all the RFR fixings are published, it continues to trade mid period.
 - Reduces its volatility substantially midway through its periods since proportions of the EDSP is already known, and with each published fixing becomes less variable.
-- RFR SITR futures experience convexity adjustments.
+- RFR STIR futures experience convexity adjustments.
 
 #### IRSs and OIS
 
 ##### IRS
 
 - An agreement to exchange a series of fixed rate payments for a series of floating rate payments by an RFR index (previously an IBOR index). We treat OIS and IRS as semantically the same now as RFRs are overnight indices.
-- The main component of an IRS is the date schedule, incouding payment dates, accrual periods, fixing dates for determination of floating rates, and notional amounts.
+- The main component of an IRS is the date schedule, including payment dates, accrual periods, fixing dates for determination of floating rates, and notional amounts.
 
 Example IRS
 
@@ -241,21 +241,21 @@ Example IRS
 | 100,000,000 | 2016-02-08 | 2016-05-09 | 2016-02-04 | 2016-02-08 | 2016-05-09 | 2016-05-09 | 1.961% | -488,907 |
 | 100,000,000 | 2016-05-09 | 2016-08-08 | 2016-05-05 | 2016-05-09 | 2016-08-09 | 2016-08-08 | 2.061% | -513,838 |
 
-To obtain the PV, multiply the cashflows with approriate DF relevatn to the payment date. The floating payments are unknown until all of the relevant fixing publications have been made, so market movements will cause valuation changes.
+To obtain the PV, multiply the cashflows with appropriate DF relevant to the payment date. The floating payments are unknown until all of the relevant fixing publications have been made, so market movements will cause valuation changes.
 
 *For a standard (or vanilla) IRS:*
 
 - The same notional, $N$, for every individual period of the IRS either on the floating or fixed leg
 - A consecutive structure so that each period comes immediately after another without overlapping or creating gaps
 - An alignment between the fixed and floating legs (subject to the frequency) so that accrual periods and payment dates on each are the same
-- An alignment of the fixing date and flaoting rate tenor to the given accrual schedule and payment schedule for the floating leg. Payments are made in arrears, that is, at the end of each period, usually on the accrual end date
-- Standard day count conventions and fied leg frequency in each specified currency
+- An alignment of the fixing date and floating rate tenor to the given accrual schedule and payment schedule for the floating leg. Payments are made in arrears, that is, at the end of each period, usually on the accrual end date
+- Standard day count conventions and fixed leg frequency in each specified currency
 
 Customization:
 
 Stub periods:
 
-When start and end dates are specified wihtout an associated relationship, it creates stub periods, placed in IRS either at the start, end, or both, so that the remianing part of the leg follows teh speciifed frequency and reverts to the form of a standard IRS.
+When start and end dates are specified without an associated relationship, it creates stub periods, placed in IRS either at the start, end, or both, so that the remaining part of the leg follows teh specified frequency and reverts to the form of a standard IRS.
 
 Mathematical formulae:
 
@@ -263,14 +263,14 @@ The present value of a **standard IRS**:
 
 $$P = N \left(-R \sum_{i=1}^{T_1} d_i v_i + \sum_{j=1}^{T_2} d_j r_j v_j \right)$$
 
-The present value of a **customised IRS**:
+The present value of a **customized IRS**:
 
 $$P = - R \sum_{i=1}^{T_1} N_i d_i v_i + \sum_{j=1}^{T_2} N_j d_j r_j v_j$$
 
 Where:
 
 - $T_1, T_2$ = number of periods in the fixed and float leg respectively
-- $N$ = notional (for standard IRS), $N_i$ = notional per period (for customised IRS)
+- $N$ = notional (for standard IRS), $N_i$ = notional per period (for customized IRS)
 - $R$ = fixed rate
 - $d_i$ = day count fraction for period $i$
 - $v_i$ = discount factor to payment date $i$
@@ -358,7 +358,7 @@ The hatched/shaded areas (////) represent stub periods at the start (long-front)
 #### Single currency basis swaps (SBSs)
 
 - Obsolete or becoming obsolete post IBOR cessation (for some currencies)
-- Exchange a series of flaoting cashflows, almost exclusively of one index against another (i.e., 3M-IBOR cashflows for 6M-IBOR cashflows)
+- Exchange a series of floating cashflows, almost exclusively of one index against another (i.e., 3M-IBOR cashflows for 6M-IBOR cashflows)
 - a bp spread amount (or annuity) is attached to one of the legs to get NPV = 0 at inception (spread is the effective mid-market price), and is usually added to the index of the shortest tenor of either of either of the legs to result in a positive spread
 - To exchange an IBOR index for OIS, it is easier to attach the spread to the IBOR leg because of the compounding of the OIS rate fixings
 
@@ -427,7 +427,7 @@ The current mid-market IRR can also be determined from the floating leg's foreca
 
 #### IRS futures
 
-- Similar to STIRutures in that they trade on exchanges in price terms, with margining principles applied, and a single contract is a predetermined notional (typically 0.1mm) set by the exchange
+- Similar to STIR futures in that they trade on exchanges in price terms, with margining principles applied, and a single contract is a predetermined notional (typically 0.1mm) set by the exchange
 - Standard IMM only settlement days (frequently March, June, September, December), physically settled (parties with open positions at expiry will enter into a OTC IRS)
 - In order to complete teh action of settlement at expiry, counterparties either pay or receive an amount of cash to the clearing house dependent upon the EDSP of the contract (final trading price of the contract before expiry)
 - IRS futures are not particularly liquid or well traded
@@ -446,19 +446,19 @@ $$q = 100 + 100 \times \frac{P}{N}$$
 
 *Example 3.6:*
 
-A trader buys 10 {USD 0.1mm Z16 10Y SOFRRS 1.5%} IRS futures contracts at a price of 100.00.
+A trader buys 10 {USD 0.1mm Z16 10Y SOFR IRS 1.5%} IRS futures contracts at a price of 100.00.
 
 The market values and yields fall by 15bps from 1.5% to 1.35% so that the PV of the IRS represented by a single contract is now $1,386. The price of the IRS future is then 101.38 (or quoted in 32nds: 101-12+). To reflect the profit in a simple expression, MTM the exchange credits trader's account with 10 × $1,386 = $13,860. The future expires with an EDSP of the same price and the trader's open position is physically settled. He pays $13,860 to the exchange and enters an IRS for $1mm notional with the clearing house which necessarily possesses a PV of $13,860. The clearing house posts this amount to the trader as collateral.
 
 #### Non-MTM cross-currency swaps (XCSs)
 
-- A non-MTM cross-currency swap (XCS) is a swap similar to single currency bassis swaps, except instead of swapping different tenor indices or different indexes in the same currency, the coutnerparties exchange indexes (usually RFRs) in two different currencies
+- A non-MTM cross-currency swap (XCS) is a swap similar to single currency basis swaps, except instead of swapping different tenor indices or different indexes in the same currency, the counterparties exchange indexes (usually RFRs) in two different currencies
 - To balance the legs so that, at mid-market (at inception), the sum of each is zero, requires a fixed spread (or annuity) to be attached to one of the floating legs (usually the non-USD or least liquid currency). In these examples, the spread is applied to the first currency in a currency pair (i.e., EUR in EUR/USD)
 - XCSs involve notional exchange at the start and end of the swap in the two currencies, which in the case of non-MTM XCSs will always be the same value, which is based on an initially agreed FX rate (usually the spot FX at the time of execution)
 
 Mathematical formulae:
 
-The PV of, for examplee, a EUR/USD non-MTM XCS from the POV of the payer of the spread (B in figure 3.4) is:
+The PV of, for example, a EUR/USD non-MTM XCS from the POV of the payer of the spread (B in figure 3.4) is:
 
 $$PV = N F_0 w_0^* - NF_0 \sum_{i=1}^{T_1} (r_i^* + Z^*) d_i^* w_i^* - N F_0 w_{T_1}^* - N f_0 v_0 + N f_0 \sum_{j=1}^{T_2} r_j d_j v_j + N f_0 v_{T_2}$$
 
@@ -467,7 +467,7 @@ where $v_i$ represents the discount factor of a USD cashflow and $w_i^*$ the dis
 Customization:
 
 - The above describes one of the more common floating-floating swaps, but these are also completely bespoke and can be customized (date schedule. fixing schedule, day count conventions), similar to an IRS
-- It is also possible and common to have one or two fixed legs, where in the formula, $r_i^*$ and $r_j$ are replaced by $R^*$ and $R$, creating a swap where coutnerparties exchange a fixed series of payments in one currency for a floating series of payments in another
+- It is also possible and common to have one or two fixed legs, where in the formula, $r_i^*$ and $r_j$ are replaced by $R^*$ and $R$, creating a swap where counterparties exchange a fixed series of payments in one currency for a floating series of payments in another
 - Notionals can be varied each period and variable across each leg (ie..e, amortization in case of swaps hedging loans)
 
 Quoting convention:
@@ -476,7 +476,7 @@ $\text{'Currencies, Index(es), Start-date, End-date,}$ $\text{Frequency}^1$, $\t
 
 #### MTM cross-currency swaps (XCSs)
 
-- Most common form of XCS. It is the stardard XCS product traded in the interbank market. It's purpose and difference to non-MTM XCSs is to reduce credit exposure (CE) to counterparties by continually 'resetting' the notional on one leg throughout the length of the swap, in light of fluctuating exchange rates. This mitigates the overall PV of the derivative by restricting the impact of FX fluctuations
+- Most common form of XCS. It is the standard XCS product traded in the interbank market. It's purpose and difference to non-MTM XCSs is to reduce credit exposure (CE) to counterparties by continually 'resetting' the notional on one leg throughout the length of the swap, in light of fluctuating exchange rates. This mitigates the overall PV of the derivative by restricting the impact of FX fluctuations
 - In non-MTM XCSs, FX fluctuations can have a far greater impact on the PV of those derivatives than the actual underlying XCS market prices, and hence the affinity toward MTM XCSs
 
 Mathematical formulae:
@@ -485,14 +485,14 @@ The PV of, for example, a EUR/USD MTM XCS from the POV of the payer of the sprea
 
 $$PV = N F_0 w_0^* - NF_0 \sum_{i=1}^{T_1} (r_i^* + Z^*) d_i^* w_i^* - N F_0 w_{T_1}^* - N f_0 v_0 + N f_0 \sum_{j=1}^{T_2} f_{j-1} r_j d_j v_j + N \sum_{j=1}^{T_2} (f_j-1 - f_j) v_j + N f_{T_2} v_{T_2}$$
 
-It is common that one might seek to determine a mid-market spread, $Z^{*mid}$, for a XCS. To do this, the forecast rates and DFs in each currency need to be obtained from a multi-currency cureveste. The PV can then be set to zero and the formula rearranged in terms of $Z^{*mid}$. The same type of customizations are available as for non-MTM XCSs as are the quoting convetions.
+It is common that one might seek to determine a mid-market spread, $Z^{*mid}$, for a XCS. To do this, the forecast rates and DFs in each currency need to be obtained from a multi-currency curveset. The PV can then be set to zero and the formula rearranged in terms of $Z^{*mid}$. The same type of customizations are available as for non-MTM XCSs as are the quoting conventions.
 
 #### FX Swaps
 
 - FX swaps (or currency swaps) are agreements to complete two, offsetting FX exchanges: one exchange on a particular date and a re-exchange at a future date for an agreed price difference
 - I.e., one CP may agree to sell EUR100mm for USD at a spot at an exchange rate of 1.2500 and then after one month, purchase EUR100mm from USD at an exchange rate of 1.2480
 
-Mathmatical formulae:
+Mathematical formulae:
 
 Supposed the example from above: *buying the 1M €100mm EURUSD FX Swap at -20 points, i.e., EURUSD rates of 1.2500 and then 1.2480*. This equates to the following simple cashflows defined by the notional, initial FX rate and swap price:
 
@@ -517,15 +517,19 @@ Swaptions are not classified as linear IRD products. Chapter 20 exclusively outl
 
 - Households and general banking customers want to purchase items on credit (mortgages, credit cards, vehicles), and in doing so, they would like to pay fixed interest rates. Banks facilitate this spending by providing credit, however, they are payers of floating rates. This forms an implicit IRS where banks are receiving fixed interest payments (households pay fixed). To hedge this, banks must pay fixed on IRS to offset their exposure (they naturally pay floating)
 - For current deposits, banks profit from the difference between the central bank deposit rate and the rate paid for deposits (marginal rate). A bank can hedge the marginal rate by receiving fixed on an IRS
-- Pensions have an annuity obligation when members retire. To fulfuil this, pension funds invest cash, exchanged for the annuity, into euqities or other securities. If future expectations of interest rates fall then the implicit amount of growth assumed over many years may be insufficient to pay the annuity. Thus, a pension fund may choose to hedge long dated interest rates by receiving fixed on IRSs
+- Pensions have an annuity obligation when members retire. To fulfil this, pension funds invest cash, exchanged for the annuity, into equities or other securities. If future expectations of interest rates fall then the implicit amount of growth assumed over many years may be insufficient to pay the annuity. Thus, a pension fund may choose to hedge long dated interest rates by receiving fixed on IRSs
 
 #### Central governments
 
-- The treasury and debt management office (DMO) are responsible for public finances. As the DMO raises funds through taxes and sovereign issuance, the latter of which represents a supply of fixed rates, they may want to rate lock their funding by either reciving fixed on an IRS if they believe rates will fall, or paying fixed if they believe rates will rise
+- The treasury and debt management office (DMO) are responsible for public finances. As the DMO raises funds through taxes and sovereign issuance, the latter of which represents a supply of fixed rates, they may want to rate lock their funding by either receiving fixed on an IRS if they believe rates will fall, or paying fixed if they believe rates will rise
 - Hedging bonds with IRSs is not a one-for-one hedge, which is known as an asset swap. Asset swaps come with a type of basis risk called asset swap spread risk (not dissimilar to single currency basis risk between two indexes), which is the risk that IRS rates will move more or less than the yields on the bonds to the same respective maturity that they are hedging
 - A treasury does not necessarily have to raise money in the domestic currency (can issue in USD), widening its pool of potential investors. In this case, the DMO will want to hedge all market risk exposures so that its overall exposure is to its domestic currency only (usually through a fixed/fixed XCS)
 
 #### Central banks
+
+- Central banks preside over their own domestic currency, and as a defensive measure, they build up foreign reserves. This is done by buying foreign currency with domestic currency, which when done with enough nominal size, will depreciate the domestic currency. This is usually supportive of inflation for two reasons: import prices rise, and the economy can be stimulated by foreign investment increasing growth and wages.
+- In order to facilitate a functional financial system, any domestic central bank is expected to provide liquidity to its domestic banks through some standing facilities (and given the globalized nature of modern finance, domestic banks often need to access to liquidity in foreign currencies). Central banks must have this foreign reserve available, but as they are not keen to offer this from their variable foreign exchange reserves, central banks have created swap lines between themselves to exchange each other's domestic currency. Swap lines represent XCSs, so by utilizing these derivatives, a central bank gains access to a foreign currency but does not change the FX exposure of their foreign exchanges reserves account (neither central bank is exposed to the movement of FX rates via the transaction)
+- A central bank with the right amount of FX exposure invested in government bonds of a foreign currency may believe interest rates in that foreign currency to rise, and rather to sell the FX reserves, it may be better to hedge this change in rates using IRSs
 
 #### Non-financial corporations (NFCs)
 
@@ -557,7 +561,7 @@ Swaptions are not classified as linear IRD products. Chapter 20 exclusively outl
 
 ### Chapter 15 - Principal Component Analysis
 
-### Chapter 16 - Customised Risk Management
+### Chapter 16 - Customized Risk Management
 
 ### Chapter 17 - Regulatory Capital, Leverage, and Liquidity
 
