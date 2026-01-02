@@ -462,12 +462,12 @@ The PV of, for example, a EUR/USD non-MTM XCS from the POV of the payer of the s
 
 $$PV = N F_0 w_0^\ast - NF_0 \sum_{i=1}^{T_1} (r_i^\ast + Z^\ast) d_i^\ast w_i^\ast - N F_0 w_{T_1}^\ast - N f_0 v_0 + N f_0 \sum_{j=1}^{T_2} r_j d_j v_j + N f_0 v_{T_2}$$
 
-where $v_i$ represents the discount factor of a USD cashflow and $w_i^*$ the discount factor of the EUR cashflow. $f_0$ represents the FX rate which was fixed at the time of execution and $F_0$ represents the current spot FX rate. $N$ is the notional of the domestic currency where the bp spread is attached, so in this case is in EUR. It is also usual (although not necessary) to assume that $f_0 = F_0$ when pricing a new trade. The rates $r_i^*, r_j$ are determined according to equation 3.1 when RFRs are the leg indexes.
+where $v_i$ represents the discount factor of a USD cashflow and $w_i^\ast$ the discount factor of the EUR cashflow. $f_0$ represents the FX rate which was fixed at the time of execution and $F_0$ represents the current spot FX rate. $N$ is the notional of the domestic currency where the bp spread is attached, so in this case is in EUR. It is also usual (although not necessary) to assume that $f_0 = F_0$ when pricing a new trade. The rates $r_i^\ast, r_j$ are determined according to equation 3.1 when RFRs are the leg indexes.
 
 Customization:
 
 - The above describes one of the more common floating-floating swaps, but these are also completely bespoke and can be customized (date schedule. fixing schedule, day count conventions), similar to an IRS
-- It is also possible and common to have one or two fixed legs, where in the formula, $r_i^*$ and $r_j$ are replaced by $R^*$ and $R$, creating a swap where counterparties exchange a fixed series of payments in one currency for a floating series of payments in another
+- It is also possible and common to have one or two fixed legs, where in the formula, $r_i^\ast$ and $r_j$ are replaced by $R^\ast$ and $R$, creating a swap where counterparties exchange a fixed series of payments in one currency for a floating series of payments in another
 - Notionals can be varied each period and variable across each leg (ie..e, amortization in case of swaps hedging loans)
 
 Quoting convention:
