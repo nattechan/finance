@@ -862,13 +862,13 @@ Since no market-making fee was added in either case each swap has a MTM value of
 
 ##### Levenberg-Marquardt method
 
-**Risk:**
+#### Risk (quant library)
 
 **Appendix:**
 
-***Gradient descent method:***
+##### Gradient descent method math
 
-***Gauss-Newton method:***
+##### Gauss-Newton method math
 
 ##### Fixed point iteration
 
@@ -894,7 +894,7 @@ Since no market-making fee was added in either case each swap has a MTM value of
 
 #### Performance enhancements
 
-**Risk:**
+#### Risk
 
 **Appendix:**
 
