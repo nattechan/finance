@@ -547,49 +547,49 @@ Figure 4.1 demonstrates netted legs from the POV of Alpha Corp. if it pursues fo
 *Figure 4.1: Netted Cash Flows for Alpha Corp. Foreign Issuance:*
 
 ```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│              Three IRD Products Netted Together:                            │
-│                                                                             │
-│   EUR IRS          USD IRS            Non-MTM EUR/USD XCS                   │
-│  ┌───────┐       ┌─────────┐            ┌──────────┐                        │
-│  │  Pay  │       │ Receive │            │          │                        │
-│  │ Fixed │       │  Fixed  │            │          │                        │
-│  │  EUR  │       │   USD   │            │          │                        │
-│  └───┬───┘       └────┬────┘            └─────┬────┘                        │
-│      │                │                       │                             │
-│      │ ┌──────────────▼───────────────┐       │                             │
-│      │ │    USD Bond Issue            │       │                             │
-│      │ │  (Receive Fixed USD from     │       │                             │
-│      │ │   investors + USD credit spl)│       │                             │
-│      │ └──────────────┬───────────────┘       │                             │
-│      │                │                       │                             │
-│      │                │ ┌─────────────────────▼──────┐                      │
-│      │                └─│  Pay Floating USD          │                      │
-│      │                  │  to USD IRS                │                      │
-│      │                  └──────────┬─────────────────┘                      │
-│      │                             │                                        │
-│      │                    ┌────────▼──────────┐                             │
-│      │                    │ Receive Floating  │                             │
-│      │                    │ USD from XCS      │                             │
-│      │                    └────────┬──────────┘                             │
-│      │                             │ (Nets to zero)                         │
-│      │                             │                                        │
-│      │                    ┌────────▼──────────┐                             │
-│      └────────────────────│ Receive Floating  │                             │
-│                           │ EUR from EUR IRS  │                             │
-│                           └────────┬──────────┘                             │
-│                                    │                                        │
-│                           ┌────────▼──────────┐                             │
-│                           │ Pay Fixed EUR to  │  ← Outstanding              │
-│                           │ XCS (EUR IRS rate)│     commitment              │
-│                           └───────────────────┘                             │
-│                                                                             │
-│  Net Result = EUR IRS rate + USD credit spread + EUR/USD XCS spread         │
-│                                                                             │
-│  Outstanding Commitments (Right-most legs that don't net):                  │
-│  • Pay fixed EUR interest                                                   │
-│  • EUR notional exchanges                                                   │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────────────────┐
+│              Three IRD Products Netted Together:                      │
+│                                                                       │
+│   EUR IRS          USD IRS            Non-MTM EUR/USD XCS             │
+│  ┌───────┐       ┌─────────┐            ┌──────────┐                  │
+│  │  Pay  │       │ Receive │            │          │                  │
+│  │ Fixed │       │  Fixed  │            │          │                  │
+│  │  EUR  │       │   USD   │            │          │                  │
+│  └───┬───┘       └────┬────┘            └─────┬────┘                  │
+│      │                │                       │                       │
+│      │ ┌──────────────▼───────────────┐       │                       │
+│      │ │    USD Bond Issue            │       │                       │
+│      │ │  (Receive Fixed USD from     │       │                       │
+│      │ │   investors + USD credit spl)│       │                       │
+│      │ └──────────────┬───────────────┘       │                       │
+│      │                │                       │                       │
+│      │                │ ┌─────────────────────▼──────┐                │
+│      │                └─│  Pay Floating USD          │                │
+│      │                  │  to USD IRS                │                │
+│      │                  └──────────┬─────────────────┘                │
+│      │                             │                                  │
+│      │                    ┌────────▼──────────┐                       │
+│      │                    │ Receive Floating  │                       │
+│      │                    │ USD from XCS      │                       │
+│      │                    └────────┬──────────┘                       │
+│      │                             │ (Nets to zero)                   │
+│      │                             │                                  │
+│      │                    ┌────────▼──────────┐                       │
+│      └────────────────────│ Receive Floating  │                       │
+│                           │ EUR from EUR IRS  │                       │
+│                           └────────┬──────────┘                       │
+│                                    │                                  │
+│                           ┌────────▼──────────┐                       │
+│                           │ Pay Fixed EUR to  │  ← Outstanding        │
+│                           │ XCS (EUR IRS rate)│     commitment        │
+│                           └───────────────────┘                       │
+│                                                                       │
+│  Net Result = EUR IRS rate + USD credit spread + EUR/USD XCS spread   │
+│                                                                       │
+│  Outstanding Commitments (Right-most legs that don't net):            │
+│  • Pay fixed EUR interest                                             │
+│  • EUR notional exchanges                                             │
+└───────────────────────────────────────────────────────────────────────┘
 ```
 
 If Alpha chooses to issue domestically then it pays a fixed rate equal to EUR IRS rate (RFR benchmark) + EUR credit spread (say 1% and +40bps for a total of 1.40%). For foreign issuance the figure demonstrates the net payment is equal to EUR IRS rate (RFR) + USD credit spread + EUR/USD XCS spread (non-MTM). Supposing the two spreads were +50bps and -30bps resp., then the overall fixed rate for comparison is 1.2%, so it is advantageous for Alpha to consider swapped foreign issuance.
@@ -624,9 +624,41 @@ The coupon is set at 1.375% and the issuer receives a T+5 7Y RFR fixed at 1.375%
 
 #### Asset managers
 
+- Wealth management funds and pension fund providers need to hold physical products/securities as investments of their capital. They will utilize IRDs to hedge or get IR exposure correlated with other assets, diversifying their portfolios
+- One way asset managers will utilize IRDs is to gain specific exposure to credit risk (i.e., buying a corporate bond and paying fixed on an IRS, so that any PnL generated is coming from the credit spread of the bond). This, however, introduces asset swap spread risk. Another way the asset manager can hedge IR delta risk is to sell a benchmark government bond, allowing the manager to capture just credit spread risk
+
+Asset managers may choose to hedge by paying IRSs for the following reasons:
+
+1. Short selling government bonds means that they must be sourced using repo transactions (an overhead operationally and at times can become expensive if those bonds go 'special'). This type of transaction is subject to rollover risk, where short tenor repos prove difficult to repeat for an extended period of time
+2. Underlying credit bond might be benchmarked against IRSs rather than government bonds. In Euro area this is particularly common. Tom compare corporations in the Euro area, benchmarking tends to be done against a common ESTR index
+3. The asset manager might be comfortable to won the swap spread risk, particularly if initiated at historically favorable levels
+
+For this type of bond hedging, there are three specific types of IRS that are often chosen:
+
+1. Matched maturity or yield-yield asset swap: two names for the same IRS. It is a swap with the same maturity as the maturity of the bond. It has a front stub on both fixed and floating legs until the next bond coupon payment, and the rate will be the same as the mid-market rate as with any other IRS. The notional on the swap is chosen to match the IR delta on the bond, so it is often not the same as the bond notional. The conventions of a yield-yield swap are typical of standard IRSs of the given currency
+2. Par-par asset swap: more complicated than the above. An investor pays a price of par (i.e., 100) for the bond (either including accrued interest or, less commonly, excluding it by choice) and pays the fixed leg on an IRS with notional and convention to match the bond coupon cashflows. The floating leg has a short front stub with maturity mimicking the bond's, and the same notional as the fixed leg (and therefore also the bond). A bp spread is applied to the floating leg to equate the economics
+3. Net proceeds swap: probably the most complicated swap to execute against a bond. In this case, the investor pays the dirty price (i.e., the clean price plus accrued interest) of the bond. The fixed leg of the IRS is the same as with the par-par swap, whereby the bond's cashflows are replicated. But, the floating leg is different in one respect - the notional is set to be reflective of the dirty price $\left(\frac{\text{dirty price}}{100} \times \text{fixed notional}\right)$, with a bp spread applicable to the floating RFR component to equate the economics
+
+Why are three forms of asset swap used? The first is the easiest measure, for calculation and tracking. The second and third provide measures designed to see the actual floating interest rate payments received relative to RFR, albeit on marginally different terms, and can be representative of accounting structures. It is an example of subjectivity of trade construction and risk management. Note as the notionals are different, the delta risks of the IRSs are also different. The different vols of the bond assets relative to associated swaps will result in one type providing the best delta hedge, however which will differ in different market conditions.
+
+*Example 4.3:*
+
+Two different investors of Alpha Corp.'s domestic issuance choose to purchase the bond on asset swap in €50mm each. At pricing, Alpha Corp.'s bond was in fact issued with a 1.375% coupon against a yield to maturity struck at 1.4%. This means that the new bond priced at €99.85, instead of par.
+
+The first investor enters a yield-yield asset swap. He pays fixed at 1.000% and receives RFR floating leg. The yield-yield asset swap spread is defined as 40bps. The only adjustment factored here relative to the benchmark mid-market 7Y is the forward adjustment (+0.5bps on fixed leg). The notional on the IRS is €49.6mm to give analytic delta neutrality.
+
+The second investor enters a par-par asset swap. The investor pays a fixed leg of 1.375% replicating the bond cashflows and receives RFR + 37.6bps. The adjustments that have been factored into the RFR leg are the standard spread (+37.5bps), convention adjustment (+0.3bps), and make to par coupon adjustment (+0.2bps). The notional on this IRS is €50mm and the analytic delta is not neutral.
+
+Since no market-making fee was added in either case each swap has a MTM value of zero at inception. Even though their terms are different, their initial values are identical.
+
 #### Hedge funds and speculators
 
+- Hedge funds and speculators use derivatives to create leverage. With relatively small amounts of invested capital, they are able to participate in relatively large returns and exposure (if markets move the right way)
+- One particular type of speculator, called a commodity trading account (CTA), trades exclusively on exchanges. STIR futures are an example of a product they would treat as a 'commodity' and engage in buying and selling its contracts, possibly as part of larger strategies involving non-IR products. As swap futures become more liquid in exchanges, it is likely that the CTAs will also expand, applying their algorithmic trading strategies to these products too
+
 #### Banks
+
+- Banks have the most use of IRDs. Not only are they facilitating most of the activities of the parties above, they also have their own risks to manage. Not only do they partake in debt raising (similar to the parties above), as a cross-asset, market making bank, they will accrue multiple IR risks from countless areas and activities, some straightforward while others complex.
 
 ### Chapter 5 - Cash, Collateral, and Credit
 
