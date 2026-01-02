@@ -255,7 +255,7 @@ Customization:
 
 Stub periods:
 
-When start and end dates are specified without an associated relationship, it creates stub periods, placed in IRS either at the start, end, or both, so that the remaining part of the leg follows teh specified frequency and reverts to the form of a standard IRS.
+When start and end dates are specified without an associated relationship, it creates stub periods, placed in IRS either at the start, end, or both, so that the remaining part of the leg follows the specified frequency and reverts to the form of a standard IRS.
 
 Mathematical formulae:
 
@@ -429,7 +429,7 @@ The current mid-market IRR can also be determined from the floating leg's foreca
 
 - Similar to STIR futures in that they trade on exchanges in price terms, with margining principles applied, and a single contract is a predetermined notional (typically 0.1mm) set by the exchange
 - Standard IMM only settlement days (frequently March, June, September, December), physically settled (parties with open positions at expiry will enter into a OTC IRS)
-- In order to complete teh action of settlement at expiry, counterparties either pay or receive an amount of cash to the clearing house dependent upon the EDSP of the contract (final trading price of the contract before expiry)
+- In order to complete the action of settlement at expiry, counterparties either pay or receive an amount of cash to the clearing house dependent upon the EDSP of the contract (final trading price of the contract before expiry)
 - IRS futures are not particularly liquid or well traded
 
 Mathematical formulae:
@@ -639,7 +639,7 @@ For this type of bond hedging, there are three specific types of IRS that are of
 2. Par-par asset swap: more complicated than the above. An investor pays a price of par (i.e., 100) for the bond (either including accrued interest or, less commonly, excluding it by choice) and pays the fixed leg on an IRS with notional and convention to match the bond coupon cashflows. The floating leg has a short front stub with maturity mimicking the bond's, and the same notional as the fixed leg (and therefore also the bond). A bp spread is applied to the floating leg to equate the economics
 3. Net proceeds swap: probably the most complicated swap to execute against a bond. In this case, the investor pays the dirty price (i.e., the clean price plus accrued interest) of the bond. The fixed leg of the IRS is the same as with the par-par swap, whereby the bond's cashflows are replicated. But, the floating leg is different in one respect - the notional is set to be reflective of the dirty price $\left(\frac{\text{dirty price}}{100} \times \text{fixed notional}\right)$, with a bp spread applicable to the floating RFR component to equate the economics
 
-Why are three forms of asset swap used? The first is the easiest measure, for calculation and tracking. The second and third provide measures designed to see the actual floating interest rate payments received relative to RFR, albeit on marginally different terms, and can be representative of accounting structures. It is an example of subjectivity of trade construction and risk management. Note as the notionals are different, the delta risks of the IRSs are also different. The different vols of the bond assets relative to associated swaps will result in one type providing the best delta hedge, however which will differ in different market conditions.
+Why are three forms of asset swap used? The first is the easiest measure, for calculation and tracking. The second and third provide measures designed to see the actual floating interest rate payments received relative to RFR, albeit on marginally different terms, and can be representative of accounting structures. It is an example of subjectivity of trade construction and risk management. Note as the notionals are different, the delta risks of the IRSs are also different. The different volatilities of the bond assets relative to associated swaps will result in one type providing the best delta hedge, however which will differ in different market conditions.
 
 *Example 4.3:*
 
@@ -662,40 +662,634 @@ Since no market-making fee was added in either case each swap has a MTM value of
 
 ### Chapter 5 - Cash, Collateral, and Credit
 
+#### Cash balances
+
+**Introduction:**
+
+##### Cash balance profiles
+
+##### Daily PnL accounting
+
+#### Collateral
+
+**Introduction:**
+
+##### Credit support annexes (CSAs)
+
+##### Pricing derivatives with different CSAs
+
+##### Cheapest to deliver (CTD) discount curves
+
+##### Standard CSAs for benchmark valuation
+
+##### Optionality
+
+##### Unilateral CSAs
+
+#### Credit Risk
+
+##### Credit exposure (CE)
+
+##### Potential future exposure (PFE)
+
+##### Expected exposure (EE)
+
+##### EPE, EE, and EEPE
+
+##### Credit valuation adjustment (CVA)
+
+#### Funding valuation adjustment (FVA)
+
 ### Chapter 6 - Single Currency Curve Modeling
+
+#### General curveset construction
+
+##### Introduction and principles
+
+##### Foundation of a curve
+
+##### Collection of curves
+
+##### Market data and knots
+
+##### Interpolation styles of a curve
+
+##### Numerical solver
+
+##### Risk consideration
+
+##### Practice example
+
+##### Accuracy and value considerations
+
+##### Opening and closing curvesets
+
+#### Centrally cleared counterparty (CPP) adjustments
+
+##### Impact of CPP basis on curve construction
+
+**Appendix:**
+
+##### Summary of interpolation styles
+
+##### Log-linear DF interpolation
+
+##### Log-cubic DF interpolation
 
 ### Chapter 7 - Multi-Currency Curve Modeling
 
+#### Forward FX rates
+
+#### Cross-currency swaps (XCSs)
+
+#### XCSs and collateral
+
+#### MTM and non-MTM XCSs
+
+#### Curve structure
+
+**Appendix:**
+
+##### Interest rate parity restated
+
+##### Forward FX rate equivalence
+
+##### FX swap pricing
+
+##### MTM XCS pricing
+
+##### Mid-market XCS spread
+
+##### Bootstrapping the DFs, $w_i^\ast$
+
 ### Chapter 8 - Term Structure of Interest Rate Curves
+
+#### Transmission mechanism
+
+##### The deposit rate
+
+##### Standing facilities
+
+#### Term structure
+
+##### What drives the shape of yield curves in a single currency
+
+##### What drives the shape and nature of the cross-currency basis
+
+**Appendix:**
+
+##### Term structure and volatility
 
 ### Chapter 9 - Delta and Basis Risk
 
+#### Defining market risk
+
+#### Calculating delta or basis risk
+
+##### Analytic risk
+
+##### Numeric (or automatic) risk
+
+#### Numeric risk in detail
+
+##### Processes
+
+##### Design of a risk model
+
+##### Properties of a risk model
+
+##### Risking a trade or a portfolio
+
+##### Risk bleed
+
+#### Practical market risks
+
+**Appendix:**
+
+##### Approximating risks with numerical processes
+
 ### Chapter 10 - Risk Models
+
+#### Using multiple risk models
+
+#### Risking with multiple models
+
+#### Jacobian transformations for risk
+
+#### Par forward (fwd) based models
+
+#### Other uses of Jacobian transformations
+
+##### PnL estimates and market movements
+
+##### Covariance matrices
+
+##### Cross-gamma grids risk
+
+#### Summary of transformation formulae
+
+**Appendix:**
+
+##### Jacobian transformations of market movements
+
+##### Jacobian transformations of covariance matrices
 
 ### Chapter 11 - Quant Library and Automatic Differentiation
 
+#### Core library objects
+
+##### Curve
+
+##### Schedule
+
+##### Swap
+
+#### Automatic differentiation and dual numbers
+
+##### Dual
+
+#### Curve solver
+
+##### Analytic or numeric process
+
+##### Objective functions
+
+##### Optimization algorithms
+
+##### Gradient descent method
+
+##### Gauss-Newton method
+
+##### Levenberg-Marquardt method
+
+**Risk:**
+
+**Appendix:**
+
+***Gradient descent method:***
+
+***Gauss-Newton method:***
+
+##### Fixed point iteration
+
+##### Risk of calibrating instruments
+
 ### Chapter 12 - Advanced Curve Building
+
+#### Log-cubic spline interpolation
+
+#### Mixed interpolation
+
+#### Layered curvesets
+
+#### Turns
+
+#### Notes, knots, and instrument selection
+
+##### Monetary policy meeting dates and log-linear interpolation
+
+##### Par tenors and log-cubic spline interpolations
+
+#### A practical curveset
+
+#### Performance enhancements
+
+**Risk:**
+
+**Appendix:**
+
+##### B-splines
+
+##### Spline space
 
 ### Chapter 13 - Multi-Currency Risk
 
+#### Cross-currency basis risk
+
+#### FX risk
+
+#### Non-standard CSAs
+
+#### Multi-CSAs
+
+#### Risk management
+
 ### Chapter 14 - Value at Risk
+
+#### Portfolio construction
+
+#### Value at risk (VaR)
+
+#### Historical VaR simulation model
+
+#### Variance-covariance (CoVaR) model
+
+##### Construction of covariance matrices
+
+##### Covariance matrix smoothing
+
+##### CoVar multiplier and VaR calculation
+
+#### Using CoVaR in practice
+
+##### Single instrument VaR minimization
+
+##### Allocation of VaR
+
+##### Multiple instrument VaR minimization
+
+#### Properties of VaR
+
+#### Expected shortfall (ES)
+
+**Appendix:**
+
+##### The CoVaR approach, mathematically
+
+##### CoVaR is a subadditive
+
+##### Deriving single instrument VaR minimization trades
+
+##### Deriving multiple instrument VaR minimization trades
+
+##### Comparing ES with VaR
+
+##### Estimating covariance matrices using prices
 
 ### Chapter 15 - Principal Component Analysis
 
+#### General application
+
+#### PCA Risk representation
+
+#### Drawbacks with using PCA
+
+#### Practical uses of PCA
+
+##### Correlation and covariance smoothing
+
+##### Multi-variate random walks
+
+**Appendix:**
+
+##### Establishing PCA through eigenvalues and eigenvectors
+
+##### Cholesky decomposition
+
 ### Chapter 16 - Customized Risk Management
+
+#### General risk management
+
+#### Benchmark trade combinations
+
+##### Types of trades
+
+##### Directionality
+
+##### Hedging considerations
+
+#### Trader risk models
+
+##### Risk representation
+
+##### PnL representation
+
+#### Market risk management
+
+##### Prioritization
+
+##### Incorporating VaR
+
+##### Simplified portfolio representation
+
+#### Consolidating everything
 
 ### Chapter 17 - Regulatory Capital, Leverage, and Liquidity
 
+#### Basel Accords
+
+#### Capital
+
+##### What is capital?
+
+##### Why is capital important to monitor?
+
+##### Capital ratios
+
+##### Risk weighted assets (RWAs)
+
+##### Basel rules for RWA calculation
+
+##### Management of RWAs
+
+##### Capital requirements for market risks
+
+#### Leverage Ratio
+
+##### Basel rules for the exposure measure calculation
+
+##### A note on centrally cleared counterparties (CPPs)
+
+#### Liquidity
+
+##### Liquidity coverage ratio (LCR)
+
+##### Net stable funding ratio (NSFR)
+
+#### Overview
+
+**Appendix:**
+
+##### Aumann-Shapley allocation concept
+
 ### Chapter 18 - Market-Making and Price-Taking
+
+#### Context of the whole market
+
+#### Market-maker considerations
+
+##### Curve model & pricing curves
+
+##### Outside influence
+
+##### Assessment of risk and margin
+
+##### Reset risk hedging costs
+
+##### Market risks hedging costs
+
+##### Liquidity and volatility hedging costs
+
+##### Regulatory capital hedging costs
+
+##### Strategy and game theory
 
 ### Chapter 19 - Electronic Trading
 
+#### Mid-market
+
+##### Level 1 assets
+
+##### Single instrument pricing algorithms
+
+##### Least squares regression
+
+##### Bayesian inference
+
+#### Slow and fast calculation
+
+#### Automated pricing model
+
+##### Equivalence of portfolios
+
+##### Parametrizing the model
+
+##### Solving the system
+
+#### Model extensions
+
+##### Volume and market impact
+
+##### Inventory hedging
+
+##### Correlation
+
+##### Liquidity and volatility
+
+##### Other possible extensions
+
+**Appendix:**
+
+##### Mean intrinsic depth average
+
+##### Bayesian inference of market movements
+
 ### Chapter 20 - Swaptions and Volatility
+
+#### Options basics
+
+#### Swaption pricing
+
+##### Pricing formulae
+
+##### Receiver-payer (put-call) parity
+
+##### Python code for swaption pricing
+
+##### Intrinsic and optionality value
+
+##### Log-normal distribution and shifting
+
+##### Implying distributions from swaption prices
+
+#### Volatility
+
+##### At-the-money (ATM) straddles
+
+##### Python code for implied volatility
+
+##### Measures of volatility
+
+##### Volatility smiles and skew
+
+##### Volatility surface
+
+##### Volatility of forward rates and correlation
+
+##### Forward volatility
+
+#### Greeks
+
+##### Python code for swaption greeks
+
+#### Market-making and price-taking
+
+##### Named strategies
+
+#### Extraneous topics
+
+**Appendix:**
+
+##### IRR formula for cash settlement
+
+##### Implying distributions from swaption prices math
+
+##### Estimating $\sigma_n$ given ATM swaption implied $\sigma_{LN}$
+
+##### Deriving forward volatility
 
 ### Chapter 21 - Gamma and Cross-Gamma Risk
 
+#### Defining gamma
+
+#### Classical description of gamma
+
+#### Modern description of gamma
+
+#### Defining cross-gamma
+
+#### Gamma and cross-gamma risks in portfolios
+
+##### STIR futures hedged with IMM IRSs
+
+##### ZCSs hedged with IRSs
+
+##### Cash settled swaptions hedged with physically settled swaptions, and zero-wide collars
+
+##### Trades with different CSAs
+
+##### Misaligned payment dates
+
+##### Non-MTM XCSs hedged with MTM XCSs
+
+#### Hedging gamma and cross-gamma
+
+##### Cross-gamma grids hedging
+
+##### Cross-gamma hedging strategies
+
 ### Chapter 22 - Analytic Cross-Gamma
+
+#### Historical context
+
+#### Discounting risk
+
+#### Mathematical basis
+
+#### Trade types
+
+#### First order risks
+
+#### Second order risks
+
+#### Practical algorithms
+
+##### New swap class
+
+##### Forward zero coupon risks
+
+##### Cross-gamma of fixed and non-compounded trade types
+
+##### Jacobian transformations
+
+#### Cross-gamma and PnL estimates
+
+#### Gamma of IRSs
+
+##### The value of Gamma
+
+**Appendix:**
+
+##### Estimating the gamma of IRSs
+
+##### STIR Futures convexity adjustment (FCA)
+
+##### ZCS convexity adjustment (ZCA)
+
+##### Impact of IRS risk rather than zero coupon deposits
+
+##### Synthetic gamma with a discrete swaption series
+
+##### VBA code for cross-gamma of compounded trade types
 
 ### Chapter 23 - Constructing Trade Strategies
 
+#### Hedging trade directionality
+
+##### PCAedging
+
+##### CoVaR hedging
+
+##### Multivariate least squares regression (MLSR)
+
+#### Carry and Roll
+
+##### Cost-of-carry
+
+##### Roll-down
+
+#### Sharpe ratio
+
+##### Expected PnL
+
+##### Volatility of PnL
+
+##### Roll-down / volatility of trade
+
+##### Adjusted roll-down / volatility of PnL ratio
+
+##### Efficient frontier and CAPM
+
+##### Using other assumptions
+
+**Appendix:**
+
+##### PCA directionality minimization
+
+##### Multivariate least squares regression
+
 ### Chapter 24 - Reset Risk
+
+#### Resets and reset ladders
+
+#### Characterizing reset risk
+
+##### The expected path of fixings and risk apportionment
+
+##### Continuous hedging mechanism and overall risk
+
+##### Practical example of reset risk assessment
+
+##### Central bank policy meeting dates
+
+##### Reviewing
+
+#### Benefits of a VaR based approach
+
+**Appendix:**
+
+##### Establishing a relationship between the cash rate and the next IMM rate
+
+##### Deriving the IMM hedge for VaR minimization
+
+##### Deriving the overall reset risk VaR multiplier
