@@ -547,49 +547,49 @@ Figure 4.1 demonstrates netted legs from the POV of Alpha Corp. if it pursues fo
 *Figure 4.1: Netted Cash Flows for Alpha Corp. Foreign Issuance:*
 
 ```text
-┌───────────────────────────────────────────────────────────────────────┐
-│              Three IRD Products Netted Together:                      │
-│                                                                       │
-│   EUR IRS          USD IRS            Non-MTM EUR/USD XCS             │
-│  ┌───────┐       ┌─────────┐            ┌──────────┐                  │
-│  │  Pay  │       │ Receive │            │          │                  │
-│  │ Fixed │       │  Fixed  │            │          │                  │
-│  │  EUR  │       │   USD   │            │          │                  │
-│  └───┬───┘       └────┬────┘            └─────┬────┘                  │
-│      │                │                       │                       │
-│      │ ┌──────────────▼───────────────┐       │                       │
-│      │ │    USD Bond Issue            │       │                       │
-│      │ │  (Receive Fixed USD from     │       │                       │
-│      │ │   investors + USD credit spl)│       │                       │
-│      │ └──────────────┬───────────────┘       │                       │
-│      │                │                       │                       │
-│      │                │ ┌─────────────────────▼──────┐                │
-│      │                └─│  Pay Floating USD          │                │
-│      │                  │  to USD IRS                │                │
-│      │                  └──────────┬─────────────────┘                │
-│      │                             │                                  │
-│      │                    ┌────────▼──────────┐                       │
-│      │                    │ Receive Floating  │                       │
-│      │                    │ USD from XCS      │                       │
-│      │                    └────────┬──────────┘                       │
-│      │                             │ (Nets to zero)                   │
-│      │                             │                                  │
-│      │                    ┌────────▼──────────┐                       │
-│      └────────────────────│ Receive Floating  │                       │
-│                           │ EUR from EUR IRS  │                       │
-│                           └────────┬──────────┘                       │
-│                                    │                                  │
-│                           ┌────────▼──────────┐                       │
-│                           │ Pay Fixed EUR to  │  ← Outstanding        │
-│                           │ XCS (EUR IRS rate)│     commitment        │
-│                           └───────────────────┘                       │
-│                                                                       │
-│  Net Result = EUR IRS rate + USD credit spread + EUR/USD XCS spread   │
-│                                                                       │
-│  Outstanding Commitments (Right-most legs that don't net):            │
-│  • Pay fixed EUR interest                                             │
-│  • EUR notional exchanges                                             │
-└───────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│                  Three IRD Products Netted Together:                 │
+│                                                                      │
+│   EUR IRS          USD IRS            Non-MTM EUR/USD XCS            │
+│  ┌───────┐       ┌─────────┐            ┌──────────┐                 │
+│  │  Pay  │       │ Receive │            │          │                 │
+│  │ Fixed │       │  Fixed  │            │          │                 │
+│  │  EUR  │       │   USD   │            │          │                 │
+│  └───┬───┘       └────┬────┘            └─────┬────┘                 │
+│      │                │                       │                      │
+│      │ ┌──────────────▼───────────────┐       │                      │
+│      │ │    USD Bond Issue            │       │                      │
+│      │ │  (Receive Fixed USD from     │       │                      │
+│      │ │   investors + USD credit spl)│       │                      │
+│      │ └──────────────┬───────────────┘       │                      │
+│      │                │                       │                      │
+│      │                │ ┌─────────────────────▼────┐                 │
+│      │                └─│  Pay Floating USD        │                 │
+│      │                  │  to USD IRS              │                 │
+│      │                  └──────────┬───────────────┘                 │
+│      │                             │                                 │
+│      │                    ┌────────▼──────────┐                      │
+│      │                    │ Receive Floating  │                      │
+│      │                    │ USD from XCS      │                      │
+│      │                    └────────┬──────────┘                      │
+│      │                             │ (Nets to zero)                  │
+│      │                             │                                 │
+│      │                    ┌────────▼──────────┐                      │
+│      └────────────────────│ Receive Floating  │                      │
+│                           │ EUR from EUR IRS  │                      │
+│                           └────────┬──────────┘                      │
+│                                    │                                 │
+│                           ┌────────▼──────────┐                      │
+│                           │ Pay Fixed EUR to  │  ← Outstanding       │
+│                           │ XCS (EUR IRS rate)│     commitment       │
+│                           └───────────────────┘                      │
+│                                                                      │
+│  Net Result = EUR IRS rate + USD credit spread + EUR/USD XCS spread  │
+│                                                                      │
+│  Outstanding Commitments (Right-most legs that don't net):           │
+│  • Pay fixed EUR interest                                            │
+│  • EUR notional exchanges                                            │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 If Alpha chooses to issue domestically then it pays a fixed rate equal to EUR IRS rate (RFR benchmark) + EUR credit spread (say 1% and +40bps for a total of 1.40%). For foreign issuance the figure demonstrates the net payment is equal to EUR IRS rate (RFR) + USD credit spread + EUR/USD XCS spread (non-MTM). Supposing the two spreads were +50bps and -30bps resp., then the overall fixed rate for comparison is 1.2%, so it is advantageous for Alpha to consider swapped foreign issuance.
@@ -696,7 +696,7 @@ Here the example interest rate of 0.8% on the cash balance is not equal to the R
 
 A cash balance profile details the expected cash balance of a portfolio at differing future dates. It is measured by aggregating all cashflows on a given day including accumulated interest amounts from previous days' balance. In the previous example, the cash balance at the 9M point would be $50,100 after the accrual of some interest each day after the initial receipt of $50,000.
 
-For simple, mid-market IRDs, the expected cash balance profile is often easy to qualitatively describe. Firstly, for any derivative which has only a single cashflow date, there will never be any expectation of any cash balance (mid-market FRAs, ZCSs, single period IRSs/OISs). Thi is because any floating or fixed cashflows paid or received will be priced to net to zero, and therefore no net cashflows will ever be forecast to be exchanged. The trades still have risk, of course, and net cashflows will arise as market movements give rise to MTM PnL, we are just stating the expected nature of a zero cash balance profile for certain trade types executed at mid-market. 
+For simple, mid-market IRDs, the expected cash balance profile is often easy to qualitatively describe. Firstly, for any derivative which has only a single cashflow date, there will never be any expectation of any cash balance (mid-market FRAs, ZCSs, single period IRSs/OISs). Thi is because any floating or fixed cashflows paid or received will be priced to net to zero, and therefore no net cashflows will ever be forecast to be exchanged. The trades still have risk, of course, and net cashflows will arise as market movements give rise to MTM PnL, we are just stating the expected nature of a zero cash balance profile for certain trade types executed at mid-market.
 
 Secondly, where derivatives have multiple cashflows, there is generally a particular structure to the IR curve that allows a qualitative assessment (flat, upward sloping, downward sloping, bowing). Any derivative whose initial PV is zero will always have an expected final cash balance of zero. This is because a derivative with zero PV cannot be expected to gain or lose an amount of cash after its maturity. The interim, forecast, cash balance, however can feasibly have any pattern. These depend on the structure of all of the interim cashflows that take place. Cash balances are central to considering future discounting risk and the impact to PnL if discounting basis changes or the terms of a CSA is restructured.
 
