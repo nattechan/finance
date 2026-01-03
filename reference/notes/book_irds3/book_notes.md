@@ -662,13 +662,48 @@ Since no market-making fee was added in either case each swap has a MTM value of
 
 ### Chapter 5 - Cash, Collateral, and Credit
 
+- What is a cash balance and why is it important in the context of an IRD portfolio
+- How accounting principles work to record trading profits and not cash balance interest profits
+- What collateral is and how the terms are legally set out in CSAs
+- How and why CSAs must be considered in the accurate pricing of IRDs and the concept of the CTD collateral
+- Why the counterparty of a trade is an important consideration
+- In what ways the credit risk of a counterparty can be expressed
+- What credit valuation adjustments (CVAs) and funding valuation adjustments (FVAs) are
+
 #### Cash balances
 
 **Introduction:**
 
+Cash balances form an important part of any derivatives portfolio. Consider the following example:
+
+*Example 5.1:*
+
+1. A trader creates an empty IRDs portfolio
+2. Executes a single trade paying fixed on $100mm 1Y semi-semi IRS at the mid-market rate of 1.0% (records PV of the trade as zero)
+3. The compounded RFR fixings during the 6M period yield 1.1% exactly as initially forecast (at the 6M point, the trader receives a net cashflow of $50,000)
+4. The compounded RFR fixings during the second 6M period yield 0.8996%, exactly as initially forecast (at the 1Y point, the trader pays a net cashflow of $50,200)
+
+At first, it looks like the trader has lost $200, which violates our claim, however, with time value of money, the trader has kept his NPV of 0 as the interest received (0.8%) on the cash balance of $50,000 received at the 6M point equals the difference between the two net cash payments (6M and 1Y).
+
+Derivatives are always priced assuming cash can be funded or invested at a specific rate of interest. This is the rate that determines the DF for any given day. For an IRD valued at zero, to actually recognize no gain or loss at its ultimate maturity, two events must occur;
+
+1. The original forecast floating rates must publish as predicted
+2. The DFs used for the initial pricing must be attained when funding or investing real cash balances
+
+Here the example interest rate of 0.8% on the cash balance is not equal to the RFR period rate published at 0.8996%. This is a very important distinction. For cleared and regularly collateralized derivates, these will be the same rates, but in this specific contract's case, 0.8% reflects the physically attainable rate of interest on the cash balance over the term, for example, there is a non-standard remuneration agreement on collateral here, which we will come on to.
+
 ##### Cash balance profiles
 
+A cash balance profile details the expected cash balance of a portfolio at differing future dates. It is measured by aggregating all cashflows on a given day including accumulated interest amounts from previous days' balance. In the previous example, the cash balance at the 9M point would be $50,100 after the accrual of some interest each day after the initial receipt of $50,000.
+
+For simple, mid-market IRDs, the expected cash balance profile is often easy to qualitatively describe. Firstly, for any derivative which has only a single cashflow date, there will never be any expectation of any cash balance (mid-market FRAs, ZCSs, single period IRSs/OISs). Thi is because any floating or fixed cashflows paid or received will be priced to net to zero, and therefore no net cashflows will ever be forecast to be exchanged. The trades still have risk, of course, and net cashflows will arise as market movements give rise to MTM PnL, we are just stating the expected nature of a zero cash balance profile for certain trade types executed at mid-market. 
+
+Secondly, where derivatives have multiple cashflows, there is generally a particular structure to the IR curve that allows a qualitative assessment (flat, upward sloping, downward sloping, bowing). Any derivative whose initial PV is zero will always have an expected final cash balance of zero. This is because a derivative with zero PV cannot be expected to gain or lose an amount of cash after its maturity. The interim, forecast, cash balance, however can feasibly have any pattern. These depend on the structure of all of the interim cashflows that take place. Cash balances are central to considering future discounting risk and the impact to PnL if discounting basis changes or the terms of a CSA is restructured.
+
 ##### Daily PnL accounting
+
+- IRDs are unlike securities in the sense that on inception, you do not expect them to yield any return (vs. a bond that yields 2% per annum for example). In fact, if you receive a mid-market 1Y IRS @ 2%, based on the expectation of future forecast floating rates, you expect that the IRS will mature with zero PnL
+- Derivatives are risk management and speculative, leveraged instruments. Trading these result in PnL only when market rates deviate from forecasts
 
 #### Collateral
 
