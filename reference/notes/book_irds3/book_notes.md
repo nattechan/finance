@@ -88,7 +88,7 @@ No arbitrage pricing (equivalent financial scenarios should have identical value
 
 - For various currencies, there are central bank rates and overnight indexes and risk free rates (i.e., in USD, the Federal Reserve dictates the discount rate and federal funds target rate, while the ). The former is central bank dependent and the latter is market dependent and transaction based.
 - Overnight index swap (OIS) rates are calculated based off of data on executed unsecured lending transactions. The index is a notional weighed average, and published as a daily overnight level.
-- IBOR vs OIS Index differs where IBOR is an estimate of the future level while OIS is an observation of the past (both are unsecured). There is sometimes a lag between when a rate is fixed and the valuation period (i.e., 2 b.d. lag with EUR)
+- IBOR vs. OIS Index differs where IBOR is an estimate of the future level while OIS is an observation of the past (both are unsecured). There is sometimes a lag between when a rate is fixed and the valuation period (i.e., 2 b.d. lag with EUR)
 - Fallback method was required to continue to settle derivative contracts which settled against IBOR after the cessation, turning the rate from a look-forward rate (IBOR) into a look-back rate (RFR).
 
 #### Derivation of CC rates formula
@@ -472,7 +472,7 @@ Customization:
 
 Quoting convention:
 
-$\text{'Currencies, Index(es), Start-date, End-date,}$ $\text{Frequency}^1$, $\text{Frequency}^2$, $\text{Fixed/Floating}^1$, $\text{Fixed/Floating,}^2$ $\text{Roll-date, Stub-type, MTM or non-MTM'}$
+'Currencies, Index(es), Start-date, End-date, Frequency<sup>1</sup>, Frequency<sup>2</sup>, Fixed/Floating<sup>1</sup>, Fixed/Floating<sup>2</sup>, Roll-date, Stub-type, MTM or non-MTM'
 
 #### MTM cross-currency swaps (XCSs)
 
@@ -703,7 +703,36 @@ Secondly, where derivatives have multiple cashflows, there is generally a partic
 ##### Daily PnL accounting
 
 - IRDs are unlike securities in the sense that on inception, you do not expect them to yield any return (vs. a bond that yields 2% per annum for example). In fact, if you receive a mid-market 1Y IRS @ 2%, based on the expectation of future forecast floating rates, you expect that the IRS will mature with zero PnL
-- Derivatives are risk management and speculative, leveraged instruments. Trading these result in PnL only when market rates deviate from forecasts
+- Derivatives are risk management and speculative, leveraged instruments. Trading these result in PnL only when market rates deviate from forecasts, so it is important to take into consideration cash balances for accounting purposes. Take for example a derivatives portfolio with a very positive cash balance (perhaps from previously successful trades), that has no open trades or the ability to enter into any more derivatives. This presents a conflict of interest as the portfolio will naturally increase via accrued interest on its cash balance, however, a derivative portfolio should only report derivative trading PnL (not interest accrued on previous profits)
+
+One should be aware that the cash balance of a derivative portfolio is necessarily made up of these two components, expressly;
+
+1. The PV of future cashflows, where the cash balance either funds or recoups, negative or positive cashflows respectively
+2. PnL, where a positive or negative cash balance has been generated as the result of successful or unsuccessful trading, respectively
+
+Good accounting practice isolates the PnL component of any cash balance so that it cannot accrue any further interest gains or losses that would be misrepresented as derivative trading PnL (the definition of PnL here is MTM PnL, which is the sum of realized plus any unrealized PnL). The following is designed for monitoring of a derivatives portfolio on a daily basis, only.
+
+*Example 5.2:*
+
+We outline a sample balance sheet and profit and loss statement of a derivatives portfolio.
+
+| Balance Sheet (000's) | Day 1 | Day 2 | Day 3 |
+| --- | --- | --- | --- |
+| *Previous closing values* <br> [A1=previous(E1)] PV of previous derivative contracts <br> [A2=-A1=previous(E4)] Total cash balance*|  <br> 80,000 <br> -80,000 | <br> 75,711 <br> -75,711 | <br> 76,635 <br> -76,635 |
+| *Day's schedule cashflow exchange* <br> [B1= $\alpha$ A2] O/N interest on previous cash balance* <br> [B2] Net previous derivative contracts' cashflows* <br> [B3=-B2] PV change of previous derivative contracts| <br> -2 <br> 5,000 <br> -5,000 | <br> -2 <br> -1,000 <br> 1,000 | <br> -2 <br> 7,000 <br> -7,000 |
+| *Previous derivative contracts' valuation changes* <br> [C1 $\approx$ -B1] O/N carry from previous close to open<sup>2</sup> <br> [C2] PV due to market movements from open to close | <br> -2 <br> 965 | <br> -2 <br> -110 | <br> -2 <br> 30 |
+| *New trading activity* <br> [D1] PV of derivative contracts acquired/disposed <br> [D2] Day's cash payments due to [D1]* <br> [D3] Other imposed cost-of-carry<sup>3</sup> | <br> -256 <br> 354 <br> 0 | 33 <br> -10 <br> 0 | 612 <br> -432 <br> 0 |
+| *Closing values* <br> [E1=A1+B3+C1+C2+D1] PV of all derivative contracts <br> [E2=A2+B1+B2+D2] Intermediate cash balance* <br> [E3=-(E1+E2)+D3] Balancing PnL cash transfer* (Dividend) <br> [E4=E2+E3] Total cash balance carried forward* | <br> 75,711 <br> -74,648 <br> -1,063 <br> -75,711 | <br> 76,636 <br> -76,723 <br> 87 <br> -76,636 | <br> 70,279 <br> -70,069 <br> -210 <br> -70,279 |
+| | | | |
+
+| Profit and Loss Statement (000's) | Day 1 | Day 2 | Day 3 |
+| --- | --- | --- | --- |
+| *PnL Itemized* <br> [F1=B1+C1] Funding inconsistencies (interest vs. carry) <br> [F2=C2] Market movements from open to close <br> [F3=D1+D2+D3] New daily activity | <br> 0 <br> 965 <br> 98 | <br> 0 <br> -110 <br> 23 | <br> 0 <br> 30 <br> 180 |
+| *Total* <br> [G1=F1+F2+F3=-E3] Recorded PnL | 1,063 | -87 | 210 |
+
+The *day's schedule cashflow exchange* lists payments and receipts that are written into the derivative contracts and already known on the previous day (if cash is exchanged, the value of derivatives must move in the opposite direction). The *previous derivative contracts' valuation changes* determines the change in the value measured between the previous close and today's close, subdivided into previous close to today's open and today's open to today's close. How the open curves are produced differs across institutions (if open curves are produced as in chapter 6, then the overnight carry value is synonymous with interest and reflects the fact that each future cashflow is one day closer to realization and therefore, each future cashflow is valued with a slightly different DF). *New trading activity* captures all entering and terminating trades on a given day, and *closing values* are determined as the sums of the items above.
+
+Transfer of PnL is an effective dividend to a governing entity, an isolation step that ensures any PnL made do not generate interest directly for the derivatives portfolio. Profits paid as cash sums to the governing entity can generate interest instead for the governing entity.
 
 #### Collateral
 
