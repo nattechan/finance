@@ -721,7 +721,7 @@ We outline a sample balance sheet and profit and loss statement of a derivatives
 | *Previous closing values* <br> [A1=previous(E1)] PV of previous derivative contracts <br> [A2=-A1=previous(E4)] Total cash balance*|  <br> 80,000 <br> -80,000 | <br> 75,711 <br> -75,711 | <br> 76,635 <br> -76,635 |
 | *Day's schedule cashflow exchange* <br> [B1= $\alpha$ A2] O/N interest on previous cash balance* <br> [B2] Net previous derivative contracts' cashflows* <br> [B3=-B2] PV change of previous derivative contracts| <br> -2 <br> 5,000 <br> -5,000 | <br> -2 <br> -1,000 <br> 1,000 | <br> -2 <br> 7,000 <br> -7,000 |
 | *Previous derivative contracts' valuation changes* <br> [C1 $\approx$ -B1] O/N carry from previous close to open<sup>2</sup> <br> [C2] PV due to market movements from open to close | <br> -2 <br> 965 | <br> -2 <br> -110 | <br> -2 <br> 30 |
-| *New trading activity* <br> [D1] PV of derivative contracts acquired/disposed <br> [D2] Day's cash payments due to [D1]* <br> [D3] Other imposed cost-of-carry<sup>3</sup> | <br> -256 <br> 354 <br> 0 | 33 <br> -10 <br> 0 | 612 <br> -432 <br> 0 |
+| *New trading activity* <br> [D1] PV of derivative contracts acquired/disposed <br> [D2] Day's cash payments due to [D1]* <br> [D3] Other imposed cost-of-carry<sup>3</sup> | <br> -256 <br> 354 <br> 0 | <br> 33 <br> -10 <br> 0 | <br> 612 <br> -432 <br> 0 |
 | *Closing values* <br> [E1=A1+B3+C1+C2+D1] PV of all derivative contracts <br> [E2=A2+B1+B2+D2] Intermediate cash balance* <br> [E3=-(E1+E2)+D3] Balancing PnL cash transfer* (Dividend) <br> [E4=E2+E3] Total cash balance carried forward* | <br> 75,711 <br> -74,648 <br> -1,063 <br> -75,711 | <br> 76,636 <br> -76,723 <br> 87 <br> -76,636 | <br> 70,279 <br> -70,069 <br> -210 <br> -70,279 |
 | | | | |
 
