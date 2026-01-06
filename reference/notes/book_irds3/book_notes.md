@@ -738,17 +738,137 @@ Transfer of PnL is an effective dividend to a governing entity, an isolation ste
 
 **Introduction:**
 
+Collateral is an obligation (cash or other financial asset) attached to some derivative contracts, with the purpose of mitigating one party against loss in the event of a default by the counterparty (acts as protection or insurance).
+
+*Example 5.3:*
+
+Day 1: Alpha reports a PnL of $710,000 due to the following two trades
+Alpha pays $100mm 5y IRS @ 2.0% to Bravo collateralized with USD cash
+Alpha receives $100mm 5y IRS @ 2.15% from Delta, uncollaterlaized
+
+Day 2: Global event moves rates 100bps lower
+Alpha records the IRS with Delta as an asset worth $5.51mm
+Alpha records the IRS with Bravo as a liability worth $4.8mm
+
+Although accounting wise, Alpha still records the same profit, it cannot source funds to post $4.8mm collateral to Bravo, because the asset with Delta is specifically uncollateralized (Alpha defaults, which could lead to bankruptcy and subsequent problems for Bravo). This simplified example illustrates how a destructive chain of events can start through the default of obligations. Since 2007, regulators and governments have imposed much stricter controls in the hope of limiting such catastrophes (clearing, capital reserves, stress tests), especially for banks.
+
 ##### Credit support annexes (CSAs)
+
+A CSA is a legal document which regulates collateral posting for a derivative transactions (one of four parts that make up an ISDA master agreement, but is not mandatory). It is possible to have an ISDA agreement without a CSA but normally not a CSA without an ISDA agreement. The terms of a CSA normally include:
+
+1. Type of collateral: cash, bonds (government or corporate), strips, bills, stocks, etc.
+2. Currency of collateral
+3. Country of collateral (if applicable)
+4. Thresholds: the asset value above that whereby parties exchange collateral
+5. Frequency of exchange: daily, weekly, monthly revaluations, etc.
+6. Bilateral or unilateral: whether only one party is required to post collateral
+7. Remuneration: the rates of interest paid for cash collateral
+8. Haircuts: the additional collateral required above the asset value when posting value-at-risk securities such as bonds and stocks
+9. Other clauses: such as permissibility of the posting counterparty to switch collateral type or post multiple types of collateral, or the permissibility of the receiving counterparty to re-use, or rehypothecate, the collateral to satisfy their own collateral obligations on other trades
 
 ##### Pricing derivatives with different CSAs
 
+If all derivative contracts with the same headline parameters were valued equivalently, irrespective of their CSA agreements, this would lead to a concept of collateral arbitrage.
+
+*Example 5.4:*
+
+Derivative contract: €5bn IRS @ 1.5% start-1w tenor-3m
+Alpha has bought and sold this contract with Bravo and Charlie resp., and current market rates are 1.0%
+
+| Counterparty | Direction | Asset PV | CSA |
+| --- | --- | --- | --- |
+| Bravo | Paid fixed | €-6.23mm | Cash (EUR, USD) @ OIS, weekly |
+| Charlie | Received fixed | €6.23mm | Cash (EUR) @ OIS, weekly |
+
+The t+0 EURUSD FX rate is 1.2500 and the 1w XCS EUR/USD OIS spread is +22bps
+
+The terms of the CSAs for each contract are different. Charlie has to post collateral to Alpha of €6.23mm in EUR, while Alpha can post collateral to Bravo in either EUR or USD. If Alpha posts €6.23mm, this leaves a net zero position and no PnL at the end of one week, or Alpha can receive €6.23mm 1W XCS trade at +22bps and post $7.7875mm (more complicated but results in €260.5 profit
+
+| Date | Ccy | Amount | Description |
+| --- | --- | --- | --- |
+| t+0 | EUR | €6.23mm | Charlie posts to Alpha |
+| t+0 | EUR | €-6.23mm | XCS notional exchange |
+| t+0 | USD | $7.7875mm | XCS notional exchange |
+| t+0 | USD | $-7.7875mm | Alpha posts to Bravo |
+| --- | --- | --- | --- |
+| t+1w | EUR | €-X | Alpha pays €OIS interest to Charlie |
+| t+1w | EUR | €(X+260.5) | Alpha receives €OIS+22bps on XCS |
+| t+1w | USD | $Y | Bravo pays $OIS interest to Alpha |
+| t+1w | USD | $-Y | Alpha pays $OIS on XCS |
+| t+1w | EUR | €6.23mm | XCS notional exchange |
+| t+1w | EUR | €-6.23mm | Alpha returns to Charlie |
+| t+1w | USD | $7.7875mm | Bravo returns to Alpha |
+| t+1w | USD | $-7.7875mm | XCS notional exchange |
+
+The arbitrage in the example came about because it proved better for Alpha to post USD cash collateral to Bravo, having swapped it from EUR. USD cash is the CTD collateral and in order to adhere to the no arbitrage principle, valuation of IRSs have to become CSA aware and the IRS with Bravo should be valued €260.5 higher. More generally, derivatives contracts should be valued dependent on CSAs and it is assumed that a counterparty will always posts the CTD collateral where possible.
+
+*Example 5.5:*
+
+Delta has a derivative liability valued at £100mm and £100mm in cash. The terms of the CSA on the derivative require GBP cash (remunerated at RFR) or UK gilts to be posted as collateral. The specified haircuts set by the CSA are 2% for gilts less than 5Y in maturity and 6% for gilts greater than 5Y in maturity. The market repo rate on any gilt is RFR+8bps with no haircut and the RFR rate is 0.75%. Delta can, however, only borrow unsecured cash at a rate of 2.5%, which creates borrowing costs.
+
+| Delta's Strategy | Posted | Remuneration | Costs | 1D Total |
+| --- | --- | --- | --- | --- |
+| Post GBP cash | £100mm | @0.75% is £2055 | £0 | £2055 |
+| Borrow £2mm & reverse repo any gilt $<$ 5Y maturity | 3Y gilt £102mm | @0.83% is £2319 | £-137 | £2182 |
+| Borrow £6mm & reverse repo any gilt $\geq$ 5Y maturity | 15Y gilt £106mm | @0.83% is £2410 | £-411 | £1999 |
+
+The CTD is gilts less than 5Y maturity, even with the haircuts specified in the CSA.
+
 ##### Cheapest to deliver (CTD) discount curves
+
+To satisfy the no arbitrage principle, the valuation of any derivative must be calculated using discount factors built specifically for the type of collateral under the terms of the CSA. Here, we suppose the existence of single-CSA discount curves and illustrate a way to combine these individual curves. By combining the individual curves, we create a discount curve for a CSA that permits multiple choices (multi-CSA discount curve). Combining single-CSA curves is teh less difficult process of selecting the cheapest daily rate from any of the individual curves, and progressively building up a new one. This is essentially a bootstrapping process constructed one day after the next.
+
+*Example 5.6:*
+
+Suppose that two single-CSA discount curves exist, containing DFs for any JPY cashflow under the terms of either a JPY cash only, or USD cash only CSA. Then we form the multi-CSA discount curve for a choice of either JPY or USD cash by taking the highest attainable daily rate of each day:
+
+| Date | JPY CSA DF | JPY CSA O/N Rate | USD CSA DF | USD CSA O/N Rate | JPY + USD DF | JPY + USD O/N Rate |
+| --- | --- | --- | --- | --- | --- | --- |
+| t+0 | 1.000000 | 2.00% | 1.000000 | 2.10% | 1.000000 | 2.10% |
+| t+1 | 0.999945 | 2.05% | 0.999942 | 2.10% | 0.999942 | 2.10% |
+| t+2 | 0.999889 | 2.15% | 0.999885 | 2.10% | 0.999885 | 2.15% |
+| t+3 | 0.999830 | 2.20% | 0.999827 | 2.10% | 0.999827 | 2.20% |
+| t+4 | 0.999770 | etc. | 0.999769 | etc. | 0.999769 | etc. |
+
+In order for the collateral posting institution to achieve the cheapest rate it will either; have USD cash available initially and post that for two days, then request its return, swap it for JPY cash via a XCS (or practically an FX swap), and then post JPY for the last two days, or, it will have JPY cash available initially but swap it for USD cash via a XCS (or FX swap) and post that for two days, then request its return, complete the XCS and post the remaining JPY for the final two days. The no arbitrage principle and pricing methodologies ensure that these two scenarios are equivalent.
+
+In this example, two single-CSA discounting curves for JPY cashflows have products a third basic/intrinsic multi-CSA curve for JPY cashflows, assuming XCS transactions to secure the prevailing rates. Building off of this, three single-CSA curves could combine in four different ways and ten could produce 1,012 possible multi-CSA curves. For any institution to value its derivatives properly it must be able to;
+
+1. Automate construction of all single-CSA curves for use of cashflows of a particular currency
+2. Have automated processes to combine single-CSA curves to produce new, required, multi-CSA curves for cashflows of that same currency
+3. Extract information about specific CSAs on individual derivative contracts to determine which discount curve to use to value and price that derivative contract accurately.
+
+The above is operationally complex, so there is a form of collateral valuation adjustment created as an approximation of the true value of derivative assets and liabilities. Practical collateral management is also complex, so some theoretic asset/liability values might not necessarily be completely attainable (especially if the counterparty is unable to practically post the CTD collateral).
 
 ##### Standard CSAs for benchmark valuation
 
+All cleared trades will have the same CSA by product, and it is sensible to use this as the benchmark CSA as clearing of trades is prevalent for many counterparties, and encompasses the vast majority of traded derivatives. The standard terms of these CSAs are:
+
+1. Type of collateral: cash
+2. Currency of collateral: locally specific to the product (i.e., GBP for GBP IRS)
+3. Thresholds: zero, exchange on any liability
+4. Frequency of exchange: daily
+5. Bilateral or unilateral: bilateral
+6. Remuneration: FRF
+
+Having a benchmark allows easier comparison between non-standard and standard CSAs as well as measures of CSA risk and PnL separable from other market risks and PnL. The valuation difference between non-standard CSAs and benchmark CSAs are sometimes called the CVA (collateral valuation adjustment).
+
 ##### Optionality
 
+When a CSA exists that allows one or both parties to post multiple currencies or types of collateral, and switch the collateral at any time, there exists an inherent option available to the posting institution (same as the institution who holds the liability side of the derivative). It is quite a complicated process to price the value of this optionality, which is dependent upon many variables:
+
+1. Expected value: a derivative whose expected value is around 0 (one party could be equally ITM or OTM), will have minimum optionality. A derivative which is deeply OTM, and with one-sided expected value, will have a higher optionality because the collateral choice favors the poster much more than the asset holder
+2. Collateral choice & time: the more choices of collateral one can post will generally increase the value of optionality, as will the longer the time to maturity
+3. Expected CTD: like with the expected value of the derivative, the expected CTD collateral has an impact on the value of optionality. If the current CTD is far cheaper than other forms/currencies of collateral, there is a lower value of optionality. If they are roughly equal in value, the value of optionality will be increased
+4. Market volatilities: the expectation of more volatile market movements and the probability of changing CTDs increases the optionality value
+5. Frequency of exchange/switch: There can only be optionality value if the terms of the CSA permit switching of collateral to monetize changes in CTD
+6. Practical expectations: the posting institution has to have the practical ability. to react to changes in CTD. Transaction costs will also decrease the value of optionality as the necessary hedging costs to pursue a theoretical CTD strategy may exceed the benefits of the strategy
+
+Modern approaches toward CTD optionality pricing will run a simulated environment approach (Monte Carlo analysis) and assume a statistical price, with input parameters estimated for all of the above points.
+
 ##### Unilateral CSAs
+
+Occasionally CSAs exists which requires only one counterparty to post collateral, which creates a peculiar pricing dynamic. For assets like this which are heavily ITM, then it is more statistically certain that the asset is either collateralized or uncollateralized (as standard market movements are unlikely to alter this binary determination). Its value can then be assumed to be broadly equivalent to the discounting of the cashflows assumed in either the case of a collateralized derivative or an uncollateralized one. For assets with values close to zero, then the eimpact of unilateral CSA becomes very significant, because the binary dtermination is potentially subject to fluctuate with market movements. This represents a different kind of option held by the counterparty who never needs to post collateral. Modern derivative pricing should take this into account, again through scenario analysis, but it is very complex.
 
 #### Credit Risk
 
