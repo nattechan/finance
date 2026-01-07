@@ -1,6 +1,6 @@
 # finance
 
-## Python code for finance applications. Mainly focusing on interest rate derivatives, credit, and fixed income
+## Python repository for finance applications. Mainly focusing on interest rate derivatives, credit, and fixed income
 
 ### To do list
 
