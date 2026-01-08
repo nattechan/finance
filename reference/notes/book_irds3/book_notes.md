@@ -903,7 +903,7 @@ Portfolios containing multiple trades with a single counterparty are usually sub
 
 Calculating CE becomes a task synonymous with VaR. It requires statistical analysis to make predictions about viable market movements and then to ascertain values deemed to be expected within a specific c.i.. Suppose we wish to calculate the CE which is expected to be only $\alpha\%$ of the time, that is to a $(1-\alpha)\%$ c.i., then:
 
-$$CE_{\alpha\%} = RC_{mtm} + C_{lag, \alpha\%} + C_{tran, \alpha\%} + RC_{risk, \alpha\%}$$
+$$CE_{\alpha \%} = RC_{mtm} + C_{lag, \alpha \%} + C_{tran, \alpha \%} + RC_{risk, \alpha \%}$$
 
 where,
 
@@ -913,12 +913,12 @@ RC_{mtm} &:= \begin{cases}
 0, & \text{(if collateralised)} \\
 \max\{\text{asset PV}, 0\}, & \text{(if uncollateralised)}
 \end{cases} \\
-C_{lag,\alpha\%} &:= \begin{cases}
+C_{lag,\alpha \%} &:= \begin{cases}
 \text{the cost of collateral lag,} & \text{(if collateralised)} \\
 0, & \text{(if uncollateralised)}
 \end{cases} \\
-C_{tran,\alpha\%} &:= \text{the cost of valuation change through transition,} \\
-RC_{risk,\alpha\%} &:= \text{the replacement cost of risk,}
+C_{tran,\alpha \%} &:= \text{the cost of valuation change through transition,} \\
+RC_{risk,\alpha \%} &:= \text{the replacement cost of risk,}
 \end{align*}
 $$
 
@@ -926,14 +926,14 @@ with all statistical values measured to a $(1-\alpha)\%$ c.i.
 
 *Example 5.9:*
 
-Continuing from example 5.8, at the close of day -1, Alpha considers its CE with a 95% c.i. to Lima, and calculates it ot be, $CE_{5\%} = 9,200,000$
+Continuing from example 5.8, at the close of day -1, Alpha considers its CE with a 95% c.i. to Lima, and calculates it to be, $CE_{5 \%} = 9,200,000$
 
 $$
 \begin{align*}
 RC_{mtm} &:= 0 \text{ (the asset is collateralised),} \\
-C_{lag,5\%} &= 1,500,000 \text{ (is an observed value),} \\
-C_{tran,5\%} &= 6,500,000 \text{ (through statistical model),} \\
-RC_{risk,5\%} &= 1,200,000 \text{ (through expected charges),}
+C_{lag,5 \%} &= 1,500,000 \text{ (is an observed value),} \\
+C_{tran,5 \%} &= 6,500,000 \text{ (through statistical model),} \\
+RC_{risk,5 \%} &= 1,200,000 \text{ (through expected charges),}
 \end{align*}
 $$
 
