@@ -874,6 +874,71 @@ Occasionally CSAs exists which requires only one counterparty to post collateral
 
 ##### Credit exposure (CE)
 
+The immediate potential loss in the event of a counterparty defaulting on its obligations (sometimes also called current exposure). Exchange traded or cleared derivatives can be said not to possess CE because the legal counterparty of those trades is a clearing house (only valid if assumed that a clearing house cannot default). For bilateral trades (face counterparty directly), there is an important distinction between collateralized and uncollateralized derivatives in the context of CE (mitigates against loss by providing security for assets), but there are a few elements which are not protected by collateral;
+
+1. Collateral valuation lag: even the most frequent collateral exchanges can only be posted one day in arrears, after the previous day'sclosing valuations have been exchanged and agreed between counterparties. This lag represents the time period between the date of the valuation for the most recently submitted collateral posting and the notice of bankruptcy filing, with a potential market move in between
+2. Uncollateralized valuation adjustment through period of transition: when a counterapty defaults, the fair value of the asset must be ascertained by the agrieved party, which is usally done using official daily closing curves to provide a legal demonstratoiin of validity ahead of liquidation proceedings. This creates a period of time where valuation changes will occur wintout being colalteralized any further (time between notice of bankruptcy filing and final derivative valuation)
+3. Replacement cost of risk: which is required as the defaulted derivative contract effectively ceases to exist. The cost of replacement can be made up of bid/offer spread and misaligned timing with respect to the foramlization of the fair value claim on the original derivative, particularly if it is expected totake a reasonable amount of time to execute suitable replacement trades. Basel II and III regualtions are particularly keen to stress this factor when measuring the risks on derivative assets for the purpose of regulatory reporting
+
+Basel calls the above components (in a broad sense) the margin period of risk.
+
+*Example 5.8:*
+
+Alpha has a collateralized derivative with Lima, hedged by collateralized derivatives with other counterparties. On the open of day zero (i.e. after the close of day -1) Lima files for bankruptcy and makes no further collateral exchanges or payments. The table illustrates a possible scenario:
+
+| STATEMENT of VALUATION (close on) | Day -2 | Day -1 | Day 0 |
+| --- | --- | --- | --- |
+| PV of Lima derivatives | 7,100,000 | 8,600,000 | 13,100,000 |
+| Collateral posted by Lima | 6,900,000 | 7,100,000 | 7,100,000 |
+| PV of replacement derivatives | - | - | -600,000 |
+| --- | --- | --- | --- |
+| PV of other derivatives | -7,100,000 | -8,600,000 | -13,100,000 |
+| Collateral posted by others | -6,900,000 | -7,100,000 | -8,600,000 |
+| --- | --- | --- | --- |
+| Daily market move | -1bp | -7bp | -21bp |
+
+Alpha will submit a claim to Lima's bankruptcy administrators for a total of 6mm, which represents the claim of 13.1mm minus the kept collateral of 7.1mm. The 6mm is made up of a 1.5mm collateral lag and a 4.5mm uncollateralized valuation adjustment on the day of the declared bankruptcy. In addition Alpha suffers a loss of 0.6mm due to risk replacement. If recovery rates are, for example 30% then Alpha's loss may be finalised as 4.8mm, ignoring any other costs (such as legal, operational or administrative).
+
+Portfolios containing multiple trades with a single counterparty are usually subject to netting agreements, which state that the agregate PV of all derivatives is the value used in legal claims. Wihtout a netting agreement, the CE is usually far higher because each derivative is treated individually and a different treatement of assets comapred to liabilities has large impact. Additionally, an institution may choose to model the valuaiton lag and change through tranisition slightly differently. Before notification of bankruptcy, financial markets will be funcitoning normlaly, but after an announcement, panic and consolidation may impact the liquidity, meaning a more conservative approach would be to consider the voalitlity after the notification having increased (mainly used larger, more influential organizations).
+
+Calculating CE becomes a task synonymous with VaR. It requires statistical analysis to make predictions about viable market movements and then to ascertain values deemed to be expected within a specific c.i.. Suppose we wish to calculate the CE which is expected to be only $\alpha\%$ of the time, that is to a $(1-\alpha)\%$ c.i., then:
+
+$$CE_{\alpha\%} = RC_{mtm} + C_{lag, \alpha\%} + C_{tran, \alpha\%} + RC_{risk, \alpha\%}$$
+
+where,
+
+$$
+\begin{align*}
+RC_{mtm} &:= \begin{cases}
+0, & \text{(if collateralised)} \\
+\max\{\text{asset PV}, 0\}, & \text{(if uncollateralised)}
+\end{cases} \\
+C_{lag,\alpha\%} &:= \begin{cases}
+\text{the cost of collateral lag,} & \text{(if collateralised)} \\
+0, & \text{(if uncollateralised)}
+\end{cases} \\
+C_{tran,\alpha\%} &:= \text{the cost of valuation change through transition,} \\
+RC_{risk,\alpha\%} &:= \text{the replacement cost of risk,}
+\end{align*}
+$$
+
+with all statistical values measured to a $(1-\alpha)\%$ c.i.
+
+*Example 5.9:*
+
+Continuing from example 5.8, at the close of day -1, Alpha considers its CE with a 95% c.i. to Lima, and calculates it ot be, $CE_{5\%} = 9,200,000$
+
+$$
+\begin{align*}
+RC_{mtm} &:= 0 \text{ (the asset is collateralised),} \\
+C_{lag,5\%} &= 1,500,000 \text{ (is an observed value),} \\
+C_{tran,5\%} &= 6,500,000 \text{ (through statistical model),} \\
+RC_{risk,5\%} &= 1,200,000 \text{ (through expected charges),}
+\end{align*}
+$$
+
+At this point, it is well worth flagging recovery rates and loss given default (LGD), which are terms for the same concept. Some of the CE will generally be expected to be recovered via the liquidation of assets of the defaulting entity, and this does play a part in CVA and regulatory reporitng. But, as a value, CE seeks to indicate the immediate risk to a counterparty defauling on its obligations and it is useful as an individual metric to compare exposure on different trades or portfolios to different counterparties, wihtout specifically factoring in or estimating the LGD.
+
 ##### Potential future exposure (PFE)
 
 ##### Expected exposure (EE)
