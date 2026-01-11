@@ -901,9 +901,9 @@ Alpha will submit a claim to Lima's bankruptcy administrators for a total of 6mm
 
 Portfolios containing multiple trades with a single counterparty are usually subject to netting agreements, which state that the agregate PV of all derivatives is the value used in legal claims. Wihtout a netting agreement, the CE is usually far higher because each derivative is treated individually and a different treatement of assets comapred to liabilities has large impact. Additionally, an institution may choose to model the valuaiton lag and change through tranisition slightly differently. Before notification of bankruptcy, financial markets will be funcitoning normlaly, but after an announcement, panic and consolidation may impact the liquidity, meaning a more conservative approach would be to consider the voalitlity after the notification having increased (mainly used larger, more influential organizations).
 
-Calculating CE becomes a task synonymous with VaR. It requires statistical analysis to make predictions about viable market movements and then to ascertain values deemed to be expected within a specific c.i.. Suppose we wish to calculate the CE which is expected to be only $\alpha\%$ of the time, that is to a $(1-\alpha)\%$ c.i., then:
+Calculating CE becomes a task synonymous with VaR. It requires statistical analysis to make predictions about viable market movements and then to ascertain values deemed to be expected within a specific c.i.. Suppose we wish to calculate the CE which is expected to be only $\alpha\text{\%}$ of the time, that is to a $(1-\alpha)\text{\%}$ c.i., then:
 
-$$CE_{\alpha\%} = RC_{mtm} + C_{lag, \alpha\%} + C_{tran, \alpha\%} + RC_{risk, \alpha\%}$$
+$$CE_{\alpha\text{\%}} = RC_{mtm} + C_{lag, \alpha\text{\%}} + C_{tran, \alpha\text{\%}} + RC_{risk, \alpha\text{\%}}$$
 
 where,
 
@@ -913,27 +913,27 @@ RC_{mtm} &:= \begin{cases}
 0, & \text{(if collateralised)} \\
 \max\{\text{asset PV}, 0\}, & \text{(if uncollateralised)}
 \end{cases} \\
-C_{lag,\alpha\%} &:= \begin{cases}
+C_{lag,\alpha\text{\%}} &:= \begin{cases}
 \text{the cost of collateral lag,} & \text{(if collateralised)} \\
 0, & \text{(if uncollateralised)}
 \end{cases} \\
-C_{tran,\alpha\%} &:= \text{the cost of valuation change through transition,} \\
-RC_{risk,\alpha\%} &:= \text{the replacement cost of risk,}
+C_{tran,\alpha\text{\%}} &:= \text{the cost of valuation change through transition,} \\
+RC_{risk,\alpha\text{\%}} &:= \text{the replacement cost of risk,}
 \end{align*}
 $$
 
-with all statistical values measured to a $(1-\alpha)\%$ c.i.
+with all statistical values measured to a $(1-\alpha)\text{\%}$ c.i.
 
 *Example 5.9:*
 
-Continuing from example 5.8, at the close of day -1, Alpha considers its CE with a 95% c.i. to Lima, and calculates it to be, $CE_{5\%} = 9,200,000$
+Continuing from example 5.8, at the close of day -1, Alpha considers its CE with a 95% c.i. to Lima, and calculates it to be, $CE_{5\text{\%}} = 9,200,000$
 
 $$
 \begin{align*}
 RC_{mtm} &:= 0 \text{ (the asset is collateralised),} \\
-C_{lag,5\%} &= 1,500,000 \text{ (is an observed value),} \\
-C_{tran,5\%} &= 6,500,000 \text{ (through statistical model),} \\
-RC_{risk,5\%} &= 1,200,000 \text{ (through expected charges),}
+C_{lag,5\text{\%}} &= 1,500,000 \text{ (is an observed value),} \\
+C_{tran,5\text{\%}} &= 6,500,000 \text{ (through statistical model),} \\
+RC_{risk,5\text{\%}} &= 1,200,000 \text{ (through expected charges),}
 \end{align*}
 $$
 
@@ -943,11 +943,11 @@ At this point, it is well worth flagging recovery rates and loss given default (
 
 Where CE is a metric for immediate credit exposure, PFE seeks to present a metric for exposure in the future (calculation requires more simulation than for CE). For a specific future date, $m_i$, we obtain the future CE by considering:
 
-$$CE_{\alpha\%}(m_i) = [RC_{mtm, \alpha\%} + C_{lag, \alpha\%} + C_{tran, \alpha\%} + RC_{risk, \alpha\%}](m_i)$$
+$$CE_{\alpha\text{\%}}(m_i) = [RC_{mtm, \alpha\text{\%}} + C_{lag, \alpha\text{\%}} + C_{tran, \alpha\text{\%}} + RC_{risk, \alpha\text{\%}}](m_i)$$
 
 where the major difference is that the uncollateralized asset value, $RC_{mtm, \alpha\%}$, has to be statiscally modeled as its future value is dependent upon the unkown progression of market rates. Minor differences being that the other three elements of the formula need to be statistically modeled in the context of future volatilities. For example, if one were tyring to calculate the CE of a trade five years into the future, then one might choose to use higher volatilities, which are more conservative than those used to calculate today's CE. Once enough future dates have been assessed, the reported PFE is simply the maximum of any values:
 
-$$PFE_{\alpha\%} = \max_{i}{[CE_{\alpha\%}(m_i)]}$$
+$$PFE_{\alpha\text{\%}} = \max_{i}{[CE_{\alpha\text{\%}}(m_i)]}$$
 
 Notice that the future CE values are future values, as opposed to present value calculations.
 
@@ -958,11 +958,11 @@ Alpha executes a collateralised £100mm 10Y IRS with Bravo and analyses the PFE.
 (i) five sampled future dates as well as the immediate CE,
 (ii) the expected future delta risk of the remaining swap at each date,
 (iii) a predicted market volatility for the remaining swap at each date
-(iv) a multiplier, $DM$, for the consideration of distressed markets to estimate $C_{tran,5\%}^{1D}$,
+(iv) a multiplier, $DM$, for the consideration of distressed markets to estimate $C_{tran,5\text{\%}}^{1D}$,
 (v) no expected cost of risk replacement but a variance of 1bp of delta risk to this variable, in respect of when the replacement trade might be executed,
 (vi) a c.l. of 95%.
 
-| $m_i$ | $E[pv01]$ | $Vol_{c.l}^{1D}$ | $C_{lag,5\%}^{1D}$ | $DM$ | $C_{tran,5\%}^{1D}$ | $RC_{risk,5\%}$ | $CE(m_i)$  |
+| $m_i$ | $E[pv01]$ | $Vol_{c.l}^{1D}$ | $C_{lag,5\text{\%}}^{1D}$ | $DM$ | $C_{tran,5\text{\%}}^{1D}$ | $RC_{risk,5\text{\%}}$ | $CE(m_i)$  |
 | ----- | --------- | ---------------- | ------------------ | ---- | ------------------- | --------------- | ---------- |
 | 0y    | £92,000   | 4.5bp            | 681,000            | 1.5  | 1,021,000           | 151,000         | £1,853,000 |
 | 2y    | £75,000   | 5.5bp            | 679,000            | 1.5  | 1,018,000           | 123,000         | £1,820,000 |
@@ -981,12 +981,12 @@ Alpha pays an uncollateralised £100mm start-2Y tenor-8Y IRS with Bravo, and ana
 
 (i) five sampled future dates as well as the immediate CE,
 (ii) the expected future delta of the remaining swap at each date,
-(iii) Monte Carlo analysis to produce $RC_{mtm,5\%}$,
-(iv) a predicted market volatility for the remaining swap at each date to estimate $C_{tran,5\%}^{1D}$,
+(iii) Monte Carlo analysis to produce $RC_{mtm,5\text{\%}}$,
+(iv) a predicted market volatility for the remaining swap at each date to estimate $C_{tran,5\text{\%}}^{1D}$,
 (v) no expected cost of risk replacement but a variance of 1bp of delta risk to this variable, in respect of when the replacement trade might be executed,
 (vi) a c.l. of 95%
 
-| $m_i$ | $E[pv01]$ | $RC_{mtm,5\%}$ | $Vol_{c.l}^{1D}$ | $C_{tran,5\%}^{1D}$ | $RC_{risk,5\%}$ | $CE(m_i)$   |
+| $m_i$ | $E[pv01]$ | $RC_{mtm,5\text{\%}}$ | $Vol_{c.l}^{1D}$ | $C_{tran,5\text{\%}}^{1D}$ | $RC_{risk,5\text{\%}}$ | $CE(m_i)$   |
 | ----- | --------- | -------------- | ---------------- | ------------------- | --------------- | ----------- |
 | 0y    | £73,000   | 540,000        | 4.5bp            | 540,000             | 120,000         | £1,200,000  |
 | 2y    | £75,000   | 12,500,000     | 5.5bp            | 679,000             | 123,000         | £13,302,000 |
