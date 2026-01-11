@@ -278,7 +278,7 @@ Where:
 
 In the case of OISs and other compounded RFRs the period floating rates, $r_j$, are determined from the individual published RFRs, $\tilde{r}_k$, for the period such that:
 
-$$r_j = \frac{1}{d_j}\prod_{k=1}^{T_j} (1 + d_k r_k) - 1, \quad T_j = \text{number of business days in period } j$$
+$$r_j = \frac{1}{d_j}\left(\prod_{k=1}^{T_j} (1 + d_k r_k) - 1\right), \quad T_j = \text{number of business days in period } j$$
 
 *Example 3.4:*
 
@@ -372,14 +372,14 @@ $$P = - \sum_{i=1}^{T_1} N_i d_i (r_i^1 + Z) v_i + \sum_{j=1}^{T_2} N_j d_j r_j^
 
 *IBOR/OIS basis swap:*
 
-$$P = - \sum_{i=1}^{T_1} N_i d_i (r_i^1 + Z) v_i + \sum_{j=1}^{T_2} N_j v_j \left(\prod_{k=1}^{T_j} (1 + d_k \tilde{r}_k^2) - 1\right)$$
+$$P = - \sum_{i=1}^{T_1} N_i d_i (r_i^1 + Z) v_i + \sum_{j=1}^{T_2} N_j v_j \left(\prod_{k=1}^{T_j} (1 + d_k r_k^2) - 1\right)$$
 
 Where:
 
 - $Z$ = spread (basis points added to one leg)
 - $r_i^1$ = floating rate for leg 1
 - $r_j^2$ = floating rate for leg 2
-- $\tilde{r}_k^2$ = individual OIS rate fixings
+- $r_k^2$ = individual OIS rate fixings
 - Other notation as per IRS formulae
 
 As with IRSs and OISs to determine the mid-market price $Z^{\text{mid}}$, it simply requires manipulation of the formulae setting $P = 0$, so that for a standard IBOR/IBOR SBS with constant notional in every period):
@@ -616,9 +616,9 @@ The bond is typically priced by specifying its YTM as the forward adjusted, mid-
 
 If the coupon on the bond were matched at 1.400%, the bond would price at par. If Alpha Corp. received 1.400% on the IRS with standard conventions, the RFR floating rate spread would match the credit spread at 40bps. However, there are three adjustments which might exists which can result in that spread that the issuer pays differing from 40bps;
 
-- Convention adjustments: if the fixed leg and floating leg have different conventions (i.e., day count conventions or different frequencies), the same bp spread on one leg is not equivalent to the same spread on the other
-- Coupon adjustment: if the coupon on the bond is not set to be the same as the priced YTM, the bond price is not exactly par. Usually the coupon is set to be lower than the YTM (bond prices at discount). The issuer typically wants to receive par however, so an economic upfront payment value known as the make to par is embedded into the swap. The lower coupon rate applied to the fixed rate of the swap offsets this in part but the economics are not exact
-- Market-maker's margin: this is a fee for facilitating the transaction embedded into the issuer swap
+1. Convention adjustments: if the fixed leg and floating leg have different conventions (i.e., day count conventions or different frequencies), the same bp spread on one leg is not equivalent to the same spread on the other
+2. Coupon adjustment: if the coupon on the bond is not set to be the same as the priced YTM, the bond price is not exactly par. Usually the coupon is set to be lower than the YTM (bond prices at discount). The issuer typically wants to receive par however, so an economic upfront payment value known as the make to par is embedded into the swap. The lower coupon rate applied to the fixed rate of the swap offsets this in part but the economics are not exact
+3. Market-maker's margin: this is a fee for facilitating the transaction embedded into the issuer swap
 
 The coupon is set at 1.375% and the issuer receives a T+5 7Y RFR fixed at 1.375% with conventions, Annual ACT/ACT ICMA, and pays floating rate plus 38.1bps, which equates to 37.5bps standard spread plus 0.3bps convention adjustment minus 0.2bps make to par coupon adjustment plus a market maker fee of 0.5bps. The swap includes an upfront make to par payment.
 
@@ -895,7 +895,7 @@ Alpha has a collateralized derivative with Lima, hedged by collateralized deriva
 | PV of other derivatives | -7,100,000 | -8,600,000 | -13,100,000 |
 | Collateral posted by others | -6,900,000 | -7,100,000 | -8,600,000 |
 | --- | --- | --- | --- |
-| Daily market move | -1bp | -7bp | -21bp |
+| Daily market move | -1bps | -7bps | -21bps |
 
 Alpha will submit a claim to Lima's bankruptcy administrators for a total of 6mm, which represents the claim of 13.1mm minus the kept collateral of 7.1mm. The 6mm is made up of a 1.5mm collateral lag and a 4.5mm uncollateralized valuation adjustment on the day of the declared bankruptcy. In addition Alpha suffers a loss of 0.6mm due to risk replacement. If recovery rates are, for example 30% then Alpha's loss may be finalised as 4.8mm, ignoring any other costs (such as legal, operational or administrative).
 
@@ -964,12 +964,12 @@ Alpha executes a collateralised £100mm 10Y IRS with Bravo and analyses the PFE.
 
 | $m_i$ | $E[pv01]$ | $Vol_{c.l}^{1D}$ | $C_{lag,5\\%}^{1D}$ | $DM$ | $C_{tran,5\\%}^{1D}$ | $RC_{risk,5\\%}$ | $CE(m_i)$  |
 | ----- | --------- | ---------------- | ------------------- | ---- | -------------------- | ---------------- | ---------- |
-| 0y    | £92,000   | 4.5bp            | 681,000             | 1.5  | 1,021,000            | 151,000          | £1,853,000 |
-| 2y    | £75,000   | 5.5bp            | 679,000             | 1.5  | 1,018,000            | 123,000          | £1,820,000 |
-| 4y    | £57,000   | 6.5bp            | 609,000             | 1.5  | 914,000              | 94,000           | £1,617,000 |
-| 6y    | £38,000   | 6.5bp            | 406,000             | 1.5  | 609,000              | 63,000           | £1,078,000 |
-| 8y    | £19,000   | 6.5bp            | 203,000             | 1.5  | 305,000              | 31,000           | £539,000   |
-| 10y   | £0        | 0bp              | 0                   | 0    | 0                    | 0                | £0         |
+| 0y    | £92,000   | 4.5bps           | 681,000             | 1.5  | 1,021,000            | 151,000          | £1,853,000 |
+| 2y    | £75,000   | 5.5bps           | 679,000             | 1.5  | 1,018,000            | 123,000          | £1,820,000 |
+| 4y    | £57,000   | 6.5bps           | 609,000             | 1.5  | 914,000              | 94,000           | £1,617,000 |
+| 6y    | £38,000   | 6.5bps           | 406,000             | 1.5  | 609,000              | 63,000           | £1,078,000 |
+| 8y    | £19,000   | 6.5bps           | 203,000             | 1.5  | 305,000              | 31,000           | £539,000   |
+| 10y   | £0        | 0.0bps           | 0                   | 0    | 0                    | 0                | £0         |
 
 $PFE = £1,853,000$
 
@@ -988,12 +988,12 @@ Alpha pays an uncollateralised £100mm start-2Y tenor-8Y IRS with Bravo, and ana
 
 | $m_i$ | $E[pv01]$ | $RC_{mtm,5\\%}$ | $Vol_{c.l}^{1D}$ | $C_{tran,5\\%}^{1D}$ | $RC_{risk,5\\%}$ | $CE(m_i)$   |
 | ----- | --------- | --------------- | ---------------- | -------------------- | ---------------- | ----------- |
-| 0y    | £73,000   | 540,000         | 4.5bp            | 540,000              | 120,000          | £1,200,000  |
-| 2y    | £75,000   | 12,500,000      | 5.5bp            | 679,000              | 123,000          | £13,302,000 |
-| 4y    | £57,000   | 17,800,000      | 6.5bp            | 609,000              | 94,000           | £18,503,000 |
-| 6y    | £38,000   | 15,200,000      | 6.5bp            | 406,000              | 63,000           | £15,669,000 |
-| 8y    | £19,000   | 9,000,000       | 6.5bp            | 203,000              | 31,000           | £9,234,000  |
-| 10y   | £0        | 0               | 0bp              | 0                    | 0                | £0          |
+| 0y    | £73,000   | 540,000         | 4.5bps           | 540,000              | 120,000          | £1,200,000  |
+| 2y    | £75,000   | 12,500,000      | 5.5bps           | 679,000              | 123,000          | £13,302,000 |
+| 4y    | £57,000   | 17,800,000      | 6.5bps           | 609,000              | 94,000           | £18,503,000 |
+| 6y    | £38,000   | 15,200,000      | 6.5bps           | 406,000              | 63,000           | £15,669,000 |
+| 8y    | £19,000   | 9,000,000       | 6.5bps           | 203,000              | 31,000           | £9,234,000  |
+| 10y   | £0        | 0               | 0.0bps           | 0                    | 0                | £0          |
 
 $PFE = £18,503,000$
 
@@ -1015,12 +1015,12 @@ For the same trade in example 5.10 Alpha assesses its EE under the same paramete
 
 | $m_i$ | $E[pv01]$ | $Vol_{1s.d.}^{1D}$ | $E^+[C_{lag}]$ | $DM$ | $E^+[C_{tran}]$ | $E^+[RC_{risk}]$ | $EE(m_i)$ |
 | ----- | --------- | ------------------ | -------------- | ---- | --------------- | ---------------- | --------- |
-| 0y    | £92,000   | 4.5bp              | 165,000        | 1.5  | 248,000         | 37,000           | £450,000  |
-| 2y    | £75,000   | 5.5bp              | 165,000        | 1.5  | 248,000         | 30,000           | £443,000  |
-| 4y    | £57,000   | 6.5bp              | 148,000        | 1.5  | 222,000         | 23,000           | £393,000  |
-| 6y    | £38,000   | 6.5bp              | 99,000         | 1.5  | 149,000         | 15,000           | £263,000  |
-| 8y    | £19,000   | 6.5bp              | 49,000         | 1.5  | 74,000          | 8,000            | £131,000  |
-| 10y   | £0        | 0bp                | 0              | 0    | 0               | 0                | £0        |
+| 0y    | £92,000   | 4.5bps             | 165,000        | 1.5  | 248,000         | 37,000           | £450,000  |
+| 2y    | £75,000   | 5.5bps             | 165,000        | 1.5  | 248,000         | 30,000           | £443,000  |
+| 4y    | £57,000   | 6.5bps             | 148,000        | 1.5  | 222,000         | 23,000           | £393,000  |
+| 6y    | £38,000   | 6.5bps             | 99,000         | 1.5  | 149,000         | 15,000           | £263,000  |
+| 8y    | £19,000   | 6.5bps             | 49,000         | 1.5  | 74,000          | 8,000            | £131,000  |
+| 10y   | £0        | 0.0bps             | 0              | 0    | 0               | 0                | £0        |
 
 $\text{max EE}: £450,000$
 
@@ -1030,12 +1030,12 @@ For the same trade in example 5.11 Alpha assesses its EE under the same paramete
 
 | $m_i$ | $E[pv01]$ | $Vol_{1s.d.}^{1D}$ | $E^+[RC_{risk}]$ | $E^+[C_{tran}]$ | $E^+[RC_{mtm}]$ | $EE(m_i)$   |
 | ----- | --------- | ------------------ | ---------------- | --------------- | --------------- | ----------- |
-| 0y    | £73,000   | 4.5bp              | 29,000           | 197,000         | 131,000         | £357,000    |
-| 2y    | £75,000   | 5.5bp              | 30,000           | 248,000         | 3,000,000       | £3,278,000  |
-| 4y    | £57,000   | 6.5bp              | 23,000           | 222,000         | 4,800,000       | £5,045,000  |
-| 6y    | £38,000   | 6.5bp              | 15,000           | 149,000         | 3,900,000       | £4,064,000  |
-| 8y    | £19,000   | 6.5bp              | 8,000            | 98,000          | 1,100,000       | £1,206,000  |
-| 10y   | £0        | 0bp                | 0                | 0               | 0               | £0          |
+| 0y    | £73,000   | 4.5bps             | 29,000           | 197,000         | 131,000         | £357,000    |
+| 2y    | £75,000   | 5.5bps             | 30,000           | 248,000         | 3,000,000       | £3,278,000  |
+| 4y    | £57,000   | 6.5bps             | 23,000           | 222,000         | 4,800,000       | £5,045,000  |
+| 6y    | £38,000   | 6.5bps             | 15,000           | 149,000         | 3,900,000       | £4,064,000  |
+| 8y    | £19,000   | 6.5bps             | 8,000            | 98,000          | 1,100,000       | £1,206,000  |
+| 10y   | £0        | 0.0bps             | 0                | 0               | 0               | £0          |
 
 $\text{max EE}: £5,193,000$
 
