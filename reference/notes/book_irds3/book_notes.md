@@ -943,7 +943,7 @@ At this point, it is well worth flagging recovery rates and loss given default (
 
 Where CE is a metric for immediate credit exposure, PFE seeks to present a metric for exposure in the future (calculation requires more simulation than for CE). For a specific future date, $m_i$, we obtain the future CE by considering:
 
-$$CE_{\alpha\\%}(m_i) = [RC_{mtm, \alpha\\%} + C_{lag, \alpha\\%} + C_{tran, \alpha\\%} + RC_{risk, \alpha\\%}](m_i)$$
+$$CE_{\alpha\\%}(m_i) = RC_{mtm, \alpha\\%}(m_i) + C_{lag, \alpha\\%}(m_i) + C_{tran, \alpha\\%}(m_i) + RC_{risk, \alpha\\%}(m_i)$$
 
 where the major difference is that the uncollateralized asset value, $RC_{mtm, \alpha\\%}$, has to be statiscally modeled as its future value is dependent upon the unkown progression of market rates. Minor differences being that the other three elements of the formula need to be statistically modeled in the context of future volatilities. For example, if one were tyring to calculate the CE of a trade five years into the future, then one might choose to use higher volatilities, which are more conservative than those used to calculate today's CE. Once enough future dates have been assessed, the reported PFE is simply the maximum of any values:
 
