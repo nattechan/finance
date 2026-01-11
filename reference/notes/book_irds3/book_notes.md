@@ -960,7 +960,7 @@ Alpha executes a collateralised £100mm 10Y IRS with Bravo and analyses the PFE.
 (iii) a predicted market volatility for the remaining swap at each date
 (iv) a multiplier, $DM$, for the consideration of distressed markets to estimate $C_{tran,5\\%}^{1D}$,
 (v) no expected cost of risk replacement but a variance of 1bp of delta risk to this variable, in respect of when the replacement trade might be executed,
-(vi) a c.l. of 95%.
+(vi) a c.i. of 95%.
 
 | $m_i$ | $E[pv01]$ | $Vol_{c.l}^{1D}$ | $C_{lag,5\\%}^{1D}$ | $DM$ | $C_{tran,5\\%}^{1D}$ | $RC_{risk,5\\%}$ | $CE(m_i)$  |
 | ----- | --------- | ---------------- | ------------------- | ---- | -------------------- | ---------------- | ---------- |
@@ -971,9 +971,9 @@ Alpha executes a collateralised £100mm 10Y IRS with Bravo and analyses the PFE.
 | 8y    | £19,000   | 6.5bp            | 203,000             | 1.5  | 305,000              | 31,000           | £539,000   |
 | 10y   | £0        | 0bp              | 0                   | 0    | 0                    | 0                | £0         |
 
-$$PFE = £1,853,000$$
+$PFE = £1,853,000$
 
-In example 5.10 the PFE is the same as the CE. This is often the case with collateralised swaps, whose delta risk profile typically declines as the swap progresses through its life. However, changing the parameters can, of course, influence the results. Two swaps, whose risk increases as the swap start date becomes ever closer, is another example where this is not necessarily true. Once the swap begins, though, the risk steadily declines with each passing swap period and falls back to the above case.
+In example 5.10 the PFE is the same as the CE. This is often the case with collateralised swaps, whose delta risk profile typically declines as the swap progresses through its life. However, changing the parameters can, of course, influence the results. Forward swaps, whose risk increases as the swap start date becomes ever closer, is another example where this is not necessarily true. Once the swap begins, though, the risk steadily declines with each passing swap period and falls back to the above case.
 
 *Example 5.11:*
 
@@ -995,11 +995,13 @@ Alpha pays an uncollateralised £100mm start-2Y tenor-8Y IRS with Bravo, and ana
 | 8y    | £19,000   | 9,000,000       | 6.5bp            | 203,000              | 31,000           | £9,234,000  |
 | 10y   | £0        | 0               | 0bp              | 0                    | 0                | £0          |
 
-$$PFE = £18,503,000$$
+$PFE = £18,503,000$
 
 In example 5.11 the effect of the valuation of the swap has significant and the dominant impact. With respect to PFE the key term is *potential*. The swap is clearly not expected to have greater than £17.8mm PV four years into its life, but the potential for that to happen exists 5% of the time. If the counterparty were then to file for bankruptcy in this circumstance it would be quite unfortunate. This impact to the credit risk consideration highlights the difference between collateralised and uncollateralised derivatives. Regulators aim to capture all of these aspects when assessing RWA values for derivative trades.
 
 ##### Expected exposure (EE)
+
+Calculating PFE required the determination of $CE_{\alpha\\%}(m_i)$, which is a specific type of statistical metric of exposure at a future date measured with a specific c.i.. Another frequently used metric is to consider the expected exposure (EE) which determines the average exposure on a specific date, $m_i$, of all simulated scenarios. Where the PFE aims to provide a kind of worst case analysis, the EE gives a more typical exposure value. In calculations, if the exposure in a scneario is accessed to be negative, that is the derivative is in fact a liability, then the exposure in that scenario is set to be zero. This ensures that EE values always express some credit risk, and is representative of the fact that if a counterparty were to file for bankruptcy and that counterparty be owed money, then that would be collected in full by the bankruptcy administrators (subject to the aforementioned netting agreement). On the other hand, if the counterparty owed money itself, then only a proportion might be recovered depending upon the LGD and distributed amount by the bankruptcy administrators.
 
 Conservatively speaking, we can write EE as:
 
@@ -1009,9 +1011,33 @@ where $E^+[..]$ represents the expectation of the random variable whose value is
 
 *Example 5.12:*
 
+For the same trade in example 5.10 Alpha assesses its EE under the same parameters;
 
+| $m_i$ | $E[pv01]$ | $Vol_{1s.d.}^{1D}$ | $E^+[C_{lag}]$ | $DM$ | $E^+[C_{tran}]$ | $E^+[RC_{risk}]$ | $EE(m_i)$ |
+| ----- | --------- | ------------------ | -------------- | ---- | --------------- | ---------------- | --------- |
+| 0y    | £92,000   | 4.5bp              | 165,000        | 1.5  | 248,000         | 37,000           | £450,000  |
+| 2y    | £75,000   | 5.5bp              | 165,000        | 1.5  | 248,000         | 30,000           | £443,000  |
+| 4y    | £57,000   | 6.5bp              | 148,000        | 1.5  | 222,000         | 23,000           | £393,000  |
+| 6y    | £38,000   | 6.5bp              | 99,000         | 1.5  | 149,000         | 15,000           | £263,000  |
+| 8y    | £19,000   | 6.5bp              | 49,000         | 1.5  | 74,000          | 8,000            | £131,000  |
+| 10y   | £0        | 0bp                | 0              | 0    | 0               | 0                | £0        |
+
+$\text{max EE}: £450,000$
 
 *Example 5.13:*
+
+For the same trade in example 5.11 Alpha assesses its EE under the same parameters;
+
+| $m_i$ | $E[pv01]$ | $Vol_{1s.d.}^{1D}$ | $E^+[RC_{risk}]$ | $E^+[C_{tran}]$ | $E^+[RC_{mtm}]$ | $EE(m_i)$   |
+| ----- | --------- | ------------------ | ---------------- | --------------- | --------------- | ----------- |
+| 0y    | £73,000   | 4.5bp              | 29,000           | 197,000         | 131,000         | £357,000    |
+| 2y    | £75,000   | 5.5bp              | 30,000           | 248,000         | 3,000,000       | £3,278,000  |
+| 4y    | £57,000   | 6.5bp              | 23,000           | 222,000         | 4,800,000       | £5,045,000  |
+| 6y    | £38,000   | 6.5bp              | 15,000           | 149,000         | 3,900,000       | £4,064,000  |
+| 8y    | £19,000   | 6.5bp              | 8,000            | 98,000          | 1,100,000       | £1,206,000  |
+| 10y   | £0        | 0bp                | 0                | 0               | 0               | £0          |
+
+$\text{max EE}: £5,193,000$
 
 ##### EPE, EE, and EEPE
 
