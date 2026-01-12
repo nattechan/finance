@@ -392,7 +392,7 @@ Quoting convention:
 
 #### Zero coupon swaps (ZCSs)
 
-- Similar to IRS except payments are not made after each accrual period. Instead, payments due for each periiod, on each leg of the swap, are compounded up to be paid as a single cashflow at the maturity of the swap
+- Similar to IRS except payments are not made after each accrual period. Instead, payments due for each period, on each leg of the swap, are compounded up to be paid as a single cashflow at the maturity of the swap
 - The fixed and floating leg both have a single cashflow, payable on the same day in the future for standard ZCSs (this results in only one net payment regardless of maturity or tenor)
 - Can be easily quoted in actual fixed amount of cash or in rate terms as an IRR
 - The floating leg is uniquely defined. A ZCS compounds all of the relevant index fixings to make a single payment at maturity
@@ -690,7 +690,7 @@ Derivatives are always priced assuming cash can be funded or invested at a speci
 1. The original forecast floating rates must publish as predicted
 2. The DFs used for the initial pricing must be attained when funding or investing real cash balances
 
-Here the example interest rate of 0.8% on the cash balance is not equal to the RFR period rate published at 0.8996%. This is a very important distinction. For cleared and regularly collateralized derivates, these will be the same rates, but in this specific contract's case, 0.8% reflects the physically attainable rate of interest on the cash balance over the term, for example, there is a non-standard remuneration agreement on collateral here, which we will come on to.
+Here the example interest rate of 0.8% on the cash balance is not equal to the RFR period rate published at 0.8996%. This is a very important distinction. For cleared and regularly collateralized derivatives, these will be the same rates, but in this specific contract's case, 0.8% reflects the physically attainable rate of interest on the cash balance over the term, for example, there is a non-standard remuneration agreement on collateral here, which we will come on to.
 
 ##### Cash balance profiles
 
@@ -744,7 +744,7 @@ Collateral is an obligation (cash or other financial asset) attached to some der
 
 Day 1: Alpha reports a PnL of $710,000 due to the following two trades
 Alpha pays $100mm 5y IRS @ 2.0% to Bravo collateralized with USD cash
-Alpha receives $100mm 5y IRS @ 2.15% from Delta, uncollaterlaized
+Alpha receives $100mm 5y IRS @ 2.15% from Delta, uncollateralized
 
 Day 2: Global event moves rates 100bps lower
 Alpha records the IRS with Delta as an asset worth $5.51mm
@@ -868,7 +868,7 @@ Modern approaches toward CTD optionality pricing will run a simulated environmen
 
 ##### Unilateral CSAs
 
-Occasionally CSAs exists which requires only one counterparty to post collateral, which creates a peculiar pricing dynamic. For assets like this which are heavily ITM, then it is more statistically certain that the asset is either collateralized or uncollateralized (as standard market movements are unlikely to alter this binary determination). Its value can then be assumed to be broadly equivalent to the discounting of the cashflows assumed in either the case of a collateralized derivative or an uncollateralized one. For assets with values close to zero, then the eimpact of unilateral CSA becomes very significant, because the binary dtermination is potentially subject to fluctuate with market movements. This represents a different kind of option held by the counterparty who never needs to post collateral. Modern derivative pricing should take this into account, again through scenario analysis, but it is very complex.
+Occasionally CSAs exists which requires only one counterparty to post collateral, which creates a peculiar pricing dynamic. For assets like this which are heavily ITM, then it is more statistically certain that the asset is either collateralized or uncollateralized (as standard market movements are unlikely to alter this binary determination). Its value can then be assumed to be broadly equivalent to the discounting of the cashflows assumed in either the case of a collateralized derivative or an uncollateralized one. For assets with values close to zero, then the impact of unilateral CSA becomes very significant, because the binary determination is potentially subject to fluctuate with market movements. This represents a different kind of option held by the counterparty who never needs to post collateral. Modern derivative pricing should take this into account, again through scenario analysis, but it is very complex.
 
 #### Credit Risk
 
@@ -876,9 +876,9 @@ Occasionally CSAs exists which requires only one counterparty to post collateral
 
 The immediate potential loss in the event of a counterparty defaulting on its obligations (sometimes also called current exposure). Exchange traded or cleared derivatives can be said not to possess CE because the legal counterparty of those trades is a clearing house (only valid if assumed that a clearing house cannot default). For bilateral trades (face counterparty directly), there is an important distinction between collateralized and uncollateralized derivatives in the context of CE (mitigates against loss by providing security for assets), but there are a few elements which are not protected by collateral;
 
-1. Collateral valuation lag: even the most frequent collateral exchanges can only be posted one day in arrears, after the previous day'sclosing valuations have been exchanged and agreed between counterparties. This lag represents the time period between the date of the valuation for the most recently submitted collateral posting and the notice of bankruptcy filing, with a potential market move in between
-2. Uncollateralized valuation adjustment through period of transition: when a counterapty defaults, the fair value of the asset must be ascertained by the agrieved party, which is usally done using official daily closing curves to provide a legal demonstratoiin of validity ahead of liquidation proceedings. This creates a period of time where valuation changes will occur wintout being colalteralized any further (time between notice of bankruptcy filing and final derivative valuation)
-3. Replacement cost of risk: which is required as the defaulted derivative contract effectively ceases to exist. The cost of replacement can be made up of bid/offer spread and misaligned timing with respect to the foramlization of the fair value claim on the original derivative, particularly if it is expected totake a reasonable amount of time to execute suitable replacement trades. Basel II and III regualtions are particularly keen to stress this factor when measuring the risks on derivative assets for the purpose of regulatory reporting
+1. Collateral valuation lag: even the most frequent collateral exchanges can only be posted one day in arrears, after the previous day's closing valuations have been exchanged and agreed between counterparties. This lag represents the time period between the date of the valuation for the most recently submitted collateral posting and the notice of bankruptcy filing, with a potential market move in between
+2. Uncollateralized valuation adjustment through period of transition: when a counterparty defaults, the fair value of the asset must be ascertained by the aggrieved party, which is usually done using official daily closing curves to provide a legal demonstration of validity ahead of liquidation proceedings. This creates a period of time where valuation changes will occur without being collateralized any further (time between notice of bankruptcy filing and final derivative valuation)
+3. Replacement cost of risk: which is required as the defaulted derivative contract effectively ceases to exist. The cost of replacement can be made up of bid/offer spread and misaligned timing with respect to the formalization of the fair value claim on the original derivative, particularly if it is expected to take a reasonable amount of time to execute suitable replacement trades. Basel II and III regulations are particularly keen to stress this factor when measuring the risks on derivative assets for the purpose of regulatory reporting
 
 Basel calls the above components (in a broad sense) the margin period of risk.
 
@@ -897,9 +897,9 @@ Alpha has a collateralized derivative with Lima, hedged by collateralized deriva
 | --- | --- | --- | --- |
 | Daily market move | -1bps | -7bps | -21bps |
 
-Alpha will submit a claim to Lima's bankruptcy administrators for a total of 6mm, which represents the claim of 13.1mm minus the kept collateral of 7.1mm. The 6mm is made up of a 1.5mm collateral lag and a 4.5mm uncollateralized valuation adjustment on the day of the declared bankruptcy. In addition Alpha suffers a loss of 0.6mm due to risk replacement. If recovery rates are, for example 30% then Alpha's loss may be finalised as 4.8mm, ignoring any other costs (such as legal, operational or administrative).
+Alpha will submit a claim to Lima's bankruptcy administrators for a total of 6mm, which represents the claim of 13.1mm minus the kept collateral of 7.1mm. The 6mm is made up of a 1.5mm collateral lag and a 4.5mm uncollateralized valuation adjustment on the day of the declared bankruptcy. In addition Alpha suffers a loss of 0.6mm due to risk replacement. If recovery rates are, for example 30% then Alpha's loss may be finalized as 4.8mm, ignoring any other costs (such as legal, operational or administrative).
 
-Portfolios containing multiple trades with a single counterparty are usually subject to netting agreements, which state that the agregate PV of all derivatives is the value used in legal claims. Wihtout a netting agreement, the CE is usually far higher because each derivative is treated individually and a different treatement of assets comapred to liabilities has large impact. Additionally, an institution may choose to model the valuaiton lag and change through tranisition slightly differently. Before notification of bankruptcy, financial markets will be funcitoning normlaly, but after an announcement, panic and consolidation may impact the liquidity, meaning a more conservative approach would be to consider the voalitlity after the notification having increased (mainly used larger, more influential organizations).
+Portfolios containing multiple trades with a single counterparty are usually subject to netting agreements, which state that the aggregate PV of all derivatives is the value used in legal claims. Without a netting agreement, the CE is usually far higher because each derivative is treated individually and a different treatment of assets compared to liabilities has large impact. Additionally, an institution may choose to model the valuation lag and change through transition slightly differently. Before notification of bankruptcy, financial markets will be functioning normally, but after an announcement, panic and consolidation may impact the liquidity, meaning a more conservative approach would be to consider the volatility after the notification having increased (mainly used larger, more influential organizations).
 
 Calculating CE becomes a task synonymous with VaR. It requires statistical analysis to make predictions about viable market movements and then to ascertain values deemed to be expected within a specific c.i.. Suppose we wish to calculate the CE which is expected to be only $\alpha\\%$ of the time, that is to a $(1-\alpha)\\%$ c.i., then:
 
@@ -910,12 +910,12 @@ where,
 $$
 \begin{align*}
 RC_{mtm} &:= \begin{cases}
-0, & \text{(if collateralised)} \\
-\max\{\text{asset PV}, 0\}, & \text{(if uncollateralised)}
+0, & \text{(if collateralized)} \\
+\max\{\text{asset PV}, 0\}, & \text{(if uncollateralized)}
 \end{cases} \\
 C_{lag,\alpha\\%} &:= \begin{cases}
-\text{the cost of collateral lag,} & \text{(if collateralised)} \\
-0, & \text{(if uncollateralised)}
+\text{the cost of collateral lag,} & \text{(if collateralized)} \\
+0, & \text{(if uncollateralized)}
 \end{cases} \\
 C_{tran,\alpha\\%} &:= \text{the cost of valuation change through transition,} \\
 RC_{risk,\alpha\\%} &:= \text{the replacement cost of risk,}
@@ -930,14 +930,14 @@ Continuing from example 5.8, at the close of day -1, Alpha considers its CE with
 
 $$
 \begin{align*}
-RC_{mtm} &:= 0 \text{ (the asset is collateralised),} \\
+RC_{mtm} &:= 0 \text{ (the asset is collateralized),} \\
 C_{lag,5\\%} &= 1,500,000 \text{ (is an observed value),} \\
 C_{tran,5\\%} &= 6,500,000 \text{ (through statistical model),} \\
 RC_{risk,5\\%} &= 1,200,000 \text{ (through expected charges),}
 \end{align*}
 $$
 
-At this point, it is well worth flagging recovery rates and loss given default (LGD), which are terms for the same concept. Some of the CE will generally be expected to be recovered via the liquidation of assets of the defaulting entity, and this does play a part in CVA and regulatory reporitng. But, as a value, CE seeks to indicate the immediate risk to a counterparty defauling on its obligations and it is useful as an individual metric to compare exposure on different trades or portfolios to different counterparties, wihtout specifically factoring in or estimating the LGD.
+At this point, it is well worth flagging recovery rates and loss given default (LGD), which are terms for the same concept. Some of the CE will generally be expected to be recovered via the liquidation of assets of the defaulting entity, and this does play a part in CVA and regulatory reporting. But, as a value, CE seeks to indicate the immediate risk to a counterparty defaulting on its obligations and it is useful as an individual metric to compare exposure on different trades or portfolios to different counterparties, without specifically factoring in or estimating the LGD.
 
 ##### Potential future exposure (PFE)
 
@@ -945,7 +945,7 @@ Where CE is a metric for immediate credit exposure, PFE seeks to present a metri
 
 $$CE_{\alpha\\%}(m_i) = RC_{mtm, \alpha\\%}(m_i) + C_{lag, \alpha\\%}(m_i) + C_{tran, \alpha\\%}(m_i) + RC_{risk, \alpha\\%}(m_i)$$
 
-where the major difference is that the uncollateralized asset value, $RC_{mtm, \alpha\\%}$, has to be statiscally modeled as its future value is dependent upon the unkown progression of market rates. Minor differences being that the other three elements of the formula need to be statistically modeled in the context of future volatilities. For example, if one were tyring to calculate the CE of a trade five years into the future, then one might choose to use higher volatilities, which are more conservative than those used to calculate today's CE. Once enough future dates have been assessed, the reported PFE is simply the maximum of any values:
+where the major difference is that the uncollateralized asset value, $RC_{mtm, \alpha\\%}$, has to be statistically modeled as its future value is dependent upon the unknown progression of market rates. Minor differences being that the other three elements of the formula need to be statistically modeled in the context of future volatilities. For example, if one were trying to calculate the CE of a trade five years into the future, then one might choose to use higher volatilities, which are more conservative than those used to calculate today's CE. Once enough future dates have been assessed, the reported PFE is simply the maximum of any values:
 
 $$PFE_{\alpha\\%} = \max_{i}{[CE_{\alpha\\%}(m_i)]}$$
 
@@ -953,7 +953,7 @@ Notice that the future CE values are future values, as opposed to present value 
 
 *Example 5.10:*
 
-Alpha executes a collateralised £100mm 10Y IRS with Bravo and analyses the PFE. Alpha uses the following parameters in the model;
+Alpha executes a collateralized £100mm 10Y IRS with Bravo and analyses the PFE. Alpha uses the following parameters in the model;
 
 (i) five sampled future dates as well as the immediate CE,
 (ii) the expected future delta risk of the remaining swap at each date,
@@ -973,11 +973,11 @@ Alpha executes a collateralised £100mm 10Y IRS with Bravo and analyses the PFE.
 
 $PFE = £1,853,000$
 
-In example 5.10 the PFE is the same as the CE. This is often the case with collateralised swaps, whose delta risk profile typically declines as the swap progresses through its life. However, changing the parameters can, of course, influence the results. Forward swaps, whose risk increases as the swap start date becomes ever closer, is another example where this is not necessarily true. Once the swap begins, though, the risk steadily declines with each passing swap period and falls back to the above case.
+In example 5.10 the PFE is the same as the CE. This is often the case with collateralized swaps, whose delta risk profile typically declines as the swap progresses through its life. However, changing the parameters can, of course, influence the results. Fwd swaps, whose risk increases as the swap start date becomes ever closer, is another example where this is not necessarily true. Once the swap begins, though, the risk steadily declines with each passing swap period and falls back to the above case.
 
 *Example 5.11:*
 
-Alpha pays an uncollateralised £100mm start-2Y tenor-8Y IRS with Bravo, and analyses the PFE. Alpha uses the following model parameters:
+Alpha pays an uncollateralized £100mm start-2Y tenor-8Y IRS with Bravo, and analyses the PFE. Alpha uses the following model parameters:
 
 (i) five sampled future dates as well as the immediate CE,
 (ii) the expected future delta of the remaining swap at each date,
@@ -997,11 +997,11 @@ Alpha pays an uncollateralised £100mm start-2Y tenor-8Y IRS with Bravo, and ana
 
 $PFE = £18,503,000$
 
-In example 5.11 the effect of the valuation of the swap has significant and the dominant impact. With respect to PFE the key term is *potential*. The swap is clearly not expected to have greater than £17.8mm PV four years into its life, but the potential for that to happen exists 5% of the time. If the counterparty were then to file for bankruptcy in this circumstance it would be quite unfortunate. This impact to the credit risk consideration highlights the difference between collateralised and uncollateralised derivatives. Regulators aim to capture all of these aspects when assessing RWA values for derivative trades.
+In example 5.11 the effect of the valuation of the swap has significant and the dominant impact. With respect to PFE the key term is *potential*. The swap is clearly not expected to have greater than £17.8mm PV four years into its life, but the potential for that to happen exists 5% of the time. If the counterparty were then to file for bankruptcy in this circumstance it would be quite unfortunate. This impact to the credit risk consideration highlights the difference between collateralized and uncollateralized derivatives. Regulators aim to capture all of these aspects when assessing RWA values for derivative trades.
 
 ##### Expected exposure (EE)
 
-Calculating PFE required the determination of $CE_{\alpha\\%}(m_i)$, which is a specific type of statistical metric of exposure at a future date measured with a specific c.i.. Another frequently used metric is to consider the expected exposure (EE) which determines the average exposure on a specific date, $m_i$, of all simulated scenarios. Where the PFE aims to provide a kind of worst case analysis, the EE gives a more typical exposure value. In calculations, if the exposure in a scneario is accessed to be negative, that is the derivative is in fact a liability, then the exposure in that scenario is set to be zero. This ensures that EE values always express some credit risk, and is representative of the fact that if a counterparty were to file for bankruptcy and that counterparty be owed money, then that would be collected in full by the bankruptcy administrators (subject to the aforementioned netting agreement). On the other hand, if the counterparty owed money itself, then only a proportion might be recovered depending upon the LGD and distributed amount by the bankruptcy administrators.
+Calculating PFE required the determination of $CE_{\alpha\\%}(m_i)$, which is a specific type of statistical metric of exposure at a future date measured with a specific c.i.. Another frequently used metric is to consider the expected exposure (EE) which determines the average exposure on a specific date, $m_i$, of all simulated scenarios. Where the PFE aims to provide a kind of worst case analysis, the EE gives a more typical exposure value. In calculations, if the exposure in a scenario is accessed to be negative, that is the derivative is in fact a liability, then the exposure in that scenario is set to be zero. This ensures that EE values always express some credit risk, and is representative of the fact that if a counterparty were to file for bankruptcy and that counterparty be owed money, then that would be collected in full by the bankruptcy administrators (subject to the aforementioned netting agreement). On the other hand, if the counterparty owed money itself, then only a proportion might be recovered depending upon the LGD and distributed amount by the bankruptcy administrators.
 
 Conservatively speaking, we can write EE as:
 
@@ -1041,11 +1041,54 @@ $\text{max EE}: £5,193,000$
 
 ##### EPE, EE, and EEPE
 
+To be consistent with the Basel III terminology, we must include three more terms;
+
+1. Effective expected exposure (EEE): on any date, is the highest EE that has occurred at any point until that date
+2. Effective potential exposure (EPE): is the average across all time horizons of the EEs
+3. Effective expected positive exposure (EEPE): is the average across all time horizons of the EEEs
+
+The reason that these additional credit measures are used by Basel is because they believe they characterize better the risk of transactions which are subject ot rollover risk. This incorporates a sense that transactions are likely to be extended into the. future through new, on-going business.
+
 ##### Credit valuation adjustment (CVA)
+
+With credit exposure in mind, financial institutions seek to calculate an adjustment to the market valuation of trades to reflect the chance of a counterparty defaulting and generating a loss in that scenario. Again, it is highlighted that many methods exists in practice for the determination of these adjustments. Some are more complicated and detailed than others. We can consider a standard simple model which help to present the overall idea of CVAs. Suppose that $p(m_i)$ is the modeled probability of default of the counterparty between the dates $m_i$ and $m_{i+1}$, then the CVA can be estimated as,
+
+$$CVA = LGD \sum_{i=1}^{T} p(m_i) EE(m_i) v_i$$
+
+where this model has chosen to adopt the EE as its base credit metric. We have also incorporated the probability of default and the LGD (or recovery ratio), which is another important estimation in the final assessment of ultimate loss if a counterparty defaulted.
+
+*Example 5.14:*
+
+Alpha calculates the CVA adjustment of both the collateralized (1) and the uncollateralized (2) trades from previous examples using the suggested model, with the parameters;
+
+| $m_i$ | 0Y | 2Y | 4Y | 6Y | 8Y |
+| --- | --- | --- | --- | --- | --- |
+| (1) $p(m_i)$ | 0.1% | 0.1% | 0.1% | 0.1% | 0.1% |
+| (2) $p(m_i)$ | 1.0% | 0.4% | 0.1% | 0.1% | 0.1% |
+| $v_i$ | 1.000 | 0.963 | 0.928 | 0.906 | 0.856 |
+
+Using LGD as 100%, for the collateralized trade, the CVA adjustment is calculated as £1,592. In the case of the uncollateralized trade, the CVA adjustment is, unsurprisingly, determined to be the much higher value of £25,593. If a standard 40% recovery ratio, i.e., 60% LGD, were to be applied to these values, then they might arguably be reduced by 40%.
+
+CVAs are usually made at a counterparty level and not by each individual trade. If a counterparty were to default, then the complete set of trades owned by an institution facing that counterparty would be affected simultaneously. A new trade (or early termination of an old trade) should always be considered in the context of how it will affect the overall credit exposure of the institution to the counterparty as a whole (assuming netting set rules apply). Thus, the impact of a single trade could increase or decrease exposure dependent upon the other, current trades within the set. This is precisely the same concept as with the impact of new (or terminated) trades to RWA values of specific counterparties, which is covered in chapter 17. The above examples all presented the information assuming that the trade in question was isolated and was the only trade in the set. Be aware that in practice, credit exposure changes and CVA might be unintuitive, particularly without important knowledge of all of the other trades facing that same counterparty.
 
 #### Funding valuation adjustment (FVA)
 
+Unlike CVAs, FVAs have no dependence on the credit of the counterparty. Instead, they are completely dependent upon the institution's own funding ability. So CVAs depend on the counterparty, factoring in the economics of what happens if they were to default, and FVAs depend on the institution, factoring in the economics of how it will manage its own funding obligations on the trade. Like with CVAs, there is a grave distinction between collateralized and uncollateralized trades when considering FVAs. Collateralized trades have little consideration because funding of these trades are implicit; net cashflows that are paid to one counterparty as part of regular, intermediate settlement of derivatives will necessarily be returned, by that same counterparty, to the other due to the PV of the derivative changing by the same amount (collateral flux). Uncollateralized trades, however, are completely different; net cash outflows have to be funded and cash inflows provide an effective surplus.
+
+When pricing an uncollateralized trade, the discount curve used to discount the cashflows is dependent on the institution's ability to borrow or utilize cash. For example, suppose rates are very low at 0.5% and an institution is about to execute a 10Y receiver IRS at 3%. The institution is getting an inflow of cash every accrual period until rates move higher nearer the maturity of the IRS when the cash starts being transferred back to the counterparty (to equate to an initial PV of zero). The cash balance profile of this trade becomes positive. What does the institution do with this received cash in the meantime (invested, utilized, etc.)? If so, at what rate of return? What if the institution were to enter the same IRS but as a payer (negative cash balance throughout the life of the IRS). In that scenario, how will the institution raise the cash to fund the trade and at what expected cost? This is precisely the information required in order to discount the IRS cashflows to price the IRS accurately. In practice, for an large institution, the rates at which it could borrow/fund cash will likely differ from those rates of return where it can utilize cash (so it not sensible to price an uncollateralized IRS with just one discount curve because it depends on upon the direction of the trade, and for more complicated IRSs, it may depend on more parameters than just direction).
+
+The solution to the slightly complicated scenario is to invent the FVA. The technique allows an uncollateralized trade to be priced using a single, benchmark uncollateralized discount curve, and then the FVA is an after pricing adjustment which takes account of the likely cash balance of the institution and its applicable rates of funding (all institutions manage this differently and a specific way of pricing the flows in conjunction with all of the ways cash is managed as part of its on-going business). It is advantageous to have offsetting positions (i.e., paying uncollateralized cash on some derivatives and receiving uncollateralized cash on others), as this reduces funding risk and allows an institution to be in a position of engaging new business in either direction.
+
 ### Chapter 6 - Single Currency Curve Modeling
+
+Curves make viable, and are the backbone for all derivative pricing techniques. The term *curve modeling* can have slightly different meaning in different contexts; it either means establishing the mechanical process that will generate RFR rates used for the pricing of linear IRDs, or constructing approximate, analytical mathematical models (many varieties) aimed at reflecting or proxying the movement in rates, often for use with deriving solutions to stochastic differential equations (when pricing swaptions or other structured products), or more theoretical financial applications. The focus here is on practical construction and the decisions involved in determining the mechanical process. The mathematical models aim to reflect the movement of these true mechanically generated curves, which themselves, reflect the market prices of basic IRDs. Complacency tends to exist in this field because it is quite easy to generate curves poorly, without being able to observe their weaknesses. It is rather much more difficult to design curves well and that permit accurate interbank trading. In this chapter, the items covered are;
+
+1. Underlying properties, or foundations, or IR curves
+2. What types of curves are produced and the need for synchronous relationships
+3. Degrees of freedom and calibrating parameters
+4. Interpolation techniques for unspecified points of curves
+5. practical considerations of teh curve's use affecting its design
+6. Trader's considerations when relying on curves to price derivatives
 
 #### General curveset construction
 
