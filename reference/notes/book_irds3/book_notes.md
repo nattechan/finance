@@ -816,7 +816,7 @@ The CTD is gilts less than 5Y maturity, even with the haircuts specified in the 
 
 ##### Cheapest to deliver (CTD) discount curves
 
-To satisfy the no arbitrage principle, the valuation of any derivative must be calculated using discount factors built specifically for the type of collateral under the terms of the CSA. Here, we suppose the existence of single-CSA discount curves and illustrate a way to combine these individual curves. By combining the individual curves, we create a discount curve for a CSA that permits multiple choices (multi-CSA discount curve). Combining single-CSA curves is teh less difficult process of selecting the cheapest daily rate from any of the individual curves, and progressively building up a new one. This is essentially a bootstrapping process constructed one day after the next.
+To satisfy the no arbitrage principle, the valuation of any derivative must be calculated using discount factors built specifically for the type of collateral under the terms of the CSA. Here, we suppose the existence of single-CSA discount curves and illustrate a way to combine these individual curves. By combining the individual curves, we create a discount curve for a CSA that permits multiple choices (multi-CSA discount curve). Combining single-CSA curves is the less difficult process of selecting the cheapest daily rate from any of the individual curves, and progressively building up a new one. This is essentially a bootstrapping process constructed one day after the next.
 
 *Example 5.6:*
 
@@ -1087,10 +1087,12 @@ Curves make viable, and are the backbone for all derivative pricing techniques. 
 2. What types of curves are produced and the need for synchronous relationships
 3. Degrees of freedom and calibrating parameters
 4. Interpolation techniques for unspecified points of curves
-5. practical considerations of teh curve's use affecting its design
+5. Practical considerations of the curve's use affecting its design
 6. Trader's considerations when relying on curves to price derivatives
 
 #### General curveset construction
+
+Curves exist to provide interested parties with the knowledge of, for any date in the future, both of the following; the DF for that date (using a particular CSA for discounting) or a forecast RFR rate (which can be compounded together to produce an RFR tenor period). This chapter examines the most important points when creating curves for use in only a single currency, and do *not* consider the the implications of the XCS market, nor of CSAs in alternate currencies.
 
 ##### Introduction and principles
 
