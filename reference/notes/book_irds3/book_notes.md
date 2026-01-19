@@ -1092,31 +1092,212 @@ Curves make viable, and are the backbone for all derivative pricing techniques. 
 
 #### General curveset construction
 
-Curves exist to provide interested parties with the knowledge of, for any date in the future, both of the following; the DF for that date (using a particular CSA for discounting) or a forecast RFR rate (which can be compounded together to produce an RFR tenor period). This chapter examines the most important points when creating curves for use in only a single currency, and do *not* consider the the implications of the XCS market, nor of CSAs in alternate currencies.
-
 ##### Introduction and principles
+
+Curves exist to provide interested parties with the knowledge of, for any date in the future, both of the following; the DF for that date (using a particular CSA for discounting) or a forecast RFR rate (which can be compounded together to produce an RFR tenor period). This chapter examines the most important points when creating curves for use in only a single currency, and do *not* consider the the implications of the XCS market, nor of CSAs in alternate currencies. Since the transition from IBOR, creating curvesets has become simpler since the task involves the construction of only a single curve, the RFR curve (previously, curveset/curve referred to the collection of OIS and IBOR curves for all tenors of IBOR index, i.e., 1M, 3M, etc. which were all distinct curves with their own inherent basis). A curve should;
+
+*Figure 6.1: Considerations for the construction of a curve:*
+
+1. Be time synchronized with the instruments that parametrizes it and with other relevant curves, see chapter 19
+2. Be calibrate to market instruments and be able to replicate any mid-market price, see chapter 11
+3. Be numerically efficient to calculate and derive, see chapter 12
+4. Be practically maintainable and transparent so that a trader can, for example, manually update it in markets that are less liquid and so that a trader is aware of its limitations and control structure, see chapter 19
+5. Consider means of hedging with respect to risk and profit and loss management, see chapter 9
+6. Possess inherent structure to minimize internal volatility, i.e., 6Y expected to be proportional to 5Y and7 Y as an example, see chapter 12
+7. Be useful for market analysis and not just for pricing, i.e., to provide valid historical data for chapter 14 and 15
+8. Be robust to the passage of time, i.e., if a week passes, the interpolation structure should still yield consistent interpolated values for the equivalent input parameters, see chapter 12
 
 ##### Foundation of a curve
 
+The foundation fof any single curve within a set of curves establishes how we are going to represent it mathematically. It can be designed with one of only two sensible bases; DFs and forecast rates. For RFRs, actually the two foundations are the same since there is a one-to-one equivalence, but for previous IBOR curves, this was not the case.
+
+###### DFs based curves
+
+The oldest and traditionally used approach. This type of curve will assign a DF for each future date on the curve and then, from that information, an appropriate rate can be determined between two given dates. This means that there is a mathematical equivalence between the rates implied by the curve and the DFs it contains. In order to derive an implied rate from a DF based curve, use the following formula;
+
+$$r_i = \frac{1}{d_i}\left(\frac{v_{i-1}}{v_i}-1\right)$$
+
+for $m_{i-1}$, $m_i$, the value start date and value end date respectively of the appropriate tenor rate under consideration. To calculate, for example, the forecast RFR for a particular day, one need only take that day's DF and the subsequent DF (not on a holiday) and derive the rate. We will use this DF based approach for our RFR curve construction.
+
+###### Forecast rate based curves
+
+Forecast rate based curve are entirely different and designed for IBOR indexes. They produce only a specific index rate attributable for any future date, with that rate being the designated purpose of the curve. For example, a 3M-$LIBOR curve will produce the set of all 3M-$LIBOR rates. This type of curve cannot have any DFs, due to mathematical inconsistencies. Consider the example:
+
+| Value Date | Value End Date | Rate | Start DF | End DF (implied) |
+| --- | --- | --- | --- | --- |
+| 12-Dec-2016 | Mon 13-Mar-2017 | 1.6100% | 0.99500 | 0.99102 |
+| 13-Dec-2016 | Mon 13-Mar-2017 | 1.6120% | 0.99495 | 0.99101 ! |
+
+The mathematical inconsistency here arises due to weekends and holidays which affect value end dates so that sometimes two or more forecast rates have the same end date and there is *not* a unique DF which, given their start DF, satisfies all. Implementing forecast rate based curves negated the problem of resulting in spurious IBOR rates derived from those *repeated* DFs.
+
 ##### Collection of curves
+
+A curveset contains more than one curve, all of which need to be synchronized with each other according to the specified market data. Synchronization is an important property of a curveset because without it, pricing of derivatives wll be timing inconsistent and will result in inaccurate prices. A typical curveset in a single currency for use in general trading will contain the following curves;
+
+1. RFR curve
+2. Discounting curves: benchmark CSA, and uncollateralized or other forms
+3. Central bank rate curve
+4. *Obsolete* IBOR curves: 1M, 3M, 6M, 12M
 
 ##### Market data and knots
 
+Building a curveset that is accurate to the market requires knowledge of some of the market prices as inputs to the curveset. One must be careful which prices to choose as inputs. If too many inputs are chose, the curveset risks being overspecified and can be very difficult to calibrate the curve if some of these inputs need to be manually and synchronously updated (such as prices that are voice brokered). If too few inputs are chosen, the curve is underspecified and parts of the curve may be subject to other model assumptions and may not reflect real market prices. The preferred, modern day method is to numerically solve curvesets. The 'bootstrapping' method is old and outdated. This is because for implementing the more complicated features and flexibility of a curveset, it is either impossible or far more complicated than a numerically iterative solution. To solve numerically then, our curve must have what are termed *knots, nodes* or *pillar dates* depending on the author, with each knot typically representing a degree of freedom on a specific date of a curve for the numerical solver. Knots do not have to be positioned in exactly the same location as that implied by the calibrating input instruments, but it is known that some general knot placements can lead to ill-constrained curves. The below is a list of guidelines that would be expected of any curveset design, following the design parameters of figure 6.1;
+
+1. The most liquid, interbank products should be included as benchmarks (these make up the majority of the important input prices)
+2. Exchange traded products should be included (these usually fall in the above category as being the most liquid and they are also electronic, which allows immediate and automatic feedback)
+3. The further the maturity of the curve, the sparser the inclusion of inputs becomes (because more products are usually traded at the shorter end of the curve requiring it to be calibrated to a greater degree)
+4. Each currency will usually have its own nuances, meaning each curve design in each currency may have to be different to be optimally suited
+5. The RFR curve will serve as the forecast curve and default curve for discounting benchmark CSA cashflows
+
 ##### Interpolation styles of a curve
+
+Between the knots, we must use interpolation techniques to derive all of the other values on all other dates that make up the curve. Additionally, one may choose to employ one style of interpolation for one part of the curve (i.e., first year), and then switch to use another.
+
+###### DF interpolation: log-linear or log-cubic
+
+The common approach here is to either linearly interpolate the logarithm of DFs between knot dates or create a cubic spline function between the logarithm of the DFs. If a log-linear approach is adopted, it results in constant O/N rates for that curve between knot dates, provided they are tightly spaced. A log-cubic spline approach, which has the additional constraint that the first and second derivatives of $\log(DF)$ function are also required to be continuous at each knot, produces a much smoother curve. The resulting O/N rates are smooth throughout and do not have discontinuous jumps at knot points unlike the case with log-linear. But this smoothness comes with a caveat; it also means that the curve becomes globally dependent so that changes to any input parameters may impact the interpolation of any part of the global curve.
 
 ##### Numerical solver
 
+In order to generate a curve where the position of each knot is such that all fo the input prices are returned exactly or as closely as possible, requires a numerical solver. In institutions, numerical solvers for the purpose of solving curvesets would have been created to prioritize both speed and accuracy. Numerical solvers rely on techniques to iterate through multiple solutions (or guesses) trying to improve the accuracy each time and can be complex and specific. We build our own curve solver using various iterative algorithms (gradient descent, Gauss-Newton, Levenberg-Marquardt) in chapter 11.
+
 ##### Risk consideration
 
-##### Practice example
+One of the major considerations to modeling and constructing a curveset is hedging. If any curve is so complicated in its design that priced and traded products cannot be confidently or knowingly hedged with liquid, benchmark interbank trades, then the curveset is not really fit for the purpose of trading. In that case, the determination to produce such an accurate pricing curve has sacrificed the ability to risk manage traded products. Certain curve properties, such as turns (explained later), are examples of items that are complicated and difficult to hedge, but must be captured by a pricing curve. This was much more important for obsolete IBOR curves and the impact to RFRs is more muted. Other complicated effects become subjective assessments by traders, whether they feel it is better to price and sacrifice the hedging ability, or neglect them to provide risk models which better capture the PnL of market movements. Chapter 9 expands on this. 
+
+##### Practical example
+
+Here, a practical example is provided that demonstrates the concepts of curve design:
+
+*Table 6.1: An overview of the model parameters for a simple dual curveset:*
+
+| Model Considerations | Details |
+| --- | --- |
+| Curves in set | RFR which also serves as the benchmark CSA DF curve |
+| Foundation | DF based |
+| Input instruments | 3M RFR tenor rate starting t+0, <br> IMM RFR IRSs on next 8 IMM dates, <br> 3Y, 5Y, 7Y, 10Y IRS rates |
+| Knot placement | 9 knots at start and maturity of IMM IRSs, <br> 4 knots at the maturity of each IRS |
+| Interpolation style | One curve created with log-linear, <br> another curve created with log-cubic, <br> a final curve with mixed interpolation |
+| Numerical solver | Chapter 11 and 12's Python solver |
 
 ##### Accuracy and value considerations
 
+Since there are a variety of approaches and potential model choices (i.e., interpolation styles, knot points, calibrating instruments, etc.), there is a degree of model uncertainty. Some prices, or curve segments, will be subject to more model uncertainty than others (i.e., it is almost assured that a liquid 10Y IRS rate is an input to any curve model and therefore, with clarity over the market price, it will differ only marginally, if at all, across models). Confidence in a curve might give a trader an edge, which a lack of confidence may do the opposite. Curve models tend to have the greatest model uncertainty at points around local maxima or minima.
+
+*Table 6.2: Data for the modeled curveset and numerically solved values:*
+
+###### Input instruments and market prices
+
+Deposit
+
+| Start | Rate |
+| --- | --- |
+| 1-Jan-22 | 1.00% |
+
+IMM Swaps
+
+| Start | Rate |
+| --- | --- |
+| 15-Mar-22 | 1.05% |
+| 15-Jun-22 | 1.12% |
+| 21-Sep-22 | 1.16% |
+| 21-Dec-22 | 1.21% |
+| 15-Mar-23 | 1.27% |
+| 21-Jun-23 | 1.45% |
+| 20-Sep-23 | 1.68% |
+| 20-Dec-23 | 1.92% |
+
+IRSs
+
+| Tenor | Rate |
+| --- | --- |
+| 3Y | 1.68% |
+| 5Y | 2.10% |
+| 7Y | 2.20% |
+| 10Y | 2.07% |
+
+###### Curve knots and numerically solved values
+
+| Date | Log-Lin | Log-Cub | Mixed |
+| --- | --- | --- | --- |
+| 1-Jan-22 | 1.000000 | 1.000000 | 1.000000 |
+| 15-Mar-22, $v_1$ | 0.998028 | 0.998014 | 0.998028 |
+| 15-Jun-22, $v_2$ | 0.995393 | 0.995379 | 0.995393 |
+| 21-Sep-22, $v_3$ | 0.992409 | 0.992391 | 0.992409 |
+| 21-Dec-22, $v_4$ | 0.989547 | 0.989530 | 0.989547 |
+| 15-Mar-23, $v_5$ | 0.986809 | 0.986785 | 0.986809 |
+| 21-Jun-23, $v_6$ | 0.983455 | 0.983420 | 0.983455 |
+| 20-Sep-23, $v_7$ | 0.979919 | 0.979881 | 0.979919 |
+| 20-Dec-23, $v_8$ | 0.975832 | 0.975794 | 0.975832 |
+| 15-Mar-24, $v_9$ | 0.971539 | 0.971426 | 0.971537 |
+| 1-Jan-25, $v_{10}$ | 0.950978 | 0.950978 | 0.950978 |
+| 1-Jan-27, $v_{11}$ | 0.900403 | 0.900403 | 0.900383 |
+| 1-Jan-29, $v_{12}$ | 0.857393 | 0.857432 | 0.857419 |
+| 1-Jan-32, $v_{13}$ | 0.814368 | 0.814484 | 0.814464 |
+
 ##### Opening and closing curvesets
 
-#### Centrally cleared counterparty (CPP) adjustments
+Opening (or open) curvesets and closing (or close) curvesets are at least two curvesets that are generally saved each trading day (they represent 'snapshots' of curvesets at pre-determined times). The closing curveset of a given currency is usually measured at 1615hrs local time. The time synchronicity of all currencies and all other instruments is important to provide a consistent measure of cross market hedges (closing curvesets are the most important when it comes to calculating daily MTM value and collateral exchange, but construction of closing curvesets are identical to other curvesets). The closing curveset are often benchmarked against broker screens to assure that its accuracy falls within a tolerance to interbank traded market levels. It is especially important form a regulator's and accountant's perspective emphasized at quarter and year ends. The opening curveset is less well defined and not benchmarked. The opening curveset is usually constructed from the previous day's closing curveset but structurally altered to represent the start of the next trading day. Opening and closing curvesets are fundamentally different from each other in their purpose and important for reliable calculations of PnL (more an internal design choice and differs across institutions). We discuss two common approaches to building opening curvesets (the first; older, simpler, and flawed method, and the second; more robust method).
 
-##### Impact of CPP basis on curve construction
+###### An opening curveset constructed from the previous close's input prices
+
+This is the simplest method because it does nothing more than generate an opening curveset by taking, for the input instruments, the same prices as were used for the input instruments to generate the previous day's closing curve. This introduces two sources of inconsistencies;
+
+1. Misaligned date schedule: the specification of the input instruments from one day to the next is different (i.e., a 10Y IRS today does not have the same accrual, reset, or payment schedule as a 10Y IRS defined as of the previous day). This adjustment inherently and erroneously introduces an amount of roll-down (ignores the change in accrual schedule)
+2. An unintended distinction between fwd and par tenor (referring to derivatives tarting imminently with standard tenors) (par) instruments: if all the input instruments' prices are reused, then par instruments suffer the above problem but certain fwd instruments, like IMM rates, do not, because their date schedule specification does not change from day to day. *This* opening curve inconsistently treats some sections of the curve differently to other sections, by inherently introducing roll-down or not doing so.
+
+This curveset approach will not affect the total daily MTM change between the closing curvesets of one day and the preceding day, but the two associated PnL numbers: *overnight carry* and *daily market movement* have sizable amounts of offsetting stochastic noise, even if its sums are equal to the daily MTM change.
+
+###### Maintaining constant fwd rates
+
+This second method of construction creates an opening curveset where all of the rates are set to be those that were forecast, for the appropriate dates, by the previous day's closing curveset. This is a pricing consistent approach that assumes that, between the previous day's closing curve and today's open curve, the market remains exactly the same (no inherent introduction of roll-down and can either be generated by the scaling of DFs or repricing instruments). When DFs are scaled, the chosen input instruments are ignored completely in the process and the opening curveset is generated precisely by sampling every possible DF from the previous day's curveset and reinserting them into the opening curveset appropriately. Mechanically speaking, to preserve fwd rates on a curve that has been constructed using DFs, one must divide all of the DFs of the previous closing curve by the DF attributable to today's date (which was tomorrow's DF measured yesterday). This method also preserves the precise interpolation under the closing curves knot choices. When instruments are repriced, the precise input instruments' prices, needed to generate the opening curveset, are calculated from the previous day's closing curveset, taking into account the different date schedules and other nuances of moving from one day to the next. This method uses the new day's interpolation scheme which may include a possible adjustment of knot points (see chapter 12).
+
+As outlined, in the case where there are minor interpolation fluctuations moving from the previous day's *close* to today's *close*, because knot points or datasites have shifted, these fluctuations will either be,
+
+1. *Not* captured in opening curveset since DFs are scaled, so the attributed interpolation fluctuation PnL must be allocated to the daily market movement component, or,
+2. Captured in opening curveset since instruments are repriced and the curve rebuilt, meaning the attributed interpolation fluctuation PnL is allocated to the overnight carry component
+
+Which way is better is subjective. The latter permits a distinction of overnight carry, which maybe useful for extracting information that is impossible in the alternate (because market movements are often so large that they dominate the component in this case). This distinction is highlighted most prominently on a n IMM roll, or when an input instrument is added or subtracted from the set of input instruments. On those rare, but important days, the interpolation fluctuation is greatest and the curve can also shift if the new instrument is priced differently ot the previous close's estimate of the instrument's price.  
+
+#### Centrally cleared counterparty (CCP) adjustments
+
+A notable evolution in recent years (post 2012) has been the development of a basis market for IRDs, and more prominently IRSs, which face one centrally cleared counterparty (CCP) versus another (the three largest CCPs being the London Clearing House (LCH), the Chicago Mercantile Exchange (CME), and the Eurex Exchange). The form that this basis market takes is a bp spread price assigned to par tenor IRSs. One counterparty will execute an IRS with one CCP in one direction versus the same IRS in the opposite direction with another CCP: the fixed rates differing by the agreed spread price.
+
+*Example 6.1:*
+
+The table identifies some example CCP basis prices for EUR IRSs. These prices are both reference versus LCH mid-market IRS rates, since that is (at the time of publication) the dominant clearing house for this product. IRS rates int he other two clearing houses have fixed rates higher than the LCH mid-market rate in this example.
+
+a. EUR IRS Eurex/LCH price
+
+| Tenor | CCP Basis (bp) |
+| --- | --- |
+| 2Y | 0.70 |
+| 5Y | 1.60 |
+| 10Y | 2.70 |
+
+b. EUR IRS CME/LCH price
+
+| Tenor | CCP Basis (bp) |
+| --- | --- |
+| 2Y | 0.10 |
+| 5Y | 0.20 |
+| 10Y | 0.35 |
+
+Why should an IRS with similar institutions, all of negligible credit risk, have significantly different prices (all of the IRSs cleared with CCPs *have the same collateral terms*, normally cash local to the product remunerated at RFR). Assuming zero costs of trading, this would breach the no arbitrage principle, but it does not because there are other costs of trading; respective costs-of-carry of each IRS facing each CCP, specifically, the margin payments that are required to be posted to each CCP. Each CCP defines their own methodology for calculating the margin amounts that any of their counterparties must post, and while generally speaking these tend to be very similar, the "concentration charges" are noticeably different. For example, if a financial institution has a large net risk position facing the CCP (i.e., a risk position that is multiple times the expected daily executable and hedgeable volume), then that counterparty may be charged significantly higher margin amounts than would be expected through linear scaling (done to protect the CCP from significant losses in the event a counterparty defaults). There are also regulatory capital charges that should be considered also. If the basis differential reached a quantity that overcame these specific costs-of-carry, it would represent a genuine arbitrage opportunity, so there is a limit or pricing window within which these basis differentials must trade.
+
+##### Impact of CCP basis on curve construction
+
+The swaps traded at the different clearing houses settle against the same RFR fixing rates. It therefore warrants the question that if their mid-market prices are different, how should that value be quantifiably represented, and how should one price the effect into non-observable prices like bespoke swaps or fwd swaps. The solution is to utilize a *curve modeling approach*, where a separate curveset is created for the instrument prices derived from each CCP, acknowledging that the forecast RFRs will be different. Suppose we are creating an ESTR curve in EUR. To do this, we use the same set of calibrating instruments with their relevant prices at the different CCPs. This will produce three different curves; EUR:1D.ESTR-LCH, EUR:1D.ESTR-EUREX, EUR:1D.ESTR-CME.
+
+| Instrument | LCH Price | Eurex Price | CME Price |
+| --- | --- | --- | --- |
+| ... | ... | ... | ... |
+| 5Y | 2.1000% | 2.1160% | 2.1020% |
+| ... | ... | ... | ... |
+| 10Y | 2.0700% | 2.0960% | 2.0735% |
+| ... | ... | ... | ... |
+
+We then use each of the curves to price trades designated to the respective CCPs. At the current time, the LCH is by far the larges CCP in terms of traded volumes, and therefore, must be assumed that this is the source of truth, for the true forecast RFR fixings, and will therefore be used to price generic trades outside of CCPs. The other prices are understood to suffer biases created by the cost of capital and execution charges incurred when settling through those CCPs (further discussed in the context of the market in chapter 18).
 
 **Appendix:**
 
@@ -1418,7 +1599,7 @@ Curves exist to provide interested parties with the knowledge of, for any date i
 
 ##### Basel rules for the exposure measure calculation
 
-##### A note on centrally cleared counterparties (CPPs)
+##### A note on centrally cleared counterparties (CCPs)
 
 #### Liquidity
 
