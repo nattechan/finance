@@ -1303,9 +1303,48 @@ We then use each of the curves to price trades designated to the respective CCPs
 
 ##### Summary of interpolation styles
 
+| Style | Details |
+| --- | --- |
+| DF log-linear | $log(v_i) = \left(\frac{D_{k+1} - D_i}{D_{k+1} - D_k}\right) log(v_k) + \left(\frac{D_i - D_k}{D_{k+1} - D_k}\right) log(v_{k+1})$ <br> Constant O/N rates between knots <br> Locally stable and easily implemented |
+| DF log-cubic | $log(v_i) = \left(\frac{D_{k+1} - D_i}{D_{k+1} - D_k}\right) log(v_k) + \left(\frac{D_i - D_k}{D_{k+1} - D_k}\right) log(v_{k+1}) + \left(\frac{(D_{k+1} - D_i)^2 (D_i - D_k)}{(D_{k+1} - D_k)^3}\right) \alpha + \left(\frac{(D_{k+1} - D_i) (D_i - D_k)^2}{(D_{k+1} - D_k)^3}\right) \beta$ <br> Smooth, continuous O/N rates between knots <br> Global dependence and complicated to implement |
+
 ##### Log-linear DF interpolation
 
+We show in this section that log-linear DF interpolation produces constant O/N rates obtained from resultant DFs. Suppose for $m_k \leq m_i < m_{k+1}$, where $k$ indexes a knot point with the respective DF, $v_k$, then under this interpolation style, it is true that,
+
+$$log(v_i) = log(v_k) + \frac{D_i - D_k}{D_{k+1} - D_k}(log(v_{k+1}) - log(v_k))$$
+
+Additionally, the DF for one day after $m_i$ is,
+
+$$log(v_{i(+1)}) = log(v_k) + \frac{1 + D_i - D_k}{D_{k+1} - D_k}(log(v_{k+1}) - log(v_k))$$
+
+The O/N forward rate obtained through $v_i$, $v_{i(+1)}$ is,
+
+$$r_i^{O/N} = \frac{1}{d_i}\left(\frac{v_i}{v_{i(+1)}}-1\right)$$
+
+Which with the substitution of the exponential of the above logarithms gives,
+
+$$r_i^{O/N} = \frac{1}{d_i}\left(\left(\frac{v_k}{v_{k+1}}\right)^\frac{1}{D_{k+1} - {D_k}} - 1\right)$$
+
+So for any $m_i$ between $[m_k...m_{k+1}]$ the O/N rate is always the same, dependent only upon $k$, $k+1$.
+
 ##### Log-cubic DF interpolation
+
+We show here firstly that the above interpolation style gives rise to quadratic CC O/N rates obtained from relevant DFs. Under this interpolation style, it is true that,
+
+$$log(v_i) = \alpha + \beta D_i + \gamma D_i^2 + \epsilon D_i^3, \text{for constants } \alpha, \beta, \gamma, \epsilon$$
+
+Additional to this, the DF for one day after $m_i$ is,
+
+$$log(v_{i(+1)}) = \alpha + \beta (D_i + 1) + \gamma (D_i + 1)^2 + \epsilon (D_i + 1)^3$$
+
+Then the CC O/N rate on date, $m_i$, is,
+
+$$\bar r_i^{O/N} = \frac{1}{d_i} log\left(\frac{v_i}{v_{i( + 1)}}\right) = \frac{1}{d_i} \left((\beta + \gamma + \epsilon) + (2 \gamma + 3 \epsilon) D_i + (3 \epsilon) D_i^2\right)$$
+
+Which is quadratic in $D_i$. Given $r_i^{O/N} \approx \bar r_i^{O/N}$, we conclude that the O/N rate on date $m_i$ is approximately quadratic. Secondly, we show that the instantaneous CC forward rates before and after knot, $m_k$, are equal, from which we infer the smooth nature of O/N rates about $m_k$. Because the construction is necessarily a cubic spline, the derivative of each piecewise polynomial about $m_k$ is equal, therefore,
+
+$$\bar r_{k(- \Delta)}^\Delta = \frac{log(v_{k(- \Delta)}) - log(v_k)}{\lambda \Delta} = \frac{log(v_k) - log(v_{k(+ \Delta)})}{\lambda \Delta} = \bar r_k^\Delta, \text{as } \Delta \to 0$$
 
 ### Chapter 7 - Multi-Currency Curve Modeling
 
