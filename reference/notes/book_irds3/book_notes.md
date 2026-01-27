@@ -1348,7 +1348,93 @@ $$\bar r_{k(- \Delta)}^\Delta = \frac{log(v_{k(- \Delta)}) - log(v_k)}{\lambda \
 
 ### Chapter 7 - Multi-Currency Curve Modeling
 
+In chapter 5, it shows that in order to price derivatives accurately, according to their CSAs, multi-currency curve models are required. XCSs are also one of the basic IR products that require multi-currency curve models to explicitly price them. Explicitly, we look at;
+
+- What forward FX rates are and what influences them
+- What XCSs really are and their relation with FX rates and collateral
+- An explicit explanation of the difference between MTM XCSs and non-MTM XCSs
+- Some of the considerations of multi-currency models such as structure and curve cataloging
+
+Multi-currency curve modeling is complicated in its theoretical basis. Collateral and the effect of different CSAs is an important aspect of the theory, but it can represent one of the least clear ways of explaining the concepts behind multi-currency curve pricing. Instead, we focus on items that one might have seen before and build from there. Firstly, we discuss forward FX rates (inextricably linked to XCSs due to the no arb principle). We will show that correct multi-currency curve modeling results in a complete set of forecast and discount curves in all currencies which price all of the IR derivatives in the market such that there is no arbitrage available anywhere, regardless of which products might be traded or different CSA terms. Historically, there were different models for single currency and multi-currency curves, where a fin-bias or financial bias was added to a single currency curve model to arrive at the price of an accurately priced XCSs, however this is not used anymore.
+
 #### Forward FX rates
+
+##### Interest rate parity and XCSs
+
+Classical description of forward FX rates (Wikipedia): *Where two currencies have distinct interest rates, the forward FX rate will be dependent upon the immediate FX rate and those interest rates such that a parity is reached and the 'no arbitrage principle' is adhered to.*
+
+What that means is that if one currency has a higher interest rate, then each day the FX rate will adjust slightly so that the 'buying' power of each currency is maintained. The equation for determining the forward FX rate, $f_i$, from the initial FX rate, $f_{i-1}$, under thee classical approach is:
+
+$$f_i = \frac{1 + d_i r_i}{1 + d_i^\ast r_i^\ast}f_{i-1}$$
+
+where $d_i^\ast r_i^\ast$ is the domestic DCF and the rate and $d_i r_i$ is the foreign DCF and rate.
+
+The above formula for forward FX rates can also be presented via DFs rather than rates. In this approach, the ratio of discount factors in each currency generated from their RFR curve provides the forward FX rate dependent just on the immediate FX rate, $F_0$:
+
+$$F_i = \frac{v_i^\ast}{v_{i - 1}^\ast}\frac{v_{i - 1}}{v_i}f_{i - 1} = \frac{v_i^\ast}{v_i} F_0$$
+
+(Note that the immediate FX rate settles T_0, whereas the typical FX rate that is always visible on screens, say, is the spot FX rate which settles T_2. The two rates are also linked by the above formula)
+
+*Example 7.1:*
+
+The EURUSD immediate FX rate is 1.20. An investor has $1.2mm to deposit and considers in which currency he should deposit his funds. The EUR RFR rate is 5% and USD RFR rate is 1%. He calculates the one day forward FX rate which equates both possible options:
+
+$$f_1 = \frac{1 + \frac{1}{360}1\%}{1 + \frac{1}{360}5\%} 1.20 = 1.19987$$
+
+```text
+Institution 1                    Institution 2
+(pays 1% in $)                   (pays 5% in €)
+
+Invest $1.2mm                    Invest €1mm
+    |  ^                             |
+    |  |                             |
+    |  |                             |
+    v  |                             v
+Return $33.33                    Return €138.89
+                                     |
+Option 1                             | FX € → $ @ f₁
+                                     v
+                                 Return $33.33
+                                     |
+                                     | FX $ → € @ f₀
+                                     v
+                                 Invest €1mm
+                                  Option 2
+```
+
+Figure 7.1: Classical argument of covered interest rate parity adhering to no arbitrage principle, demonstrating two equivalent investment options
+
+Unfortunately this classical approach is not one hundred percent accurate, albeit it is an excellent starting point. There is a slight amendment that needs to be considered in this context. Suppose that rather than enact either of the options there is a sophisticated party engineer a third option utilizing XCSs, where not only does he acquire the daily return of $33.33 but also gets an extra €27.78. See figure 7.1 a sophisticated party engineer a third option that:
+
+```text
+Institution 1: O/N XCS $ → € v € RFR -1%
+
+Exchange $1.2mm ──→ Institution 2 ──→ Return €111.11
+                        |
+Invest €1mm ────────────┘
+                        |
+Exchange €1mm ←── Institution 2 ←── Return €138.89 ──→ Return $33.33
+
+                     Option 3
+```
+
+Figure 7.2: An overlay of a XCS creates an arbitrage
+
+The result is that to calculate forward FX rates and to truly adhere to the no arbitrage principle the most recent rates and the DFs from the XCS market have to be used, so that instead:
+
+$$f_i = \frac{1 + d_i r_i}{1 + d_i^*(r_i^* + z_i^*)} f_{i-1} = \frac{w_i^*}{v_i} F_0 \tag{7.1}$$
+
+notice the inclusion here of the term $w_i^*$, which is the DF in EUR adjusted for the XCS basis spread.
+
+*Example 7.2:*
+
+The EURUSD immediate FX rate is 1.20. The same investor has $1.2mm to deposit and considers again how to deposit this funds, this time with knowledge of the XCS market. The USD OIS rate is 1%, EUR OIS rate is 5%, and the O/N EUR/USD XCS rate is -100bps. He recalculates the one day forward FX rate:
+
+$$f_1 = \frac{1 + \frac{1}{360} 1\%}{1 + \frac{1}{360}(5\% - 1\%)} \times 1.20 = 1.19990$$
+
+##### FX swaps
+
+The above figures and examples were crafted as demonstrations to lead to the reader into thinking about forward FX rates in combination with interest rates. In practice, for such short tenors, XCSs do not really tarde and it is much more common to trade FX swaps, which represent a spot FX transaction and forward FX transaction in opposing directions (liquid and established market in its own right).
 
 #### Cross-currency swaps (XCSs)
 
