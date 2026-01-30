@@ -1163,7 +1163,7 @@ In order to generate a curve where the position of each knot is such that all fo
 
 ##### Risk consideration
 
-One of the major considerations to modeling and constructing a curveset is hedging. If any curve is so complicated in its design that priced and traded products cannot be confidently or knowingly hedged with liquid, benchmark interbank trades, then the curveset is not really fit for the purpose of trading. In that case, the determination to produce such an accurate pricing curve has sacrificed the ability to risk manage traded products. Certain curve properties, such as turns (explained later), are examples of items that are complicated and difficult to hedge, but must be captured by a pricing curve. This was much more important for obsolete IBOR curves and the impact to RFRs is more muted. Other complicated effects become subjective assessments by traders, whether they feel it is better to price and sacrifice the hedging ability, or neglect them to provide risk models which better capture the PnL of market movements. Chapter 9 expands on this. 
+One of the major considerations to modeling and constructing a curveset is hedging. If any curve is so complicated in its design that priced and traded products cannot be confidently or knowingly hedged with liquid, benchmark interbank trades, then the curveset is not really fit for the purpose of trading. In that case, the determination to produce such an accurate pricing curve has sacrificed the ability to risk manage traded products. Certain curve properties, such as turns (explained later), are examples of items that are complicated and difficult to hedge, but must be captured by a pricing curve. This was much more important for obsolete IBOR curves and the impact to RFRs is more muted. Other complicated effects become subjective assessments by traders, whether they feel it is better to price and sacrifice the hedging ability, or neglect them to provide risk models which better capture the PnL of market movements. Chapter 9 expands on this.
 
 ##### Practical example
 
@@ -1379,24 +1379,24 @@ $$F_i = \frac{v_i^\ast}{v_{i - 1}^\ast}\frac{v_{i - 1}}{v_i}f_{i - 1} = \frac{v_
 
 The EURUSD immediate FX rate is 1.20. An investor has $1.2mm to deposit and considers in which currency he should deposit his funds. The EUR RFR rate is 5% and USD RFR rate is 1%. He calculates the one day forward FX rate which equates both possible options:
 
-$$f_1 = \frac{1 + \frac{1}{360}1\%}{1 + \frac{1}{360}5\%} 1.20 = 1.19987$$
+$$f_1 = \frac{1 + \frac{1}{360}1\\%}{1 + \frac{1}{360}5\\%} 1.20 = 1.19987$$
 
 *Figure 7.1: Classical argument of covered interest rate parity adhering to no arbitrage principle, demonstrating two equivalent investment options:*
 
 ```text
-Institution 1                    Institution 2
-(pays 1% in $)                   (pays 5% in €)
+Institution 1                  Institution 2
+(pays 1% in $)                 (pays 5% in €)
 
-Invest $1.2mm                    Invest €1mm
+Invest $1.2mm                   Invest €1mm
     |  ^                             |
     |  |                             |
     |  |                             |
     v  |                             v
-Return $33.33                    Return €138.89
+Return $33.33                   Return €138.89
                                      |
-Option 1                             | FX € → $ @ f₁
+  Option 1                           | FX € → $ @ f₁
                                      v
-                                 Return $33.33
+                               Return $33.33
                                      |
                                      | FX $ → € @ f₀
                                      v
@@ -1430,7 +1430,7 @@ notice the inclusion here of the term $w_i^\ast$, which is the DF in EUR adjuste
 
 The EURUSD immediate FX rate is 1.20. The same investor has $1.2mm to deposit and considers again how to deposit this funds, this time with knowledge of the XCS market. The USD OIS rate is 1%, EUR OIS rate is 5%, and the O/N EUR/USD XCS rate is -100bps. He recalculates the one day forward FX rate:
 
-$$f_1 = \frac{1 + \frac{1}{360} 1\%}{1 + \frac{1}{360}(5\% - 1\%)} \times 1.20 = 1.19990$$
+$$f_1 = \frac{1 + \frac{1}{360} 1\\%}{1 + \frac{1}{360}(5\\% - 1\\%)} \times 1.20 = 1.19990$$
 
 ##### FX swaps
 
