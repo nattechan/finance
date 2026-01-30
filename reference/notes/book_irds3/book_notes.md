@@ -1422,9 +1422,9 @@ Exchange $1.2mm  |  Institution 2  |  Return €111.11
 
 The result is that to calculate forward FX rates and to truly adhere to the no arbitrage principle the most recent rates and the DFs from the XCS market have to be used, so that instead:
 
-$$f_i = \frac{1 + d_i r_i}{1 + d_i^*(r_i^* + z_i^*)} f_{i-1} = \frac{w_i^*}{v_i} F_0$$
+$$f_i = \frac{1 + d_i r_i}{1 + d_i^\ast(r_i^\ast + z_i^\ast)} f_{i-1} = \frac{w_i^\ast}{v_i} F_0$$
 
-notice the inclusion here of the term $w_i^*$, which is the DF in EUR adjusted for the XCS basis spread.
+notice the inclusion here of the term $w_i^\ast$, which is the DF in EUR adjusted for the XCS basis spread.
 
 *Example 7.2:*
 
