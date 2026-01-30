@@ -1381,6 +1381,8 @@ The EURUSD immediate FX rate is 1.20. An investor has $1.2mm to deposit and cons
 
 $$f_1 = \frac{1 + \frac{1}{360}1\%}{1 + \frac{1}{360}5\%} 1.20 = 1.19987$$
 
+*Figure 7.1: Classical argument of covered interest rate parity adhering to no arbitrage principle, demonstrating two equivalent investment options:*
+
 ```text
 Institution 1                    Institution 2
 (pays 1% in $)                   (pays 5% in €)
@@ -1402,27 +1404,25 @@ Option 1                             | FX € → $ @ f₁
                                   Option 2
 ```
 
-Figure 7.1: Classical argument of covered interest rate parity adhering to no arbitrage principle, demonstrating two equivalent investment options
-
 Unfortunately this classical approach is not one hundred percent accurate, albeit it is an excellent starting point. There is a slight amendment that needs to be considered in this context. Suppose that rather than enact either of the options there is a sophisticated party engineer a third option utilizing XCSs, where not only does he acquire the daily return of $33.33 but also gets an extra €27.78. See figure 7.1 a sophisticated party engineer a third option that:
 
-```text
-Institution 1: O/N XCS $ → € v € RFR -1%
+*Figure 7.2: An overlay of a XCS creates an arbitrage:*
 
-Exchange $1.2mm ──→ Institution 2 ──→ Return €111.11
-                        |
-Invest €1mm ────────────┘
-                        |
-Exchange €1mm ←── Institution 2 ←── Return €138.89 ──→ Return $33.33
+```text
+      Institution 1: O/N XCS $ → € v € RFR -1%
+
+Exchange $1.2mm  |  Institution 2  |  Return €111.11
+    ^      |         Invest €1mm        ^       |
+    |      |           ^    |           |       |
+    |      v           |    v           |       v
+  Exchange €1mm     Return €138.89    Return $33.33
 
                      Option 3
 ```
 
-Figure 7.2: An overlay of a XCS creates an arbitrage
-
 The result is that to calculate forward FX rates and to truly adhere to the no arbitrage principle the most recent rates and the DFs from the XCS market have to be used, so that instead:
 
-$$f_i = \frac{1 + d_i r_i}{1 + d_i^*(r_i^* + z_i^*)} f_{i-1} = \frac{w_i^*}{v_i} F_0 \tag{7.1}$$
+$$f_i = \frac{1 + d_i r_i}{1 + d_i^*(r_i^* + z_i^*)} f_{i-1} = \frac{w_i^*}{v_i} F_0$$
 
 notice the inclusion here of the term $w_i^*$, which is the DF in EUR adjusted for the XCS basis spread.
 
@@ -1434,9 +1434,27 @@ $$f_1 = \frac{1 + \frac{1}{360} 1\%}{1 + \frac{1}{360}(5\% - 1\%)} \times 1.20 =
 
 ##### FX swaps
 
-The above figures and examples were crafted as demonstrations to lead to the reader into thinking about forward FX rates in combination with interest rates. In practice, for such short tenors, XCSs do not really tarde and it is much more common to trade FX swaps, which represent a spot FX transaction and forward FX transaction in opposing directions (liquid and established market in its own right).
+The above figures and examples were crafted as demonstrations to lead to the reader into thinking about forward FX rates in combination with interest rates. In practice, for such short tenors, XCSs do not really tarde and it is much more common to trade FX swaps, which represent a spot FX transaction and forward FX transaction in opposing directions (liquid and established market in its own right). These FX swaps then define the forward FX rates directly in their market quotes, which are a spread of points between the initial exchange rate and the forward exchange rate. In turn, these them imply DFs from which one can derive short dated XCS prices. The reason that XCSs are so important to the forward FX market is that they represent the only *long* term product in which one can exchange a notional currency and secure an agreed amount of interest on each leg fot eh term. So, *their* rates or prices are the ones which determine the comparative levels of interest payments and so determine the forward FX rates of these *longer* tenors. There are many factors that influence FX rates, spot or forward. Interest rates are a big factor but so too are inflation expectations or forecast central bank actions. Supply and demand dynamics from traditional flows and collateral requirements also drive the XCS prices.
 
 #### Cross-currency swaps (XCSs)
+
+XCSs are often considered as reasonably difficult products to understand (mathematical formulation looks very dense, probably have the most aspects involved in their pricing, are the central component in one of the more complex types of model, the multi-currency curve model). Here is a more simple explanation/example:
+
+Start by considering a simple floating rate loan in a single currency. Say that one party *loans* €100 to another for 10Y and receives quarterly € ESTER interest for the length of the loan and at the end receives back €100. What is the PV of this loan? Well it depends on which discount curve to use to discount the CFs, but say we use the same € ESTR curve (which is what institutions used to do), then the PV of that loan will be exactly €0, which is +€100 from future cashflows and -€100 from the immediate outflow. At the same time, imagine that the same party has *been loaned* $120 by that other party for 10Y, and is expected to pay quarterly USD SOFR interest and at the end, repay the full USD 120. The PV of this loan, by the same reasoning, discounting at USD SOFR must be USD 0. Looking back to chapter 3, this is the act same structure as a non-MTM XCS, except with no bp spread to either leg. Why? Under our discounting methodology, the value of the transaction is precisely zero and any inclusion of a spread would create some PnL. But, XCSs usually trade with a spread (as a result of market supply and demand dynamics), so how is this compensated for? The answer alluded in this chapter is using fin-bias. This means that one of the discount curves (usually the non-USD discount curve) is manually adjusted so that even with the inclusion of a bp spread, the two legs would each have zero PV, and thus the mid-market XCS prices to zero. This manual adjustment, the fin-bias, is calibrated so that it reprices the interbank XCS prices and then the PV of every other XCS in the portfolio, that have not been executed at mid-market of course, can be calculated using this specific curve
+
+*Figure 7.3:*
+
+Between 2007 and 2022, this became a more involved model. In that case, a different forecast curve (IBOR) and discount curve (OIS) was required in each single currency, but the discount curve still had to be evaluated to ensure the XCSs were repriced. It did so using the same fin-bias approach. An important inclusion was really how these curves were (and are) catalogued in modern curvesets, so that the process creates a completely consistent set of discount curves that provide a means to price any CSA in use. We can show this for the *basic interbank EUR/USD XCS which has a benchmark CSA of USD cash remunerated at OIS* (note that we are referencing the obsolete IBOR indexes here);
+
+1. In USD, there is the 3M USD LIBOR forecast curve and benchmark discounting curve equal to USD OIS
+2. In EUR there is the 3M € EURIBOR forecast curve and benchmark discount curve, again equal to € OIS
+3. The € OIS curve is adjusted to create another discount curve that satisfies the XCS prices, the same as the fin-bias approach before. This curve is precisely the EUR:USD-CSA discount curve, i.e., the curve to discount EUR cashflows based on a USD cash CSA
+
+*Figure 7.4:*
+
+With the transition from IBOR, FRFs now simultaneously provide both the local currency forecasting and the local currency discounting curves, so this is essentially a reversion back to the traditional ways of pricing. We can redraw the above charts where the curves re-align yet we maintain the labeling.
+
+*Figure 7.5:*
 
 #### XCSs and collateral
 
