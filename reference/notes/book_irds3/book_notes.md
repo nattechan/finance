@@ -257,6 +257,14 @@ Stub periods:
 
 When start and end dates are specified without an associated relationship, it creates stub periods, placed in IRS either at the start, end, or both, so that the remaining part of the leg follows the specified frequency and reverts to the form of a standard IRS.
 
+*Figure 3.2: Stub period types:*
+
+![Alt Text](diagrams/Figure_3.2.jpg)
+
+*Figure 3.2 shows short and back stub types (which can be combined) either side of swap periods which take place with regular frequency, such as annual, semi-annual, quarterly or monthly.*
+
+Historically, stub periods, being non-standard tenors, meant that they had to settle against interpolated IBOR rates.
+
 Mathematical formulae:
 
 The present value of a **standard IRS**:
@@ -310,50 +318,11 @@ Quoting convention:
 
 This represents a USD IRS with a floating leg that settles against SOFR for periods which start dates as of the 15th of each month of Jan and Jul. The long-front stub on the floating leg runs from 3rd Jun '18 to 15th Jan '19, and the short-back stub from 15th Jul '28 to 29th Jul '28. The fixed leg's long-front stub is slightly different to account for the different frequency and runs from 3rd Jun '18 to 15th Jul '19.
 
-*Figure 3.2: Stub period types:*
-
-```text
-(a) Short-front                    (b) Long-front
-┌────┬────┬────┬────┐              ┌──┬──┬────┬────┬────┐
-│////│    │    │    │              │//|//│    │    │    │
-│////│Reg │Reg │Reg │              │//|//│Reg │Reg │Reg │
-└────┴────┴────┴────┘              │//|//│    │    │    │
-START              END             └──┴──┴────┴────┴────┘
-                                   START               END
-
-(c) Short-back                     (d) Long-back
-┌────┬────┬────┬────┐              ┌────┬────┬────┬──┬──┐
-│    │    │    │////│              │    │    │    │//|//│
-│Reg │Reg │Reg │////│              │Reg │Reg │Reg │//|//│
-└────┴────┴────┴────┘              │    │    │    │//|//│
-START              END             └────┴────┴────┴──┴──┘
-                                   START               END
-```
-
-*Figure 3.2 shows short and back stub types (which can be combined) either side of swap periods which take place with regular frequency, such as annual, semi-annual, quarterly or monthly.*
-
-Historically, stub periods, being non-standard tenors, meant that they had to settle against interpolated IBOR rates.
-
 *Figure 3.3: Schedule diagram for the example IRS:*
 
-```text
-                     Fixed Leg
-┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬──┐
-│/////│     │     │     │     │     │     │     │     │     │//│
-│/////│     │     │     │     │     │     │     │     │     │//│ ←─ Annual
-└─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴──┘
-START                                                 END
-┌──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┐
-│//|  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │//│
-│//|  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │  │//│ ←─ Semi-annual
-└──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┘
-START                                                               END
-                     Float Leg
-```
+![Alt Text](diagrams/Figure_3.3.jpg)
 
 *Figure 3.3: Depicting the schedule of a 'USD SOFR, 3rd Jun '18, 29th Jul '28, Annual, Semi, 15th, Long-front short-back, IRS'.*
-
-The hatched/shaded areas (////) represent stub periods at the start (long-front) and end (short-back) of the swap.
 
 #### Single currency basis swaps (SBSs)
 
@@ -456,6 +425,10 @@ The market values and yields fall by 15bps from 1.5% to 1.35% so that the PV of 
 - To balance the legs so that, at mid-market (at inception), the sum of each is zero, requires a fixed spread (or annuity) to be attached to one of the floating legs (usually the non-USD or least liquid currency). In these examples, the spread is applied to the first currency in a currency pair (i.e., EUR in EUR/USD)
 - XCSs involve notional exchange at the start and end of the swap in the two currencies, which in the case of non-MTM XCSs will always be the same value, which is based on an initially agreed FX rate (usually the spot FX at the time of execution)
 
+*Figure 3.4: A flows diagram of a €100mm EUR/USD non-MTM XCS with initial EURUSD FX fixing of 1.25:*
+
+![Alt Text](diagrams/Figure_3.4.jpg)
+
 Mathematical formulae:
 
 The PV of, for example, a EUR/USD non-MTM XCS from the POV of the payer of the spread (B in figure 3.4) is:
@@ -478,6 +451,10 @@ Quoting convention:
 
 - Most common form of XCS. It is the standard XCS product traded in the interbank market. It's purpose and difference to non-MTM XCSs is to reduce credit exposure (CE) to counterparties by continually 'resetting' the notional on one leg throughout the length of the swap, in light of fluctuating exchange rates. This mitigates the overall PV of the derivative by restricting the impact of FX fluctuations
 - In non-MTM XCSs, FX fluctuations can have a far greater impact on the PV of those derivatives than the actual underlying XCS market prices, and hence the affinity toward MTM XCSs
+
+*Figure 3.5: A flows diagram of a €$N$ EUR/USD MTM XCS with initial EURUSD FX fixing of $f_0$*
+
+![Alt Text](diagrams/Figure_3.5.jpg)
 
 Mathematical formulae:
 
@@ -546,51 +523,7 @@ Figure 4.1 demonstrates netted legs from the POV of Alpha Corp. if it pursues fo
 
 *Figure 4.1: Netted Cash Flows for Alpha Corp. Foreign Issuance:*
 
-```text
-┌──────────────────────────────────────────────────────────────────────┐
-│                  Three IRD Products Netted Together:                 │
-│                                                                      │
-│   EUR IRS          USD IRS            Non-MTM EUR/USD XCS            │
-│  ┌───────┐       ┌─────────┐            ┌──────────┐                 │
-│  │  Pay  │       │ Receive │            │          │                 │
-│  │ Fixed │       │  Fixed  │            │          │                 │
-│  │  EUR  │       │   USD   │            │          │                 │
-│  └───┬───┘       └────┬────┘            └─────┬────┘                 │
-│      │                │                       │                      │
-│      │ ┌──────────────▼───────────────┐       │                      │
-│      │ │    USD Bond Issue            │       │                      │
-│      │ │  (Receive Fixed USD from     │       │                      │
-│      │ │   investors + USD credit spl)│       │                      │
-│      │ └──────────────┬───────────────┘       │                      │
-│      │                │                       │                      │
-│      │                │ ┌─────────────────────▼────┐                 │
-│      │                └─│  Pay Floating USD        │                 │
-│      │                  │  to USD IRS              │                 │
-│      │                  └──────────┬───────────────┘                 │
-│      │                             │                                 │
-│      │                    ┌────────▼──────────┐                      │
-│      │                    │ Receive Floating  │                      │
-│      │                    │ USD from XCS      │                      │
-│      │                    └────────┬──────────┘                      │
-│      │                             │ (Nets to zero)                  │
-│      │                             │                                 │
-│      │                    ┌────────▼──────────┐                      │
-│      └────────────────────│ Receive Floating  │                      │
-│                           │ EUR from EUR IRS  │                      │
-│                           └────────┬──────────┘                      │
-│                                    │                                 │
-│                           ┌────────▼──────────┐                      │
-│                           │ Pay Fixed EUR to  │  ← Outstanding       │
-│                           │ XCS (EUR IRS rate)│     commitment       │
-│                           └───────────────────┘                      │
-│                                                                      │
-│  Net Result = EUR IRS rate + USD credit spread + EUR/USD XCS spread  │
-│                                                                      │
-│  Outstanding Commitments (Right-most legs that don't net):           │
-│  • Pay fixed EUR interest                                            │
-│  • EUR notional exchanges                                            │
-└──────────────────────────────────────────────────────────────────────┘
-```
+![Alt Text](diagrams/Figure_4.1.jpg)
 
 If Alpha chooses to issue domestically then it pays a fixed rate equal to EUR IRS rate (RFR benchmark) + EUR credit spread (say 1% and +40bps for a total of 1.40%). For foreign issuance the figure demonstrates the net payment is equal to EUR IRS rate (RFR) + USD credit spread + EUR/USD XCS spread (non-MTM). Supposing the two spreads were +50bps and -30bps resp., then the overall fixed rate for comparison is 1.2%, so it is advantageous for Alpha to consider swapped foreign issuance.
 
@@ -699,6 +632,10 @@ A cash balance profile details the expected cash balance of a portfolio at diffe
 For simple, mid-market IRDs, the expected cash balance profile is often easy to qualitatively describe. Firstly, for any derivative which has only a single cashflow date, there will never be any expectation of any cash balance (mid-market FRAs, ZCSs, single period IRSs/OISs). Thi is because any floating or fixed cashflows paid or received will be priced to net to zero, and therefore no net cashflows will ever be forecast to be exchanged. The trades still have risk, of course, and net cashflows will arise as market movements give rise to MTM PnL, we are just stating the expected nature of a zero cash balance profile for certain trade types executed at mid-market.
 
 Secondly, where derivatives have multiple cashflows, there is generally a particular structure to the IR curve that allows a qualitative assessment (flat, upward sloping, downward sloping, bowing). Any derivative whose initial PV is zero will always have an expected final cash balance of zero. This is because a derivative with zero PV cannot be expected to gain or lose an amount of cash after its maturity. The interim, forecast, cash balance, however can feasibly have any pattern. These depend on the structure of all of the interim cashflows that take place. Cash balances are central to considering future discounting risk and the impact to PnL if discounting basis changes or the terms of a CSA is restructured.
+
+*Figure 5.1: Cash analysis of receiving a $ 5Y semi-semi IRS with initial PV of zero, in an upward sloping rates curve environment:*
+
+![Alt Text](diagrams/Figure_5.1.jpg)
 
 ##### Daily PnL accounting
 
@@ -1047,6 +984,10 @@ To be consistent with the Basel III terminology, we must include three more term
 2. Effective potential exposure (EPE): is the average across all time horizons of the EEs
 3. Effective expected positive exposure (EEPE): is the average across all time horizons of the EEEs
 
+*Figure 5.2: Plots of the exposure data and the collateralized and uncollateralized example trades:*
+
+![Alt Text](diagrams/Figure_5.2.jpg)
+
 The reason that these additional credit measures are used by Basel is because they believe they characterize better the risk of transactions which are subject ot rollover risk. This incorporates a sense that transactions are likely to be extended into the. future through new, on-going business.
 
 ##### Credit valuation adjustment (CVA)
@@ -1184,6 +1125,10 @@ Here, a practical example is provided that demonstrates the concepts of curve de
 
 Since there are a variety of approaches and potential model choices (i.e., interpolation styles, knot points, calibrating instruments, etc.), there is a degree of model uncertainty. Some prices, or curve segments, will be subject to more model uncertainty than others (i.e., it is almost assured that a liquid 10Y IRS rate is an input to any curve model and therefore, with clarity over the market price, it will differ only marginally, if at all, across models). Confidence in a curve might give a trader an edge, which a lack of confidence may do the opposite. Curve models tend to have the greatest model uncertainty at points around local maxima or minima.
 
+*Figure 6.2: Highlighting common points of variation across curve models:*
+
+![Alt Text](diagrams/Figure_6.2.jpg)
+
 *Table 6.2: Data for the modeled curveset and numerically solved values:*
 
 ###### Input instruments and market prices
@@ -1234,6 +1179,8 @@ IRSs
 | 1-Jan-27, $v_{11}$ | 0.900403 | 0.900403 | 0.900383 |
 | 1-Jan-29, $v_{12}$ | 0.857393 | 0.857432 | 0.857419 |
 | 1-Jan-32, $v_{13}$ | 0.814368 | 0.814484 | 0.814464 |
+
+![Alt Text](diagrams/Table_6.2.jpg)
 
 ##### Opening and closing curvesets
 
@@ -1383,42 +1330,13 @@ $$f_1 = \frac{1 + \frac{1}{360}1\\%}{1 + \frac{1}{360}5\\%} 1.20 = 1.19987$$
 
 *Figure 7.1: Classical argument of covered interest rate parity adhering to no arbitrage principle, demonstrating two equivalent investment options:*
 
-```text
-Institution 1                  Institution 2
-(pays 1% in $)                 (pays 5% in €)
-
-Invest $1.2mm                   Invest €1mm
-    |  ^                             |
-    |  |                             |
-    |  |                             |
-    v  |                             v
-Return $33.33                   Return €138.89
-                                     |
-  Option 1                           | FX € → $ @ f₁
-                                     v
-                               Return $33.33
-                                     |
-                                     | FX $ → € @ f₀
-                                     v
-                                 Invest €1mm
-                                  Option 2
-```
+![Alt Text](diagrams/Figure_7.1.jpg)
 
 Unfortunately this classical approach is not one hundred percent accurate, albeit it is an excellent starting point. There is a slight amendment that needs to be considered in this context. Suppose that rather than enact either of the options there is a sophisticated party engineer a third option utilizing XCSs, where not only does he acquire the daily return of $33.33 but also gets an extra €27.78. See figure 7.1 a sophisticated party engineer a third option that:
 
 *Figure 7.2: An overlay of a XCS creates an arbitrage:*
 
-```text
-      Institution 1: O/N XCS $ → € v € RFR -1%
-
-Exchange $1.2mm  |  Institution 2  |  Return €111.11
-    ^      |         Invest €1mm        ^       |
-    |      |           ^    |           |       |
-    |      v           |    v           |       v
-  Exchange €1mm     Return €138.89    Return $33.33
-
-                     Option 3
-```
+![Alt Text](diagrams/Figure_7.2.jpg)
 
 The result is that to calculate forward FX rates and to truly adhere to the no arbitrage principle the most recent rates and the DFs from the XCS market have to be used, so that instead:
 
@@ -1444,6 +1362,8 @@ Start by considering a simple floating rate loan in a single currency. Say that 
 
 *Figure 7.3:*
 
+![Alt Text](diagrams/Figure_7.3.jpg)
+
 Between 2007 and 2022, this became a more involved model. In that case, a different forecast curve (IBOR) and discount curve (OIS) was required in each single currency, but the discount curve still had to be evaluated to ensure the XCSs were repriced. It did so using the same fin-bias approach. An important inclusion was really how these curves were (and are) catalogued in modern curvesets, so that the process creates a completely consistent set of discount curves that provide a means to price any CSA in use. We can show this for the *basic interbank EUR/USD XCS which has a benchmark CSA of USD cash remunerated at OIS* (note that we are referencing the obsolete IBOR indexes here);
 
 1. In USD, there is the 3M USD LIBOR forecast curve and benchmark discounting curve equal to USD OIS
@@ -1452,11 +1372,45 @@ Between 2007 and 2022, this became a more involved model. In that case, a differ
 
 *Figure 7.4:*
 
+![Alt Text](diagrams/Figure_7.4.jpg)
+
 With the transition from IBOR, FRFs now simultaneously provide both the local currency forecasting and the local currency discounting curves, so this is essentially a reversion back to the traditional ways of pricing. We can redraw the above charts where the curves re-align yet we maintain the labeling.
 
 *Figure 7.5:*
 
+![Alt Text](diagrams/Figure_7.5.jpg)
+
 #### XCSs and collateral
+
+Chapter 5 introduced collateral, CSAs, and the concept of discounting cashflows. That chapter simply assumed the existence of discount curves for various CSAs, and it is much clearer now that multi-currency curve modeling is how they are created. We mentioned above the technique of cataloguing (system for naming all the types of curves that are used). The cataloguing system proposed here is simple but effective;
+
+1. The 3-letter marker before the ':' defines the currency to which that curve is *only* applicable, that is in which currency cashflows can be discounted, or rates can be forecast
+2. After the colon is the description, a '.' denotes a curve used for forecasting rates (which might be DF based or forecast rate based) and a '-' denotes some discounting curve (which is necessary DF based)
+
+Figure 7.6 provides an illustration of how a cataloguing system might work and also in which stage, via various models, each of the curves can be constructed. The single currency curve models feed into the multi-currency model, which incorporates XCSs and FX swaps, and produces (fin-bias) adjusted discounted curves and forward FX rates. Every other curve is then constructed with a simple mathematical process from this result.
+
+*Figure 7.6: A modern multi-currency curve model configuration and cataloguing example:*
+
+![Alt Text](diagrams/Figure_7.6.jpg)
+
+If we look at the mathematical process, it is an application of the no arbitrage principle demanding that the forward FX rates are the same regardless of under which CSA and SCSs are traded. XCSs trade with a benchmark CSA based upon the USD-RFR, SOFR, usually. This is why we have always adjusted the non-USD discount curve in the fin-bias process, but if a XCS was traded, say with a EUR-RFR CSA, this would not be expected to change the prediction of forward FX rates. If we write the formula for forward FX rates using DFs from earlier, but with more transparency according to our cataloguing system, this means that:
+
+$$(\text{EURUSD})f_i = \frac{(\text{EUR:USD-CSA})w_i^\ast}{(\text{USD:USD-CSA})v_i}F_0 = \frac{(\text{EUR:EUR-CSA})v_i^\ast}{(\text{USD:EUR-CSA})w_i}F_0$$
+
+*Example 7.3:*
+
+A multi-currency curve model has used XCS prices and determined the EUR:USD-CSA curve, that is the USD-CSA discount curve for EUR cashflows. A trader requires the USD:EUR-CSA discount curve ($w_i$) so he can price a USD cashflow collateralized at EUR RFR. The immediate EURUSD FX rate, $F_0 = 1.20$. His calculation for three arbitrary dates is shown in table 7.1.
+
+*Table 7.1: Example calculation of cross-CSA DRs:*
+
+| Date | | from 1-Ccy | | from Multi-Ccy | Implicit |
+| :----- | :--: | :--: | :--: | :--: | :--: |
+| | $v_t$ | $v_t^*$ | $w_t^*$ | $f_t$ | $w_t$ |
+| $t=1$ | 0.990 | 0.985 | 0.986 | $1.1952 = \left(\frac{0.986}{0.99}F_0\right)$ | $0.989 = \left(\frac{0.94}{1.1952}F_0\right)$ |
+| $t=2$ | 0.975 | 0.962 | 0.961 | $1.1828 = \left(\frac{0.961}{0.975}F_0\right)$ | $0.976 = \left(\frac{0.962}{1.1828}F_0\right)$ |
+| $t=3$ | 0.951 | 0.941 | 0.937 | $1.1823 = \left(\frac{0.937}{0.951}F_0\right)$ | $0.955 = \left(\frac{0.941}{1.1823}F_0\right)$ |
+
+Figure 7.6 shows how three b
 
 #### MTM and non-MTM XCSs
 
